@@ -5,9 +5,12 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const routes = require('./routes');
 
 const { environment } = require('./config');
 const isProduction = environment === 'production';
+const { ValidationError } = require('sequelize');
+const { ERROR } = require('sqlite3');
 
 const app = express();
 app.use(morgan('dev'));
@@ -26,8 +29,6 @@ app.use(csurf({
 })
 );
 
-const routes = require('./routes');
-const { ERROR } = require('sqlite3');
 
 app.use(routes);
 
@@ -39,7 +40,6 @@ app.use((_req, _res, next) => {
     next(err);
 })
 
-const { ValidationError } = require('sequelize');
 
 app.use((err, _req, _res, next) => {
     if (err instanceof ValidationError) {
