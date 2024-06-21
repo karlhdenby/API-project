@@ -37,8 +37,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
-      }, options
-    });
+      }
+    }, options);
   },
   async down(queryInterface, Sequelize) {
     options.tableName = 'Users';
