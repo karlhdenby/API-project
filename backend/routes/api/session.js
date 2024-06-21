@@ -22,7 +22,7 @@ router.post('/', async (req, res, next) => {
         const err = new Error("Login Failed");
         err.status = 401;
         err.title - 'Login Failed';
-        err.errors = { credential: 'The provided credentials were invalid' };
+        err.errors = { credential: 'The provided credentials were invalid.' };
         return next(err);
     }
 
@@ -37,6 +37,11 @@ router.post('/', async (req, res, next) => {
     return res.json({
         user: safeUser
     });
+});
+
+router.delete('/', (_req, res) => {
+    res.clearCookie('token');
+    return res.json({ message: 'success '});
 });
 
 
