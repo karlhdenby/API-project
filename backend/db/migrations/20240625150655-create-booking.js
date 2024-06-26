@@ -3,38 +3,31 @@
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;
+    options.schema = process.env.SCHEMA; // define your schema in options object
 }
-
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Bookings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
-        allowNull: false,
-        type: Sequelize.STRING
+      spotId: {
+        references: {model: "Spots"},
+        type: Sequelize.INTEGER
       },
-      firstName: {
-        allowNull: false,
-        type: Sequelize.STRING
+      userId: {
+        references: {model: "Users"},
+        type: Sequelize.INTEGER
       },
-      lastName: {
-        allowNull: false,
-        type: Sequelize.STRING
+      startDate: {
+        type: Sequelize.DATE
       },
-      email: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      hashedPassword: {
-        allowNull: false,
-        type: Sequelize.STRING
+      endDate: {
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -49,7 +42,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Users';
-    await queryInterface.dropTable("Users");
+    options.tableName = 'Bookings';
+    await queryInterface.dropTable('Bookings');
   }
 };

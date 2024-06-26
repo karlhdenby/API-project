@@ -3,38 +3,48 @@
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;
+    options.schema = process.env.SCHEMA; // define your schema in options object
 }
-
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Spots', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
-        allowNull: false,
+      ownerId: {
+        references: {model: "Users"},
+        type: Sequelize.INTEGER
+      },
+      address: {
         type: Sequelize.STRING
       },
-      firstName: {
-        allowNull: false,
+      city: {
         type: Sequelize.STRING
       },
-      lastName: {
-        allowNull: false,
+      state: {
         type: Sequelize.STRING
       },
-      email: {
-        allowNull: false,
+      country: {
         type: Sequelize.STRING
       },
-      hashedPassword: {
-        allowNull: false,
+      lat: {
+        type: Sequelize.DECIMAL
+      },
+      lng: {
+        type: Sequelize.DECIMAL
+      },
+      name: {
         type: Sequelize.STRING
+      },
+      description: {
+        type: Sequelize.STRING
+      },
+      price: {
+        type: Sequelize.DECIMAL
       },
       createdAt: {
         allowNull: false,
@@ -49,7 +59,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Users';
-    await queryInterface.dropTable("Users");
+    options.tableName = 'Spots'
+    await queryInterface.dropTable('Spots');
   }
 };
