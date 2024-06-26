@@ -1,9 +1,13 @@
 
 const express = require('express');
 const router = express.Router();
-const { Spot } = require('../../db/models');
+const { Op } = require('sequelize');
+const bcrypt = require('bcryptjs');
 
-const { check, validationResult } = require('express-validator');
+const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { User } = require('../../db/models');
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
 
 const handleValidationErrors = (req, _res, next) => {
     const validationErrors = validationResult(req);
@@ -23,12 +27,10 @@ const handleValidationErrors = (req, _res, next) => {
 };
 
 router.get('/', async (req, res, next) => {
-    try {
+        console.log("Hello")
         const spots = await Spot.findAll();
-        return res.json(spots);
-    } catch (error) {
-        next(error);
-    }
+        return res.json({spots});
+    
 });
 
 module.exports = router;
