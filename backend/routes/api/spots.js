@@ -1,18 +1,26 @@
+
 const express = require('express');
-const router = require("./session");
-const { Spot } = require('../../db/models')
-
 const router = express.Router();
+const { Spot } = require('../../db/models');
 
-const validateLogin = [
-    check('credential')
-    .exists({ checkFalsy: true })
-    .notEmpty()
-    .withMessage('Please provide a valid email or username.'),
-    check('password').exists({ checkFalsy: true })
-    .withMessage('Please provide a password.'),
-    handleValidationErrors
-];
+const { check, validationResult } = require('express-validator');
+
+const handleValidationErrors = (req, _res, next) => {
+    const validationErrors = validationResult(req);
+
+    if (!validationErrors.isEmpty()) {
+        const errors = {};
+        validationErrors.array().forEach((error) => 
+            errors[error.path] = error.msg);
+        
+        const err = Error("Bad request.");
+        err.errors = errors;
+        err.status = 400;
+        err.title = "Bad request.";
+        next(err);
+    }
+    next();
+};
 
 router.get('/', async (req, res, next) => {
     try {
@@ -21,6 +29,6 @@ router.get('/', async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-})
+});
 
-module.exports = router
+module.exports = router;
