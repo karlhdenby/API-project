@@ -1,12 +1,26 @@
+const express = require('express');
 const router = require("./session");
 const { Spot } = require('../../db/models')
 
-router.get('/spots', async (req, res, next) => {
+const router = express.Router();
 
-    const spots = await Spot.findAll()
-    console.log("hello")
+const validateLogin = [
+    check('credential')
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('Please provide a valid email or username.'),
+    check('password').exists({ checkFalsy: true })
+    .withMessage('Please provide a password.'),
+    handleValidationErrors
+];
+
+router.get('/', async (req, res, next) => {
+    try {
+        const spots = await Spot.findAll();
+        return res.json(spots);
+    } catch (error) {
+        next(error);
+    }
 })
 
-module.exports = {
-    router
-}
+module.exports = router
