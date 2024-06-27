@@ -17,7 +17,7 @@ async function calculateAvg(spot) {
         total = total + review.stars
         count++
     }
-    if(!NaN(total) && !NaN(count)) return total / count
+    if(typeof total === 'number' && typeof count === 'number') return (total / count)
     else return null
 }
 
