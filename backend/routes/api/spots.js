@@ -38,7 +38,7 @@ router.get('/', async (req, res, next) => {
         current.createdAt = (spot.createdAt),
         current.updatedAt = (spot.updatedAt),
         current.avgRating = await calculateAvg(spot.id)
-        current.previewImage = spotImage ? spotImage.url : null,
+        current.previewImage = null
         newSpots.push(current)
     }
     return res.json(newSpots)
