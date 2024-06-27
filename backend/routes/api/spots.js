@@ -130,7 +130,7 @@ router.get("/current", async (req, res, next) => {
       ownerId: userId,
     },
   });
-  return res.json(await makeSpots(result));
+  return res.json(await currentSpot(result));
 });
 
 router.get("/:id", async (req, res, next) => {
@@ -142,5 +142,27 @@ router.get("/:id", async (req, res, next) => {
   });
   return res.json(await makeSpotsById(result));
 });
+
+router.post('/', async (req, res, next) => {
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    try {
+        const newSpot = await Spot.create({
+          address,
+          city,
+          state,
+          country,
+          lat,
+          lng,
+          name,
+          description,
+          price
+        });
+    
+        res.status(201).json(newSpot);
+      } catch (error) {
+        console.error('Error creating new spot:', error);
+        res.status(500).json({ error: 'Failed to create spot' });
+      }
+})
 
 module.exports = router;
