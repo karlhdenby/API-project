@@ -73,9 +73,7 @@ async function makeSpots(array) {
     return newSpots
 };
 
-async function makeSpotsById(array) {
-    let newSpots = [];
-    for (let spot of array) {
+async function makeSpotsById(spot) {
         let current = {}
         current.id = spot.id
         current.ownerId = spot.ownerId
@@ -94,9 +92,7 @@ async function makeSpotsById(array) {
         current.avgStarRating = await calculateAvg(spot.id)
         current.SpotImages = await findSpotImages(spot.id)
         current.Owner = await findOwner(spot.ownerId)
-        newSpots.push(current);
-    };
-    return newSpots
+        return current
 };
 
 
@@ -126,7 +122,7 @@ router.get('/:id', async (req, res, next) => {
             id: id
         }
     })
-    return res.json(await makeSpots(result))
+    return res.json(await makeSpotsById(result))
 })
 
 module.exports = router;
