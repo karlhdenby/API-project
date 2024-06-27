@@ -110,9 +110,8 @@ async function currentSpot(spot) {
     (current.createdAt = spot.createdAt),
     (current.updatedAt = spot.updatedAt),
     (current.avgRating = await calculateAvg(spot.id));
-  current.previewImage = null;
-  newSpots.push(current);
-  return current;
+    current.previewImage = null;
+    return current;
 }
 
 router.get("/", async (req, res, next) => {
