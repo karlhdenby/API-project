@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
         spot.avgRating = calculateAvg(spot);
     }
     
-    return res.json({"Spots": spots, average});
+    return res.json({"Spots": spots,});
     
 });
 
