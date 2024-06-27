@@ -9,8 +9,8 @@ router.get('/', async (req, res, next) => {
     
 });
 
-router.get('/current', async (req, res, next) => {
-    const
-})
+// router.get('/current', async (req, res, next) => {
+//     const 
+// })
 
 module.exports = router;
