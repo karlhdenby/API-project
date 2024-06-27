@@ -9,8 +9,9 @@ router.get('/', async (req, res, next) => {
     
 });
 
-// router.get('/current', async (req, res, next) => {
-//     const 
-// })
+router.get('/current', async (req, res, next) => {
+    const { user } = req
+    console.log("user")
+})
 
 module.exports = router;
