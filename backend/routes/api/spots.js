@@ -68,9 +68,9 @@ async function makeSpots(array) {
 router.get('/', async (req, res, next) => {
     
     const result = await Spot.findAll();
-    let done = makeSpots(result)
+    let done = await makeSpots(result)
 
-    return res.json({"Spots": makeSpots(result)})
+    return res.json({"Spots": done})
 });
 
 router.get('/current', async (req, res, next) => {
