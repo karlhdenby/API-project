@@ -29,10 +29,10 @@ async function findSpotImages(id) {
     return result
 };
 
-async function findOwner(id) {
+async function findOwner(ownerId) {
     const result = await User.findOne({
         where: {
-            id: id
+            id: ownerId
         }
     })
     return result
