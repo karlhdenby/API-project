@@ -81,7 +81,7 @@ router.get('/current', async (req, res, next) => {
             ownerId: userId
         }
     })
-    return res.json(makeSpots(result))
+    return res.json(await makeSpots(result))
 })
 
 router.get('/:id', async (req, res, next) => {
@@ -91,7 +91,7 @@ router.get('/:id', async (req, res, next) => {
             id: id
         }
     })
-    return res.json(makeSpots(result))
+    return res.json(await makeSpots(result))
 })
 
 module.exports = router;
