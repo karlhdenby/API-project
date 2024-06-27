@@ -4,26 +4,25 @@ const router = express.Router();
 const { Spot } = require('../../db/models');
 const { Review } = require('../../db/models');
 
-async function calculateAvg(spot) {
+async function calculateAvg(id) {
+    const result = await Review.findAll({
+        where: {
+             spotId: id
+        }
+})  
     let total = 0;
     let count = 0;
-    let id = spot.id;
-    let reviews = await Review.findAll({
-        where: {
-            spotId: id
-        }
-    });
-    for (let review of reviews) {
-        total = total + review.stars
-        count++
+    for (let a of result) {
+        count ++;
+        total += a.stars
     }
-    if(typeof total === 'number' && typeof count === 'number') return (total / count)
-    else return null
+    return total / count
 }
 
 router.get('/', async (req, res, next) => {
     const spots = await Spot.findAll();
     for (let spot of spots) {
+        
         spot.avgRating = calculateAvg(spot);
     }
     
