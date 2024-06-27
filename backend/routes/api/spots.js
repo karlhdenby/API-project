@@ -20,19 +20,28 @@ async function calculateAvg(id) {
 }
 
 router.get('/', async (req, res, next) => {
-    try {
-        const spots = await Spot.findAll();
-        const spotsWithRatings = await Promise.all(spots.map(async spot => {
-            const avgRating = await calculateAvg(spot.id);
-            return {
-                ...spot.toJSON(),
-                avgRating
-            };
-        }));
-        return res.json({ "Spots": spotsWithRatings });
-    } catch (error) {
-        next(error);
+    let newSpots = [];
+    let oldSpots = await Spot.findAll();
+    for (let spot of oldSpots) {
+        let current = {};
+        current.id = spot.id,
+        current.ownerId = spot.ownerId,
+        current.address = spot.address,
+        current.city = spot.city,
+        current.state = spot.state,
+        current.country = spot.country,
+        current.lat = spot.lat,
+        current.lng = spot.lng,
+        current.name = spot.name,
+        current.description = spot.description,
+        current.price = spot.price,
+        current.createdAt = formatDate(spot.createdAt),
+        current.updatedAt = formatDate(spot.updatedAt),
+        current.avgRating = calculateAvg(spot.id)
+        current.previewImage = spotImage ? spotImage.url : null,
+        newSpots.push(current)
     }
+    return res.json(newSpots)
 });
 
 router.get('/current', async (req, res, next) => {
