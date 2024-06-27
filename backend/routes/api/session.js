@@ -72,7 +72,7 @@ router.get('/', (req, res) => {
 
 
 router.post('/', validateLogin, async (req, res, next) => {
-    const { credential, password } = req.boddy;
+    const { credential, password } = req.body;
 
     const user = await User.unscoped().findOne({
         where: {
