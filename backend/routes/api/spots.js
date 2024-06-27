@@ -5,7 +5,7 @@ const { Spot } = require('../../db/models');
 
 router.get('/', async (req, res, next) => {
     const spots = await Spot.findAll();
-    return res.json(spots);
+    return res.json({spots});
     
 });
 
