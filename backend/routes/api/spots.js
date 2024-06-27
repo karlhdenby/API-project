@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Spot, Review, SpotImage } = require("../../db/models");
+const { Spot, Review, SpotImage, User } = require("../../db/models");
 const { where } = require("sequelize");
 
 async function calculateAvg(id) {
