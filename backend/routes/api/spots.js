@@ -84,8 +84,8 @@ router.get('/current', async (req, res, next) => {
     return res.json(makeSpots(result))
 })
 
-router.get('/:spotId', async (req, res, next) => {
-    const id = req.params.spotId;
+router.get('/:id', async (req, res, next) => {
+    const id = req.params.id;
     const result = await Spot.findOne({
         where: {
             id: id
