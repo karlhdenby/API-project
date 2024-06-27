@@ -38,23 +38,23 @@ router.post('/', async (req, res) => {
 });
 
 
-router.post('/', validateSignup, async (req, res) => {
-    const { email, password, username } = req.body;
-    const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ email, username, hashedPassword });
+// router.post('/', validateSignup, async (req, res) => {
+//     const { email, password, username } = req.body;
+//     const hashedPassword = bcrypt.hashSync(password);
+//     const user = await User.create({ email, username, hashedPassword });
 
-    const safeUser = {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-    };
+//     const safeUser = {
+//         id: user.id,
+//         email: user.email,
+//         username: user.username,
+//     };
 
-    await setTokenCookie(res, safeUser);
+//     await setTokenCookie(res, safeUser);
 
-    return res.json({
-        user: safeUser
-    });
-});
+//     return res.json({
+//         user: safeUser
+//     });
+// });
 
 
 
