@@ -22,8 +22,7 @@ async function calculateAvg(id) {
 router.get('/', async (req, res, next) => {
     const spots = await Spot.findAll();
     for (let spot of spots) {
-        debugger
-        spot.avgRating = await calculateAvg(spot);
+        spot.avgRating = calculateAvg(spot);
     }
     
     return res.json({"Spots": spots});
