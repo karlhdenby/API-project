@@ -11,7 +11,13 @@ router.get('/', async (req, res, next) => {
 
 router.get('/current', async (req, res, next) => {
     const { user } = req
-    console.log("user")
+    let userId = user.id
+    const result = await Spot.findOne({
+        where: {
+            ownerId: userId
+        }
+    })
+    return res.json(result)
 })
 
 module.exports = router;
