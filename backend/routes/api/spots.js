@@ -3,7 +3,7 @@ const router = express.Router();
 const { Spot, Review, SpotImage, User } = require("../../db/models");
 const { where } = require("sequelize");
 
-export async function calculateAvg(id) {
+async function calculateAvg(id) {
   const result = await Review.findAll({
     where: {
       spotId: id,
@@ -19,7 +19,7 @@ export async function calculateAvg(id) {
   else return null;
 }
 
-export async function calculateTotal(id) {
+async function calculateTotal(id) {
   const result = await Review.findAll({
     where: {
       spotId: id,
@@ -30,7 +30,7 @@ export async function calculateTotal(id) {
   return count;
 }
 
-export async function findSpotImages(id) {
+async function findSpotImages(id) {
   const result = await SpotImage.findAll({
     where: {
       spotId: id,
@@ -39,7 +39,7 @@ export async function findSpotImages(id) {
   return result;
 }
 
-export async function findOwner(ownerId) {
+async function findOwner(ownerId) {
   const result = await User.findOne({
     where: {
       id: ownerId,
@@ -48,7 +48,7 @@ export async function findOwner(ownerId) {
   return result;
 }
 
-export async function makeSpots(array) {
+async function makeSpots(array) {
   let newSpots = [];
   for (let spot of array) {
     let current = {};
@@ -72,7 +72,7 @@ export async function makeSpots(array) {
   return newSpots;
 }
 
-export async function makeSpotsById(spot) {
+async function makeSpotsById(spot) {
   let current = {};
   current.id = spot.id;
   current.ownerId = spot.ownerId;
@@ -94,7 +94,7 @@ export async function makeSpotsById(spot) {
   return current;
 }
 
-export async function currentSpot(spot) {
+async function currentSpot(spot) {
   let current = {};
   (current.id = spot.id),
     (current.ownerId = spot.ownerId),
@@ -207,4 +207,11 @@ router.get("/:spotId/reviews", async (req, res, next) => {
   return res.json(await makeSpotsById(result));
 });
 
-module.exports = router;
+module.exports = {
+  router,
+  calculateAvg,
+  calculateTotal,
+  findOwner,
+  makeSpots,
+  makeSpotsById
+};
