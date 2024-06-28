@@ -184,13 +184,13 @@ router.post('/:spotId/images', async (req, res, next) => {
 router.put('/api/spots/:spotId', async (req, res, next) => {
     let body = req.body;
     let spotId = req.params.spotId;
-    let spot = Spot.findOne({
+    let spot = await Spot.findOne({
         where: {
             id: spotId
         }
     })
     for (let a in body) {
-        spot.a = body.a
+        spot(a) = body(a)
     }
 
     return res.status(200).json(spot)
