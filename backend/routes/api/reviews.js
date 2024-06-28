@@ -13,3 +13,5 @@ router.get("/current", async (req, res, next) => {
     });
     return res.json(await currentSpot(result));
   });
+
+module.exports = router;
