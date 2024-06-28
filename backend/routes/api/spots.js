@@ -189,6 +189,7 @@ router.put('/api/spots/:spotId', async (req, res, next) => {
             id: spotId
         }
     })
+    await spot.update(body)
 
 
     return res.status(200).json(await spot)
