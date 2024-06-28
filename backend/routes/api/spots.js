@@ -190,10 +190,10 @@ router.put('/api/spots/:spotId', async (req, res, next) => {
         }
     })
     for (let a in body) {
-        spot(a) = body(a)
+        spot(a) = a
     }
 
-    return res.status(200).json(spot)
+    return res.status(200).json(await spot)
 })
 
 module.exports = router;
