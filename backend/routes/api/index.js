@@ -12,7 +12,7 @@ const reviewsRouter = require('./reviews.js');
 
 router.use(restoreUser);
 
-router.use('/index', reviewsRouter);
+router.use('reviews', reviewsRouter);
 
 router.use('/spots', spotsRouter);
 
