@@ -181,7 +181,7 @@ router.post('/:spotId/images', async (req, res, next) => {
 
 })
 
-router.put('/api/spots/:spotId', async (req, res, next) => {
+router.put('/:spotId', async (req, res, next) => {
     let {} = req.body
     let spotId = req.params.spotId;
     let spot = await Spot.findByPk(spotId)
