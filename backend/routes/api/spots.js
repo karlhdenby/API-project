@@ -164,7 +164,7 @@ router.post('/', async (req, res, next) => {
       }
 })
 
-router.post('/:spotId/images', async (req, res, request) => {
+router.post('/:spotId/images', async (req, res, next) => {
     const { url, preview } = req.body;
 
     try {
@@ -179,6 +179,21 @@ router.post('/:spotId/images', async (req, res, request) => {
         res.status(500).json({ error: 'Failed to create spot' });
     }
 
+})
+
+router.put('/api/spots/:spotId', async (req, res, next) => {
+    let body = req.body;
+    let spotId = req.params.spotId;
+    let spot = Spot.findOne({
+        where: {
+            id: spotId
+        }
+    })
+    for (let a in body) {
+        spot.a = body.a
+    }
+
+    return res.status(200).json(spot)
 })
 
 module.exports = router;
