@@ -191,4 +191,20 @@ router.put('/:spotId', async (req, res, next) => {
     return res.status(200).json(spot)
 })
 
+router.delete('/:spotId', async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId)
+    await spot.destroy()
+    res.json({"message": "Successfully deleted"})
+})
+
+router.get("/:spotId/reviews", async (req, res, next) => {
+  const id = req.params.spotId;
+  const result = await Review.findAll({
+    where: {
+      id: id,
+    },
+  });
+  return res.json(await makeSpotsById(result));
+});
+
 module.exports = router;

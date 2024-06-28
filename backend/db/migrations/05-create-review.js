@@ -21,7 +21,7 @@ module.exports = {
       },
       userId: {
         references: {model: "Users"},
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       review: {
         type: Sequelize.STRING
