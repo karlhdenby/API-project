@@ -189,9 +189,7 @@ router.put('/api/spots/:spotId', async (req, res, next) => {
             id: spotId
         }
     })
-    for (let a in body) {
-        spot(a) = a
-    }
+
 
     return res.status(200).json(await spot)
 })
