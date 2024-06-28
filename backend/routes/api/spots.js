@@ -164,4 +164,21 @@ router.post('/', async (req, res, next) => {
       }
 })
 
+router.post('/:spotId/images', async (req, res, request) => {
+    const { url, preview } = req.body;
+
+    try {
+        const newImage = await SpotImage.create({
+        url,
+        preview
+    })
+
+    res.status(201).json(newImage);
+    } catch (error) {
+        console.error('Error creating new image:', error);
+        res.status(500).json({ error: 'Failed to create spot' });
+    }
+
+})
+
 module.exports = router;
