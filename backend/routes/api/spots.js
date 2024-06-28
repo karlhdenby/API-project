@@ -207,11 +207,4 @@ router.get("/:spotId/reviews", async (req, res, next) => {
   return res.json(await makeSpotsById(result));
 });
 
-module.exports = {
-  router,
-  calculateAvg,
-  calculateTotal,
-  findOwner,
-  makeSpots,
-  makeSpotsById
-};
+module.exports = router;
