@@ -6,11 +6,7 @@ const { where } = require("sequelize");
 router.get("/current", async (req, res, next) => {
     const { user } = req;
     let userId = user.id;
-    const result = await Review.findAll({
-      where: {
-        userId: userId,
-      },
-    });
+    const result = await Review.findByPk(userId);
     return res.json(await currentSpot(result));
   });
 
