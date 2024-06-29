@@ -201,7 +201,7 @@ router.get("/:spotId/reviews", async (req, res, next) => {
   const id = req.params.spotId;
   const result = await Review.findAll({
     where: {
-      id: id,
+      spotId: id,
     },
   });
   return res.json(await makeSpotsById(result));

@@ -12,7 +12,9 @@ router.get("/current", async (req, res, next) => {
         userId: userId
       }
     });
-    return res.json({review: result});
+    return res.json(result);
   });
+
+
 
 module.exports = router;
