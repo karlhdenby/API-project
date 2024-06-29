@@ -28,5 +28,14 @@ router.post('/:reviewId/images', async (req, res, next) => {
 
 })
 
+router.put('/:reviewId/images', async (req, res, next) => {
+  let body = req.body
+  let reviewId = req.params.reviewId
+  let review = await Review.findByPk(reviewId)
+  await review.update(body)
+
+  return res.status(200).json(review)
+})
+
 
 module.exports = router;
