@@ -207,4 +207,17 @@ router.get("/:spotId/reviews", async (req, res, next) => {
   return res.json(result);
 });
 
+router.post("/:spotId/reviews", async (req, res, next) => {
+
+  const { review, starts } = req.body;
+  let result = await Review.create({
+    review,
+    stars
+  });
+
+  return res.json(result)
+
+
+});
+
 module.exports = router;
