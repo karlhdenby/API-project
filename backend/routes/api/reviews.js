@@ -37,7 +37,7 @@ router.put('/:reviewId', async (req, res, next) => {
   return res.status(200).json(review)
 })
 
-router.put('/:reviewId', async (req, res, next) => {
+router.delete('/:reviewId', async (req, res, next) => {
   let reviewId = req.params.reviewId
   let review = await Review.findByPk(reviewId)
   await review.destroy(body)
