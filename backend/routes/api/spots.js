@@ -204,7 +204,7 @@ router.get("/:spotId/reviews", async (req, res, next) => {
       spotId: id,
     },
   });
-  return res.json(await makeSpotsById(result));
+  return res.json(result);
 });
 
 module.exports = router;
