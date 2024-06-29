@@ -28,7 +28,7 @@ router.post('/:reviewId/images', async (req, res, next) => {
 
 })
 
-router.put('/:reviewId/images', async (req, res, next) => {
+router.put('/:reviewId', async (req, res, next) => {
   let body = req.body
   let reviewId = req.params.reviewId
   let review = await Review.findByPk(reviewId)
