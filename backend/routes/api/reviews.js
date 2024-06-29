@@ -8,7 +8,7 @@ router.get("/current", async (req, res, next) => {
     const { user } = req;
     let userId = user.id;
     const result = await Review.findByPk(userId);
-    return res.json(result);
+    return res.json({result});
   });
 
 module.exports = router;
