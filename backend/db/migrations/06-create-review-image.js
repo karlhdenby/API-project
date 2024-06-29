@@ -21,7 +21,6 @@ module.exports = {
         references: {
           model: "Reviews",
           key: "id",
-          onDelete: "CASCADE"
         }
       },
       url: {
