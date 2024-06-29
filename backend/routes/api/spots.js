@@ -208,8 +208,8 @@ router.get("/:spotId/reviews", async (req, res, next) => {
 });
 
 router.post("/:spotId/reviews", async (req, res, next) => {
-
-  const { review, starts } = req.body;
+  const { review, stars } = req.body;
+  
   let result = await Review.create({
     review,
     stars
