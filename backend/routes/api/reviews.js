@@ -7,7 +7,11 @@ const { currentSpot } = require('./spots') ;
 router.get("/current", async (req, res, next) => {
     const { user } = req;
     let userId = user.id;
-    const result = await Review.findByPk(userId);
+    const result = await Review.findAll({
+      where: {
+        userId: userId
+      }
+    });
     return res.json({review: result});
   });
 
