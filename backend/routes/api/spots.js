@@ -209,10 +209,14 @@ router.get("/:spotId/reviews", async (req, res, next) => {
 
 router.post("/:spotId/reviews", async (req, res, next) => {
   const { review, stars } = req.body;
-  
+  const { user } = req;
+  const id = req.params.spotId;
+
   let result = await Review.create({
     review,
-    stars
+    stars,
+    spotId: id,
+    userId: user.id
   });
 
   return res.json(result)
