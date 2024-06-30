@@ -25,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
           model: "Reviews",
           key: "id"
         },
-        onDelete: "CASCADE"
     },
     url: DataTypes.STRING,
     createdAt: DataTypes.DATE,
