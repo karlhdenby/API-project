@@ -45,7 +45,6 @@ router.delete('/:reviewId', async (req, res, next) => {
       reviewId: reviewId
     }
   })
-  await reviewImage.destroy()
   await review.destroy()
 
   res.json({"message": "Successfully deleted"})
