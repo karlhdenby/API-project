@@ -40,7 +40,13 @@ router.put('/:reviewId', async (req, res, next) => {
 router.delete('/:reviewId', async (req, res, next) => {
   let reviewId = req.params.reviewId
   let review = await Review.findByPk(reviewId)
-  await review.destroy(review)
+  let reviewImage = await ReviewImage.findOne({
+    where: {
+      reviewId: reviewId
+    }
+  })
+  await review.destroy()
+  await reviewImage.destroy()
 
   res.json({"message": "Successfully deleted"})
 })
