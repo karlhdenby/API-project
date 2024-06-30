@@ -19,7 +19,14 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true
     },
-    reviewId: DataTypes.INTEGER,
+    reviewId: {
+      type: DataTypes.INTEGER,
+        references: {
+          model: "Reviews",
+          key: "id"
+        },
+        onDelete: "CASCADE"
+    },
     url: DataTypes.STRING,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
