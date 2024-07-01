@@ -6,7 +6,7 @@ const { currentSpot } = require('./spots') ;
 
 router.delete('/:imageId', async (req, res, next) => {
     const id = req.params.imageId
-    const image = SpotImage.findByPk(id)
+    const image = await SpotImage.findByPk(id)
 
     await image.destroy()
     return res.json({"message": "Successfully deleted"})
