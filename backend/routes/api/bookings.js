@@ -16,6 +16,13 @@ router.get('/current', async (req, res, next) => {
     return res.json(bookings)
 })
 
-// router.get()
+router.put('/:bookingId', async (req, res, next) => {
+    const id = req.params.bookingId
+    const booking = findByPk(id)
+    const body = req.body
+
+    await booking.update(body)
+})
+
 
 module.exports = router
