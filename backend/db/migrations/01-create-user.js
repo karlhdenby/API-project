@@ -30,7 +30,7 @@ module.exports = {
       },
       email: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       hashedPassword: {
         allowNull: false,

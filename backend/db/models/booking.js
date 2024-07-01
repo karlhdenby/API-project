@@ -21,10 +21,28 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      spotId: DataTypes.INTEGER,
-      userId: DataTypes.INTEGER,
-      startDate: DataTypes.DATE,
-      endDate: DataTypes.DATE,
+      spotId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      startDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+          isDate: true,
+          isAfter: "2024-06-01",
+        }
+      },
+      endDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        isDate: true,
+        isAfter: "2024-06-01"
+      },
     },
     {
       sequelize,
