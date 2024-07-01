@@ -225,7 +225,7 @@ router.post("/:spotId/reviews", async (req, res, next) => {
 });
 
 
-router.get(':spotId/bookings', async (req, res, next) => {
+router.get('/:spotId/bookings', async (req, res, next) => {
   const id = req.params.spotId
 
   const bookings = await Booking.findAll({
