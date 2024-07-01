@@ -166,7 +166,7 @@ router.get("/current", async (req, res, next) => {
         ownerId: userId,
       },
     });
-    if (!result) throw new Error()
+    if (!result || !user) throw new Error()
     else return res.json(await currentSpot(result));
   } catch (error) {
     if (!user) return res.json({"message": "Could not find user"})
@@ -322,10 +322,10 @@ router.post("/:spotId/reviews", async (req, res, next) => {
       userId: user.id
     }
   }) 
-  
+  if (!review || !stars || !user || !spot || oldRev) throw new Error()
   
   try {
-  if (!review || !stars || !user || !spot ) throw new Error()
+  if (!review || !stars || !user || !spot || oldRev) throw new Error()
     let result = await Review.create({
       review,
       stars,
@@ -377,15 +377,15 @@ router.post('/:spotId/bookings', async (req, res, next) => {
   let id = req.params.spotId
   let spot = Spot.findByPk(id)
   let {startDate, endDate} = req.body
+  let booking = await Booking.findOne({
+    where: {
+        startDate: startDate,
+        endDate: endDate
+    }
+  })
   
   try {
     if (!spot || !startDate || !endDate) throw new Error()
-    let booking = await Booking.findOne({
-      where: {
-          startDate: startDate,
-          endDate: endDate
-      }
-    })
     if (booking) throw new Error()
     let result = await Booking.create({
       startDate,
