@@ -237,4 +237,16 @@ router.get('/:spotId/bookings', async (req, res, next) => {
   return res.json(bookings)
 })
 
+router.post('/:spotId/bookings', async (req, res, next) => {
+  const id = req.params.spotId
+  const {startDate, endDate} = req.body
+
+  const result = await Booking.create({
+    startDate,
+    endDate
+  })
+
+  return res.json(result)
+})
+
 module.exports = router;
