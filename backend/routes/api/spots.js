@@ -224,4 +224,17 @@ router.post("/:spotId/reviews", async (req, res, next) => {
 
 });
 
+
+router.post(':spotId/bookings', async (req, res, next) => {
+  const id = req.params.spotId
+
+  const bookings = await Booking.findAll({
+    where: {
+      spotId: id
+    }
+  })
+
+  return res.json(bookings)
+})
+
 module.exports = router;

@@ -16,4 +16,6 @@ router.get('/current', async (req, res, next) => {
     return res.json(bookings)
 })
 
+// router.get()
+
 module.exports = router
