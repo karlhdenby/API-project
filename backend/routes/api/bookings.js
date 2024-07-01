@@ -22,6 +22,7 @@ router.put('/:bookingId', async (req, res, next) => {
     const body = req.body
 
     await booking.update(body)
+    return res.json(booking)
 })
 
 
