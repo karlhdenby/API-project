@@ -165,7 +165,8 @@ router.get("/current", async (req, res, next) => {
       ownerId: userId,
     },
   });
-  return res.json(await currentSpot(result));
+  if(!result) return res.json({"message": "Could not find spots"})
+  else return res.json(await currentSpot(result));
 });
 
 router.get("/:id", async (req, res, next) => {
@@ -307,16 +308,16 @@ router.post("/:spotId/reviews", async (req, res, next) => {
   let { review, stars } = req.body;
   let { user } = req;
   let id = req.params.spotId;
+  let spot = await Spot.findByPk(id)
+  let oldRev = await Review.findOne({
+    where: {
+      spotId: id,
+      userId: user.id
+    }
+  }) 
   
   
   try {
-    let spot = await Spot.findByPk(id)
-    let oldRev = await Review.findOne({
-      where: {
-        spotId: id,
-        userId: user.id
-      }
-    }) 
   if (!review || !stars || !user || !spot ) throw new Error()
     let result = await Review.create({
       review,
@@ -354,8 +355,10 @@ router.get('/:spotId/bookings', async (req, res, next) => {
       spotId: id
     }
   })
+  
 
   try {
+    if (!spot) throw new Error()
     return res.json(bookings)
     
   } catch (error) {

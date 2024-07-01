@@ -12,16 +12,19 @@ router.get("/current", async (req, res, next) => {
         userId: userId
       }
     });
-    return res.json(result);
+    if (!user) return res.json({"message": "no current user"})
+    else if (!result) return res.json({"message": "no reviews found"}) 
+    else return res.json(result);
   });
 
 router.post('/:reviewId/images', async (req, res, next) => {
-  const id = req.params.reviewId;
-  const { url } = req.body;
-  const review = await Review.findByPk(id)
+  let id = req.params.reviewId;
+  let { url } = req.body;
+  let review = await Review.findByPk(id)
 
   try {
-    const result = await ReviewImage.create({
+    if (!review) throw new Error()
+    let result = await ReviewImage.create({
       url,
       reviewId: id
     })
@@ -41,6 +44,8 @@ router.put('/:reviewId', async (req, res, next) => {
   let review = await Review.findByPk(reviewId)
   
   try {
+    if(!review) throw new Error()
+    if(!body) throw new Error()
     await review.update(body)
   
     return res.status(200).json(review)
@@ -66,6 +71,7 @@ router.delete('/:reviewId', async (req, res, next) => {
   //   }
   // })
   try {
+    if(!review) throw new Error()
     await review.destroy()
   
     res.json({"message": "Successfully deleted"})

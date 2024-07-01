@@ -50,6 +50,7 @@ router.delete('/:bookingId', async (req, res, next) => {
     try {
         let id = req.params.bookingId
         let booking = await Booking.findByPk(id)
+        if(!booking) throw new Error()
         await booking.destroy()
         return res.json({"message": "Successfully deleted"})
         
