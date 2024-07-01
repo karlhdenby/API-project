@@ -1,0 +1,18 @@
+^X
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Changes to be committed:
+#	new file:   backend/.sequelizerc
+#	new file:   backend/app.js
+#	new file:   backend/bin/www
+#	new file:   backend/config/database.js
+#	new file:   backend/config/index.js
+#	new file:   backend/db/models/index.js
+#	new file:   backend/package-lock.json
+#	new file:   backend/package.json
+#	new file:   backend/psql-setup-script.js
+#	new file:   backend/routes/index.js
+#	new file:   package-lock.json
+#

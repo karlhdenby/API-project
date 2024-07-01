@@ -1,0 +1,157 @@
+0000000000000000000000000000000000000000 5c6442f7720df3bc60c03aeaeabc6ece65fc1fbe karlhdenby <karlhdenby@gmail.com> 1718838080 -0700	commit (initial): Initial commit
+5c6442f7720df3bc60c03aeaeabc6ece65fc1fbe b8558f8f140e162f42d4634199d2ce7cc84b2a7e karlhdenby <karlhdenby@gmail.com> 1718850642 -0700	commit: phase-0
+b8558f8f140e162f42d4634199d2ce7cc84b2a7e 1e6aeb00ec2d7d348834d358da45ad7cc452554b karlhdenby <karlhdenby@gmail.com> 1718919868 -0700	commit: commiting all
+1e6aeb00ec2d7d348834d358da45ad7cc452554b 1e6aeb00ec2d7d348834d358da45ad7cc452554b karlhdenby <karlhdenby@gmail.com> 1718919925 -0700	checkout: moving from main to dev
+1e6aeb00ec2d7d348834d358da45ad7cc452554b 1e6aeb00ec2d7d348834d358da45ad7cc452554b karlhdenby <karlhdenby@gmail.com> 1718919942 -0700	checkout: moving from dev to auth-setup
+1e6aeb00ec2d7d348834d358da45ad7cc452554b dfcc1c2e8a2cbcdd7e13e6963df39848e3582881 karlhdenby <karlhdenby@gmail.com> 1718930246 -0700	commit: Add Users table migration and seeds
+dfcc1c2e8a2cbcdd7e13e6963df39848e3582881 dfcc1c2e8a2cbcdd7e13e6963df39848e3582881 karlhdenby <karlhdenby@gmail.com> 1718982297 -0700	checkout: moving from auth-setup to login
+dfcc1c2e8a2cbcdd7e13e6963df39848e3582881 d9b777d21dcdd7ce4e4e9f8d455230fe15200ec6 karlhdenby <karlhdenby@gmail.com> 1718995474 -0700	commit: Add User Login backend endpoint
+d9b777d21dcdd7ce4e4e9f8d455230fe15200ec6 1e6aeb00ec2d7d348834d358da45ad7cc452554b karlhdenby <karlhdenby@gmail.com> 1718995478 -0700	checkout: moving from login to dev
+1e6aeb00ec2d7d348834d358da45ad7cc452554b d9b777d21dcdd7ce4e4e9f8d455230fe15200ec6 karlhdenby <karlhdenby@gmail.com> 1718995488 -0700	merge login: Fast-forward
+d9b777d21dcdd7ce4e4e9f8d455230fe15200ec6 d9b777d21dcdd7ce4e4e9f8d455230fe15200ec6 karlhdenby <karlhdenby@gmail.com> 1718995512 -0700	checkout: moving from dev to dev
+d9b777d21dcdd7ce4e4e9f8d455230fe15200ec6 d9b777d21dcdd7ce4e4e9f8d455230fe15200ec6 karlhdenby <karlhdenby@gmail.com> 1718995512 -0700	checkout: moving from dev to logout
+d9b777d21dcdd7ce4e4e9f8d455230fe15200ec6 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1718996496 -0700	commit: Add User logout backend endpoint
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 d9b777d21dcdd7ce4e4e9f8d455230fe15200ec6 karlhdenby <karlhdenby@gmail.com> 1718996514 -0700	checkout: moving from logout to dev
+d9b777d21dcdd7ce4e4e9f8d455230fe15200ec6 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1718996573 -0700	merge logout: Fast-forward
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1718996583 -0700	checkout: moving from dev to dev
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1718996583 -0700	checkout: moving from dev to signup
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1718998888 -0700	checkout: moving from signup to dev
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1718998903 -0700	checkout: moving from dev to dev
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1718998903 -0700	checkout: moving from dev to get-session
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1719000738 -0700	checkout: moving from get-session to dev
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1719000947 -0700	checkout: moving from dev to dev
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1719000947 -0700	checkout: moving from dev to validate-login-inputs
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1719004079 -0700	checkout: moving from validate-login-inputs to dev
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1719004099 -0700	checkout: moving from dev to dev
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1719004099 -0700	checkout: moving from dev to validate-signup-inputs
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 14c7036cf4a0342e33faccd8a07a26f8c78c7e16 karlhdenby <karlhdenby@gmail.com> 1719004622 -0700	checkout: moving from validate-signup-inputs to dev
+14c7036cf4a0342e33faccd8a07a26f8c78c7e16 19d5cf0a7b86baba3d0c8b27e6e9bf9a91bbcfd2 karlhdenby <karlhdenby@gmail.com> 1719005949 -0700	commit: Package.json
+19d5cf0a7b86baba3d0c8b27e6e9bf9a91bbcfd2 1e6aeb00ec2d7d348834d358da45ad7cc452554b karlhdenby <karlhdenby@gmail.com> 1719006044 -0700	checkout: moving from dev to main
+1e6aeb00ec2d7d348834d358da45ad7cc452554b 19d5cf0a7b86baba3d0c8b27e6e9bf9a91bbcfd2 karlhdenby <karlhdenby@gmail.com> 1719006057 -0700	merge dev: Fast-forward
+19d5cf0a7b86baba3d0c8b27e6e9bf9a91bbcfd2 f3aa3a937f3bea5d67e0fd2e02418d917499aea6 karlhdenby <karlhdenby@gmail.com> 1719010137 -0700	commit: Fixing Error
+f3aa3a937f3bea5d67e0fd2e02418d917499aea6 cbb6fb0bb3f85e7030d9ac49eb566da37fb58b8c karlhdenby <karlhdenby@gmail.com> 1719010219 -0700	commit: Errors part 2
+cbb6fb0bb3f85e7030d9ac49eb566da37fb58b8c 4e36d619761aa89f81b1a8f7cd836aae91b2cf6e karlhdenby <karlhdenby@gmail.com> 1719011933 -0700	commit: bello
+4e36d619761aa89f81b1a8f7cd836aae91b2cf6e 056393dbac9a50af8c0032e0d6367696126cdc3b karlhdenby <karlhdenby@gmail.com> 1719012516 -0700	commit: sharing again
+056393dbac9a50af8c0032e0d6367696126cdc3b e3212fa263bb45c56a427ba66016a401d5296572 karlhdenby <karlhdenby@gmail.com> 1719012638 -0700	commit: fixed options
+e3212fa263bb45c56a427ba66016a401d5296572 e23cb8e3fb2571aa181b83d4cd04dd7eb62b3876 karlhdenby <karlhdenby@gmail.com> 1719012757 -0700	commit: sharing
+e23cb8e3fb2571aa181b83d4cd04dd7eb62b3876 1ef67e9244f3baa78df5d05ff8935027fb3cbdb5 karlhdenby <karlhdenby@gmail.com> 1719013131 -0700	commit: Hiii
+1ef67e9244f3baa78df5d05ff8935027fb3cbdb5 bfbb98f5c4249acc0dec14b8379019606d4dafad karlhdenby <karlhdenby@gmail.com> 1719169962 -0700	commit: Updating
+bfbb98f5c4249acc0dec14b8379019606d4dafad 0f5cb1d530c2c88e74311d81c2c1b331c715c9f0 karlhdenby <karlhdenby@gmail.com> 1719244907 -0700	commit: sharing
+0f5cb1d530c2c88e74311d81c2c1b331c715c9f0 0a90b6e43140f4cb721fc5cfb873316f0cf57151 karlhdenby <karlhdenby@gmail.com> 1719418780 -0700	commit: sharing
+0a90b6e43140f4cb721fc5cfb873316f0cf57151 711da625f726e046c470dc61f898497e6e6ba563 karlhdenby <karlhdenby@gmail.com> 1719419996 -0700	commit: Sharing
+711da625f726e046c470dc61f898497e6e6ba563 a42f9cbf9e1fd901aae69cc4bd65932d72ac1bfe karlhdenby <karlhdenby@gmail.com> 1719420487 -0700	commit: Successfully Seeded
+a42f9cbf9e1fd901aae69cc4bd65932d72ac1bfe e68845432bd3b7b4cef8be6500c6288b96702e73 karlhdenby <karlhdenby@gmail.com> 1719421464 -0700	commit: added options
+e68845432bd3b7b4cef8be6500c6288b96702e73 9b2362687f5482b7ad2ac8ccac2cec58bafd99d7 karlhdenby <karlhdenby@gmail.com> 1719436996 -0700	commit: sharing
+9b2362687f5482b7ad2ac8ccac2cec58bafd99d7 1c42400022bc09259b61e0f7aacca399bede664d karlhdenby <karlhdenby@gmail.com> 1719437720 -0700	commit: sharing
+1c42400022bc09259b61e0f7aacca399bede664d 760ef01c7a39ac08be24d4ca022d22ff2ccbe712 karlhdenby <karlhdenby@gmail.com> 1719440750 -0700	commit: sharing
+760ef01c7a39ac08be24d4ca022d22ff2ccbe712 9222146b36e332291e2df962531762493ee9102f karlhdenby <karlhdenby@gmail.com> 1719442694 -0700	commit: sharing
+9222146b36e332291e2df962531762493ee9102f d4b9e0cc7d79868299bea1d1b9d8fcd13c23c229 karlhdenby <karlhdenby@gmail.com> 1719443905 -0700	commit: sharing
+d4b9e0cc7d79868299bea1d1b9d8fcd13c23c229 5c986126ba17423a623a21c061525791722ac5a7 karlhdenby <karlhdenby@gmail.com> 1719446806 -0700	commit: sharing
+5c986126ba17423a623a21c061525791722ac5a7 1264e05eeb73da15bba2d4b2a62400411581f80a karlhdenby <karlhdenby@gmail.com> 1719459257 -0700	commit: sharing
+1264e05eeb73da15bba2d4b2a62400411581f80a ade0612cf200b996245443fd1a4f2199f7cb4329 karlhdenby <karlhdenby@gmail.com> 1719459432 -0700	commit: sharing
+ade0612cf200b996245443fd1a4f2199f7cb4329 d035d174dd5be92f473fb89247aa6ce3a8bfed2d karlhdenby <karlhdenby@gmail.com> 1719461981 -0700	commit: sharing
+d035d174dd5be92f473fb89247aa6ce3a8bfed2d d4488d3b727c3770e466063cc4cf19209409cff5 karlhdenby <karlhdenby@gmail.com> 1719462826 -0700	commit: sharing
+d4488d3b727c3770e466063cc4cf19209409cff5 6c6ca69dce636983e27451b93eb3fc585af6cf86 karlhdenby <karlhdenby@gmail.com> 1719465106 -0700	commit: sharing
+6c6ca69dce636983e27451b93eb3fc585af6cf86 1772942d7f447dc9b7fbac9974317e08e9938989 karlhdenby <karlhdenby@gmail.com> 1719501738 -0700	commit: sharing
+1772942d7f447dc9b7fbac9974317e08e9938989 24946549918c561b5b58cbeb8615189bab508a47 karlhdenby <karlhdenby@gmail.com> 1719502143 -0700	commit: sharing
+24946549918c561b5b58cbeb8615189bab508a47 8ad75ddae61d1160c6adea66683852ec0359da7c karlhdenby <karlhdenby@gmail.com> 1719507277 -0700	commit: sharing
+8ad75ddae61d1160c6adea66683852ec0359da7c 6cbe2fe29b11c9f003f33a21e86fd8c9c93fa9e2 karlhdenby <karlhdenby@gmail.com> 1719507628 -0700	commit: sharing
+6cbe2fe29b11c9f003f33a21e86fd8c9c93fa9e2 c853729f84beb503711ba00611951463c35706f9 karlhdenby <karlhdenby@gmail.com> 1719507757 -0700	commit: sharing
+c853729f84beb503711ba00611951463c35706f9 6d53a5df28d6491c722dcc0c1c37ed94799ecff8 karlhdenby <karlhdenby@gmail.com> 1719508888 -0700	commit: sharing
+6d53a5df28d6491c722dcc0c1c37ed94799ecff8 e7170300bc2ad4f685b42e1aaeae5aa6ceeae349 karlhdenby <karlhdenby@gmail.com> 1719509309 -0700	commit: sharing
+e7170300bc2ad4f685b42e1aaeae5aa6ceeae349 bf205006ba44b009cce56c0b30e7d381a912fa17 karlhdenby <karlhdenby@gmail.com> 1719509989 -0700	commit: sharing
+bf205006ba44b009cce56c0b30e7d381a912fa17 2ea24856c84aa50eeb026670eb3ff4c9870012d9 karlhdenby <karlhdenby@gmail.com> 1719510026 -0700	commit: sharing
+2ea24856c84aa50eeb026670eb3ff4c9870012d9 df01aeeb82962c0ff33a8bc89283f5972a899619 karlhdenby <karlhdenby@gmail.com> 1719510207 -0700	commit: sharing
+df01aeeb82962c0ff33a8bc89283f5972a899619 3941c90859e501dce05e4629acc5f5bbf333e5f3 karlhdenby <karlhdenby@gmail.com> 1719510608 -0700	commit: sharing
+3941c90859e501dce05e4629acc5f5bbf333e5f3 2e00524015e342376d2de6e7d617765edd7c1c57 karlhdenby <karlhdenby@gmail.com> 1719510766 -0700	commit: sharing
+2e00524015e342376d2de6e7d617765edd7c1c57 1441555045efeb59a7cdf0be8ab6b60e582ab871 karlhdenby <karlhdenby@gmail.com> 1719511076 -0700	commit: sharing
+1441555045efeb59a7cdf0be8ab6b60e582ab871 0cc9453f9629fcb37c4275c05deaa3bfdd210cc6 karlhdenby <karlhdenby@gmail.com> 1719511280 -0700	commit: sharing
+0cc9453f9629fcb37c4275c05deaa3bfdd210cc6 2fef2d230a3e3ef979c8e64b1af8688e1f4f1375 karlhdenby <karlhdenby@gmail.com> 1719511979 -0700	commit: sharing
+2fef2d230a3e3ef979c8e64b1af8688e1f4f1375 c8bb827a384b9950ad36e62f9e9a593202808f04 karlhdenby <karlhdenby@gmail.com> 1719512435 -0700	commit: sharing
+c8bb827a384b9950ad36e62f9e9a593202808f04 32d2da54990f4b2677a2ffd9938056bb19cda389 karlhdenby <karlhdenby@gmail.com> 1719515065 -0700	commit: sharing
+32d2da54990f4b2677a2ffd9938056bb19cda389 e47acaa8592b009680fadab7f8cfcfd3d5dfbd79 karlhdenby <karlhdenby@gmail.com> 1719517247 -0700	commit: sharing
+e47acaa8592b009680fadab7f8cfcfd3d5dfbd79 fc26c36141e764769c695a2dd35ce933b4086289 karlhdenby <karlhdenby@gmail.com> 1719519365 -0700	commit: sharing
+fc26c36141e764769c695a2dd35ce933b4086289 afb339245de961a71589a3a6180feb92bc7dca4d karlhdenby <karlhdenby@gmail.com> 1719521131 -0700	commit: sharing
+afb339245de961a71589a3a6180feb92bc7dca4d e09dfcf3e2f940622b3b71cf330fdd716cedb77b karlhdenby <karlhdenby@gmail.com> 1719521374 -0700	commit: sharing
+e09dfcf3e2f940622b3b71cf330fdd716cedb77b 7fb599d4ab9fe1596963573c3b296c3b58c5bf37 karlhdenby <karlhdenby@gmail.com> 1719521441 -0700	commit: sharing
+7fb599d4ab9fe1596963573c3b296c3b58c5bf37 7efbbbce9500a643b9660c95e29503eb3abf68f1 karlhdenby <karlhdenby@gmail.com> 1719521598 -0700	commit: sharing
+7efbbbce9500a643b9660c95e29503eb3abf68f1 7c1f874e1229cac4e7bd1ffbcbd9fe67a4f0c2bd karlhdenby <karlhdenby@gmail.com> 1719523768 -0700	commit: spots
+7c1f874e1229cac4e7bd1ffbcbd9fe67a4f0c2bd 11ab8e6e3ea499dfb42328fb6c367f52f25825bb karlhdenby <karlhdenby@gmail.com> 1719525608 -0700	commit: sharing
+11ab8e6e3ea499dfb42328fb6c367f52f25825bb f898fc28e9135dfbbd257c685ef6b961b564bad6 karlhdenby <karlhdenby@gmail.com> 1719525835 -0700	commit: sharing
+f898fc28e9135dfbbd257c685ef6b961b564bad6 cf83c90b634c2b75902f0d611030155d8548f26c karlhdenby <karlhdenby@gmail.com> 1719526062 -0700	commit: sharing
+cf83c90b634c2b75902f0d611030155d8548f26c 191ca7dd77d17da5d6e471f21ddc356669785aa4 karlhdenby <karlhdenby@gmail.com> 1719526461 -0700	commit: sharing
+191ca7dd77d17da5d6e471f21ddc356669785aa4 9692c074ca38f1f2022e1457fdb89e1d79fb55c7 karlhdenby <karlhdenby@gmail.com> 1719527300 -0700	commit: sharing
+9692c074ca38f1f2022e1457fdb89e1d79fb55c7 dc992029e4e91d7799422589ab22fff6bbe28570 karlhdenby <karlhdenby@gmail.com> 1719527593 -0700	commit: sharing
+dc992029e4e91d7799422589ab22fff6bbe28570 992bcc6132ce54de54a46c8ddda19511e907173d karlhdenby <karlhdenby@gmail.com> 1719528529 -0700	commit: sharing
+992bcc6132ce54de54a46c8ddda19511e907173d 9a228fa8b45191b2a15e6a2ef5d4e575157359e5 karlhdenby <karlhdenby@gmail.com> 1719528607 -0700	commit: added User
+9a228fa8b45191b2a15e6a2ef5d4e575157359e5 0e4735f42025d75e0133d36d0a7db2a650fde605 karlhdenby <karlhdenby@gmail.com> 1719529585 -0700	commit: sharing
+0e4735f42025d75e0133d36d0a7db2a650fde605 430f487c54a91e7297f654f1654e87d8b41fcb70 karlhdenby <karlhdenby@gmail.com> 1719529902 -0700	commit: sharing
+430f487c54a91e7297f654f1654e87d8b41fcb70 cd76caa58c210d4d1931082512529aabf385fc93 karlhdenby <karlhdenby@gmail.com> 1719541972 -0700	commit: sharing
+cd76caa58c210d4d1931082512529aabf385fc93 e1679ec60ff7f1d8784045e064bcb4301d77c317 karlhdenby <karlhdenby@gmail.com> 1719543783 -0700	commit: sharing
+e1679ec60ff7f1d8784045e064bcb4301d77c317 193c9b8983f8e86dd5c97e578254e56f6e1f6d84 karlhdenby <karlhdenby@gmail.com> 1719544725 -0700	commit: sharing
+193c9b8983f8e86dd5c97e578254e56f6e1f6d84 1dcdbaf9ec76fd88566557cccb162aa707f6d109 karlhdenby <karlhdenby@gmail.com> 1719545140 -0700	commit: sharing
+1dcdbaf9ec76fd88566557cccb162aa707f6d109 8a4ff5ba62160466e081de92c3a8df3b39f69fe2 karlhdenby <karlhdenby@gmail.com> 1719545569 -0700	commit: sharing
+8a4ff5ba62160466e081de92c3a8df3b39f69fe2 477d4726d1c2769964218fa1947542730c339103 karlhdenby <karlhdenby@gmail.com> 1719546122 -0700	commit: sharing
+477d4726d1c2769964218fa1947542730c339103 17623fdd3d257b6feed100d5759308e05db4a598 karlhdenby <karlhdenby@gmail.com> 1719546606 -0700	commit: sharing
+17623fdd3d257b6feed100d5759308e05db4a598 31287206518449a8d79c2cc3cfda92dd91ee5c67 karlhdenby <karlhdenby@gmail.com> 1719548313 -0700	commit: sharing
+31287206518449a8d79c2cc3cfda92dd91ee5c67 575305be23dda0853b38f308b45957bbab426fd6 karlhdenby <karlhdenby@gmail.com> 1719548543 -0700	commit: sharing
+575305be23dda0853b38f308b45957bbab426fd6 5999c45f69473a74e3ce0efe42c009679398b5d2 karlhdenby <karlhdenby@gmail.com> 1719548737 -0700	commit: sharing
+5999c45f69473a74e3ce0efe42c009679398b5d2 f2c9e2b0940ad333770ec0875003b848b3609fef karlhdenby <karlhdenby@gmail.com> 1719548866 -0700	commit: sharing
+f2c9e2b0940ad333770ec0875003b848b3609fef 6468763e6818fe06252da3ab4c20d3ae24b60a45 karlhdenby <karlhdenby@gmail.com> 1719614967 -0700	commit: sharing
+6468763e6818fe06252da3ab4c20d3ae24b60a45 7a1e24614f4f32123c834e21c889b4fa97ca9fe1 karlhdenby <karlhdenby@gmail.com> 1719615132 -0700	commit: sharing
+7a1e24614f4f32123c834e21c889b4fa97ca9fe1 d86ff624e64eea357c4af76f9c8020da228b4e83 karlhdenby <karlhdenby@gmail.com> 1719615225 -0700	commit: sharing
+d86ff624e64eea357c4af76f9c8020da228b4e83 ec833cc3299977b0c87d1b638caedd6cf7516fae karlhdenby <karlhdenby@gmail.com> 1719615304 -0700	commit: sharing
+ec833cc3299977b0c87d1b638caedd6cf7516fae 4e9a910805d10152f5d8b7f84835a69681e77194 karlhdenby <karlhdenby@gmail.com> 1719616128 -0700	commit: sharing
+4e9a910805d10152f5d8b7f84835a69681e77194 231cb79af355bc8fb179086be8d91143f0575c14 karlhdenby <karlhdenby@gmail.com> 1719616275 -0700	commit: sharing
+231cb79af355bc8fb179086be8d91143f0575c14 39d9e3623ed99f61e6d9159a9f6fd0b440f3aa80 karlhdenby <karlhdenby@gmail.com> 1719617407 -0700	commit: sharing
+39d9e3623ed99f61e6d9159a9f6fd0b440f3aa80 6b074fef3bf94c291ab6adae1427ca2eb4509514 karlhdenby <karlhdenby@gmail.com> 1719617841 -0700	commit: sharing
+6b074fef3bf94c291ab6adae1427ca2eb4509514 a28df0d2a5de809006aef71752e86c42f96f5527 karlhdenby <karlhdenby@gmail.com> 1719618685 -0700	commit: sharing
+a28df0d2a5de809006aef71752e86c42f96f5527 3c0e3bc51b39debbc6c37fa1eb719269340b61ec karlhdenby <karlhdenby@gmail.com> 1719619144 -0700	commit: sharing
+3c0e3bc51b39debbc6c37fa1eb719269340b61ec d7119777a8d4e1db5dc982c141445549f3377b0d karlhdenby <karlhdenby@gmail.com> 1719619392 -0700	commit: sharing
+d7119777a8d4e1db5dc982c141445549f3377b0d 2fb0570587d84243998c04ae3ade35c900db0590 karlhdenby <karlhdenby@gmail.com> 1719619660 -0700	commit: sharing
+2fb0570587d84243998c04ae3ade35c900db0590 685c375fabab699b9d3199024dba943a1f962bf4 karlhdenby <karlhdenby@gmail.com> 1719620378 -0700	commit: sharing
+685c375fabab699b9d3199024dba943a1f962bf4 c64f12b500687d9d83777491458ca5e2a44f9bac karlhdenby <karlhdenby@gmail.com> 1719621089 -0700	commit: sharing
+c64f12b500687d9d83777491458ca5e2a44f9bac 652c9a6c052e60b7e3385419cd986256bc26f439 karlhdenby <karlhdenby@gmail.com> 1719621429 -0700	commit: sharing
+652c9a6c052e60b7e3385419cd986256bc26f439 d01c23fc71a2aac15a1a215250df89d3e5689b00 karlhdenby <karlhdenby@gmail.com> 1719621823 -0700	commit: sharing
+d01c23fc71a2aac15a1a215250df89d3e5689b00 dd8344efac5b120b18399643a9c937436ce3deff karlhdenby <karlhdenby@gmail.com> 1719622808 -0700	commit: sharing
+dd8344efac5b120b18399643a9c937436ce3deff 4cc0b3511f6b160b0532a872ebd1605a2c1ff86a karlhdenby <karlhdenby@gmail.com> 1719623137 -0700	commit: sharing
+4cc0b3511f6b160b0532a872ebd1605a2c1ff86a c2324e65a7fca3ab25e356bc7d98ba7f289821bf karlhdenby <karlhdenby@gmail.com> 1719623601 -0700	commit: sharing
+c2324e65a7fca3ab25e356bc7d98ba7f289821bf f249bc75257ac6f7d14b01904343befd4b8b6b91 karlhdenby <karlhdenby@gmail.com> 1719700410 -0700	commit: sharing
+f249bc75257ac6f7d14b01904343befd4b8b6b91 a738421322bd9f03f7309ca37c2fd6cf000f67b0 karlhdenby <karlhdenby@gmail.com> 1719700772 -0700	commit: sharing
+a738421322bd9f03f7309ca37c2fd6cf000f67b0 798c29a0078aa938e3b688b03e3a1e110c450a13 karlhdenby <karlhdenby@gmail.com> 1719701051 -0700	commit: sharing
+798c29a0078aa938e3b688b03e3a1e110c450a13 c967967b90abc10040b2301cec50474f6d3fbe3f karlhdenby <karlhdenby@gmail.com> 1719701455 -0700	commit: sharing
+c967967b90abc10040b2301cec50474f6d3fbe3f 74ee017991e15fe1ddf44db93e935d57e39cceea karlhdenby <karlhdenby@gmail.com> 1719701593 -0700	commit: sharing
+74ee017991e15fe1ddf44db93e935d57e39cceea e74b2958f663f2a8bdef1319b6b1a2764934dd1e karlhdenby <karlhdenby@gmail.com> 1719702379 -0700	commit: sharing
+e74b2958f663f2a8bdef1319b6b1a2764934dd1e 5fae0544393768b6de8d71d03f6728dc91af7947 karlhdenby <karlhdenby@gmail.com> 1719703005 -0700	commit: sharing
+5fae0544393768b6de8d71d03f6728dc91af7947 f047035147f002b48102c2046ebaccb7111b4e72 karlhdenby <karlhdenby@gmail.com> 1719703103 -0700	commit: sharing
+f047035147f002b48102c2046ebaccb7111b4e72 7e3082d614fc3993ae0c38addfb52bf6dcba5e64 karlhdenby <karlhdenby@gmail.com> 1719703348 -0700	commit: sharing
+7e3082d614fc3993ae0c38addfb52bf6dcba5e64 e0724eb9ab8d8cddbdce4c34592ed2e47d48b145 karlhdenby <karlhdenby@gmail.com> 1719704868 -0700	commit: sharing
+e0724eb9ab8d8cddbdce4c34592ed2e47d48b145 702aebccdb53f631ba3a80c9938c2aa123f53697 karlhdenby <karlhdenby@gmail.com> 1719705346 -0700	commit: sharing
+702aebccdb53f631ba3a80c9938c2aa123f53697 c519fbb683b5b22103ad372607a3f12f35ff05b8 karlhdenby <karlhdenby@gmail.com> 1719708032 -0700	commit: sharing
+c519fbb683b5b22103ad372607a3f12f35ff05b8 5274749180eff7372d7584c533a82242c5e7ffac karlhdenby <karlhdenby@gmail.com> 1719708440 -0700	commit: sharing
+5274749180eff7372d7584c533a82242c5e7ffac d55052901ce0ee644d8c7e5e8a8ddefad0b46078 karlhdenby <karlhdenby@gmail.com> 1719708772 -0700	commit: sharing
+d55052901ce0ee644d8c7e5e8a8ddefad0b46078 e8bd1a23f4bb8a38d09e9445fa8dae9249c45b10 karlhdenby <karlhdenby@gmail.com> 1719709235 -0700	commit: sharing
+e8bd1a23f4bb8a38d09e9445fa8dae9249c45b10 20b3595a5909a42a699ab41782947fdabc14ea68 karlhdenby <karlhdenby@gmail.com> 1719709407 -0700	commit: sharing
+20b3595a5909a42a699ab41782947fdabc14ea68 493650a1dd960151f766710a85f84444d2e0ebb8 karlhdenby <karlhdenby@gmail.com> 1719709891 -0700	commit: sharing
+493650a1dd960151f766710a85f84444d2e0ebb8 8d39aa71b9d8ae509b8ff8df2851575f3b6a8402 karlhdenby <karlhdenby@gmail.com> 1719710406 -0700	commit: sharing
+8d39aa71b9d8ae509b8ff8df2851575f3b6a8402 5d4c1de3be0ca1b4c5ce0ce79f758218d5eeca8c karlhdenby <karlhdenby@gmail.com> 1719710811 -0700	commit: sharing
+5d4c1de3be0ca1b4c5ce0ce79f758218d5eeca8c ee6528d4c89231e70044313f6e4cc57fe8ee360d karlhdenby <karlhdenby@gmail.com> 1719711006 -0700	commit: sharing
+ee6528d4c89231e70044313f6e4cc57fe8ee360d ba87e48bd4e88dec3ed0b9b33c26659bc3f1a20a karlhdenby <karlhdenby@gmail.com> 1719711164 -0700	commit: sharing
+ba87e48bd4e88dec3ed0b9b33c26659bc3f1a20a 3017e3b858a53aba2722cad3453a55e172c91839 karlhdenby <karlhdenby@gmail.com> 1719711366 -0700	commit: sharing
+3017e3b858a53aba2722cad3453a55e172c91839 9680c7da0b7a74b93ec26d961db4028cf0646392 karlhdenby <karlhdenby@gmail.com> 1719711608 -0700	commit: sharing
+9680c7da0b7a74b93ec26d961db4028cf0646392 39102429cb1f46e729ecfeef75d21db5941c02c9 karlhdenby <karlhdenby@gmail.com> 1719799872 -0700	commit: sharing
+39102429cb1f46e729ecfeef75d21db5941c02c9 66e19f45d1ab28ae95eee95e185c351f1c6a608c karlhdenby <karlhdenby@gmail.com> 1719800492 -0700	commit: sharing
+66e19f45d1ab28ae95eee95e185c351f1c6a608c 4e4122070c592249a92a356ddec7a01c5fb7bc79 karlhdenby <karlhdenby@gmail.com> 1719802750 -0700	commit: sharing;
+4e4122070c592249a92a356ddec7a01c5fb7bc79 a95454b49b1cf2faace764f190020cbbda36bb06 karlhdenby <karlhdenby@gmail.com> 1719803583 -0700	commit: sharing
+a95454b49b1cf2faace764f190020cbbda36bb06 259f8cbc996c56bbf88c1987c2073d4573f3a0f5 karlhdenby <karlhdenby@gmail.com> 1719804149 -0700	commit: sharing
+259f8cbc996c56bbf88c1987c2073d4573f3a0f5 92eec6d832d5fd9156fc7d33b5f7935064d1f4bb karlhdenby <karlhdenby@gmail.com> 1719804352 -0700	commit: sharing
+92eec6d832d5fd9156fc7d33b5f7935064d1f4bb 96a9c171a641e26e35030ac2ec1ba734a367aa55 karlhdenby <karlhdenby@gmail.com> 1719805513 -0700	commit: sharing
+96a9c171a641e26e35030ac2ec1ba734a367aa55 d0737e4a30d6f51234c730e02c5530fda3bba4c2 karlhdenby <karlhdenby@gmail.com> 1719806799 -0700	commit: sharing
+d0737e4a30d6f51234c730e02c5530fda3bba4c2 780c272ca4bad9db6d53510aa9d6cdc42bd5983a karlhdenby <karlhdenby@gmail.com> 1719807066 -0700	commit: sharing
+780c272ca4bad9db6d53510aa9d6cdc42bd5983a b7ee712754aa328145c6e9833b43c6eac79a7a64 karlhdenby <karlhdenby@gmail.com> 1719807692 -0700	commit: sharing
+b7ee712754aa328145c6e9833b43c6eac79a7a64 77c42d5f079139857d83910c6dc4effc91c0ee38 karlhdenby <karlhdenby@gmail.com> 1719808027 -0700	commit: sharing
+77c42d5f079139857d83910c6dc4effc91c0ee38 35fc0be1623ce6a938f1d1a2a5bf7ae436b6409c karlhdenby <karlhdenby@gmail.com> 1719808880 -0700	commit: sharing
+35fc0be1623ce6a938f1d1a2a5bf7ae436b6409c 4d97ec6c232a8e403b36fe2a2f5f8e888a797bf7 karlhdenby <karlhdenby@gmail.com> 1719809061 -0700	commit: sharing
+4d97ec6c232a8e403b36fe2a2f5f8e888a797bf7 906005e323e6c267a35496173d85742c4bbf32d5 karlhdenby <karlhdenby@gmail.com> 1719809293 -0700	commit: sharing
+906005e323e6c267a35496173d85742c4bbf32d5 00098616ffa70d6f8cff8e9d0359d105a970f5c6 karlhdenby <karlhdenby@gmail.com> 1719811744 -0700	commit: sharing
+                                                                                                                                                     
