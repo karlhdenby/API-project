@@ -7,7 +7,7 @@ const { currentSpot } = require('./spots') ;
 router.get('/current', async (req, res, next) => {
     const { user } = req
 
-    const bookings = Booking.findAll({
+    const bookings = await Booking.findAll({
         where: {
             userId: user.id
         }
