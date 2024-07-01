@@ -18,7 +18,8 @@ module.exports = {
       },
       username: {
         allowNull: false,
-        type: Sequelize.STRING
+        unique: true,
+        type: Sequelize.STRING,
       },
       firstName: {
         allowNull: false,
@@ -30,6 +31,7 @@ module.exports = {
       },
       email: {
         allowNull: false,
+        unique: true,
         type: Sequelize.STRING,
       },
       hashedPassword: {

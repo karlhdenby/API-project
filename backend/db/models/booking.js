@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, NOW } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
@@ -24,24 +24,37 @@ module.exports = (sequelize, DataTypes) => {
       spotId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Spots"
+        }
       },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Users"
+        }
       },
       startDate: {
         type: DataTypes.DATE,
         allowNull: false,
         validate: {
           isDate: true,
-          isAfter: "2024-06-01",
+          isAfter: new Date().toString(),
         }
       },
       endDate: {
         type: DataTypes.DATE,
         allowNull: false,
-        isDate: true,
-        isAfter: "2024-06-01"
+        validate: {
+          isDate: true,
+          isAfter: new Date().toString(),
+          isAfterStartDate(value) {
+            if (this.startDate && value <= this.startDate) {
+              throw new Error('endDate must be after startDate');
+            }
+          }
+        }
       },
     },
     {

@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Review.belongsTo(models.User, { foreignKey: "userId" });
-      Review.belongsTo(models.Spot, { foreignKey: "spotId" });
+      Review.belongsTo(models.User, { foreignKey: "userId", onDelete: "CASCADE", });
+      Review.belongsTo(models.Spot, { foreignKey: "spotId", onDelete: "CASCADE", });
       Review.hasMany(models.ReviewImage, { foreignKey: 'reviewId' , onDelete: "CASCADE", hooks: true});
     }
   }
@@ -23,10 +23,16 @@ module.exports = (sequelize, DataTypes) => {
       spotId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Spots"
+        }
       },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Users"
+        }
       },
       review: {
         type: DataTypes.STRING,

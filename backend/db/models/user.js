@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
           if (Validator.isEmail(value)) {
             throw new Error("Cannot be an email")
         }
-      }
+      },
       }
     },
     email: {
@@ -43,7 +43,8 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       validate: {
         len: [3, 256],
-        isEmail: true
+        isEmail: true,
+
       }
     },
     hashedPassword: {
@@ -65,3 +66,13 @@ module.exports = (sequelize, DataTypes) => {
   });
   return User;
 };
+
+/*
+{
+    "firstName": "SecondTest",
+    "lastName": "AATester",
+    "email": "second.test@gmail.com",
+    "username": "secondaatester",
+    "password": "secret password"
+}
+*/

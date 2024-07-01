@@ -3,8 +3,9 @@ const router = express.Router();
 const { Spot, Review, SpotImage, User, ReviewImage, Booking, Sequelize } = require("../../db/models");
 const { where } = require("sequelize");
 const { currentSpot } = require('./spots') ;
+const { requireAuth } = require("../../utils/auth");
 
-router.get('/current', async (req, res, next) => {
+router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req
 
     const bookings = await Booking.findAll({
@@ -16,11 +17,12 @@ router.get('/current', async (req, res, next) => {
     return res.json(bookings)
 })
 
-router.put('/:bookingId', async (req, res, next) => {
+router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const id = req.params.bookingId
     const booking = await Booking.findByPk(id)
     const body = req.body
-    
+    if (req.user.id !== booking.userId) return res.status(403).json({error: "Booking must belong to the current user"})
+
 try {
     await booking.update(body)
     return res.json(booking)
@@ -45,9 +47,11 @@ try {
 }
 })
 
-router.delete('/:bookingId', async (req, res, next) => {
-    let id = req.params.bookingId
-    let booking = await Booking.findByPk(id)
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+    let booking = await Booking.findByPk(req.params.bookingId)
+
+    if (booking.userId === req.user.id) return res.status(403).json({error: "Cannot book your own Spot"})
+
     
     try {
         if(!booking) throw new Error()
