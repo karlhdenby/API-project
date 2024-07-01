@@ -25,5 +25,13 @@ router.put('/:bookingId', async (req, res, next) => {
     return res.json(booking)
 })
 
+router.delete('/:bookingId', async (req, res, next) => {
+    const id = req.params.bookingId
+    const booking = await Booking.findByPk(id)
+
+    await booking.destroy()
+    return res.json({"message": "Successfully deleted"})
+})
+
 
 module.exports = router
