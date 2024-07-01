@@ -160,14 +160,19 @@ router.get("/", async (req, res, next) => {
 router.get("/current", async (req, res, next) => {
   let { user } = req;
   let userId = user.id;
-  let result = await Spot.findOne({
-    where: {
-      ownerId: userId,
-    },
-  });
-  if (!user) return res.json({"message": "Could not find user"})
-  else if (!result) return res.json({"message": "Could not find spots"})
-  else return res.json(await currentSpot(result));
+  try {
+    let result = await Spot.findOne({
+      where: {
+        ownerId: userId,
+      },
+    });
+    if (!result) throw new Error()
+  } catch (error) {
+    if (!user) return res.json({"message": "Could not find user"})
+    else if (!result) return res.json({"message": "Could not find spots"})
+    else return res.json(await currentSpot(result));
+    
+  }
 });
 
 router.get("/:id", async (req, res, next) => {
