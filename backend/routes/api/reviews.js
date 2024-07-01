@@ -13,7 +13,7 @@ router.get("/current", async (req, res, next) => {
       }
     });
     if (!userId) return res.json({"message": "no current user"})
-    else if (!result) return res.json({"message": "no reviews found"}) 
+    else if (result.length < 1) return res.json({"message": "no reviews found"}) 
     else return res.json(result);
   });
 

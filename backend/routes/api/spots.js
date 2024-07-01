@@ -380,17 +380,18 @@ router.post('/:spotId/bookings', async (req, res, next) => {
           endDate: endDate
       }
     })
+    if (booking) throw new Error()
     let result = await Booking.create({
       startDate,
       endDate
     })
+    return res.json(result)
+  }
+  
+catch (error) {
     if (!spot) {
-      throw new Error()
       return res.json({"message": "Spot couldn't be found"})
     }
-    return res.json(result)
-    
-  } catch (error) {
     if (booking) return res.json(
       {
         "message": "Sorry, this spot is already booked for the specified dates",
@@ -408,9 +409,10 @@ router.post('/:spotId/bookings', async (req, res, next) => {
     })
     
   }
+}
 
   
-})
+)
 
 
 
