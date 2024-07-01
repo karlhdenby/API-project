@@ -46,14 +46,15 @@ try {
 })
 
 router.delete('/:bookingId', async (req, res, next) => {
-    const id = req.params.bookingId
-    const booking = await Booking.findByPk(id)
-
+    
     try {
+        let id = req.params.bookingId
+        let booking = await Booking.findByPk(id)
         await booking.destroy()
         return res.json({"message": "Successfully deleted"})
         
     } catch (error) {
+        let booking = await Booking.findByPk(id)
         if (!booking) return res.json({"message": "Booking couldn't be found"})
         else return res.json({"message": "Bookings that have been started can't be deleted"})
     }
