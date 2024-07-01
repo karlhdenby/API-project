@@ -18,7 +18,7 @@ router.get('/current', async (req, res, next) => {
 
 router.put('/:bookingId', async (req, res, next) => {
     const id = req.params.bookingId
-    const booking = findByPk(id)
+    const booking = await Booking.findByPk(id)
     const body = req.body
 
     await booking.update(body)
