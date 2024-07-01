@@ -165,7 +165,8 @@ router.get("/current", async (req, res, next) => {
       ownerId: userId,
     },
   });
-  if(!result) return res.json({"message": "Could not find spots"})
+  if (!user) return res.json({"message": "Could not find user"})
+  else if (!result) return res.json({"message": "Could not find spots"})
   else return res.json(await currentSpot(result));
 });
 
