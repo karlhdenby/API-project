@@ -10,6 +10,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
   let id = req.params.reviewId;
   let review = await Review.findByPk(id)
   let { url } = req.body
+  if (review.userId !== req.user.id) return res.status(403).json({error: "Cannot edit another user's review"})
 
   try {
   if (req.user.id !== review.userId) throw new Error()
@@ -18,8 +19,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
       reviewId: id
     }}))
 
-  if (reviewImages.length > 9) return res.status(400).json({error: "Review Image limit reached"})
-  if (review.userId !== req.user.id) return res.status(403).json({error: "Cannot edit another user's review"})
+  if (reviewImages.length > 9) return res.status(403).json({error: "Review Image limit reached"})
     if (!review) throw new Error()
     let result = await ReviewImage.create({
     url,
@@ -63,13 +63,13 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
 router.delete('/:reviewId', requireAuth, async (req, res, next) => {
   let reviewId = req.params.reviewId
   let review = await Review.findByPk(reviewId)
-  if (review.userId !== req.user.id) return res.status(403).json({error: "Review must belong to current user"})
   // let reviewImage = await ReviewImage.findOne({
     //   where: {
       //     reviewId: reviewId
       //   }
       // })
       try {
+        if (review.userId !== req.user.id) return res.status(403).json({error: "Review must belong to current user"})
         if(!review) throw new Error()
           await review.destroy()
         

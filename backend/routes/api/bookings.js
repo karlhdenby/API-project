@@ -107,7 +107,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     
     
     try {
-        if (booking.userId === req.user.id) return res.status(403).json({error: "Cannot book your own Spot"})
+        if (booking.userId !== req.user.id) return res.status(403).json({error: "Cannot delete another users booking"})
         if(!booking) throw new Error()
         await booking.destroy()
         return res.json({"message": "Successfully deleted"})
