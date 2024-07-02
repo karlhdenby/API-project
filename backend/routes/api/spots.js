@@ -303,7 +303,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
       });
     }
 
-    // Check for any overlapping bookings
+
     const conflictingBooking = await Booking.findOne({
       where: {
         spotId: spot.id,

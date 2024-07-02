@@ -73,11 +73,11 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
       });
     }
 
-    // Check for overlapping bookings, including edge cases
+    
     const conflictingBooking = await Booking.findOne({
       where: {
         spotId: booking.spotId,
-        id: { [Op.ne]: booking.id }, // Exclude the current booking
+        id: { [Op.ne]: booking.id },
         [Op.or]: [
           {
             startDate: {
