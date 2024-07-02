@@ -4,32 +4,85 @@ const { Spot, Review, SpotImage, User, ReviewImage, Booking, Sequelize } = requi
 const { where } = require("sequelize");
 const { currentSpot } = require('./spots') ;
 const { requireAuth } = require("../../utils/auth");
+const { Op } = require ('sequelize')
 
 router.get('/current', requireAuth, async (req, res, next) => {
-    const { user } = req
-
-
-    const bookings = await Booking.findAll({
+  
+  
+  try {
+      const { user } = req
+      const bookings = await Booking.findAll({
         where: {
-            userId: user.id
-        }
-    })
+          userId: req.user.id
+        },
+        include: [
+          {
+            model: Spot
+          }
+        ]
+        })
+      return res.json({Bookings: bookings})
+    } catch (error) {
+      return res.json({user: "null"})
+    }
 
-    return res.json(bookings)
 })
 
 router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const id = req.params.bookingId
     const booking = await Booking.findByPk(id)
+    
+    try {
+      let testBooking = await Booking.findOne({where: {
+        spotId: booking.spotId
+      }})
+      if (!testBooking) throw new Error()
+    } catch (error) {
+      return res.status(403).json({error: "invalid Booking id"})
+    }
+    const conflictingBooking = await Booking.findOne({
+        where: {
+          spotId: booking.spotId,
+          [Op.or]: [
+            {
+              startDate: {
+                [Op.between]: [booking.startDate, booking.endDate]
+              }
+            },
+            {
+              endDate: {
+                [Op.between]: [booking.startDate, booking.endDate]
+              }
+            },
+            {
+              [Op.and]: [
+                {
+                  startDate: {
+                    [Op.lte]: booking.startDate
+                  }
+                },
+                {
+                  endDate: {
+                    [Op.gte]: booking.endDate
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      });
+    
     const body = req.body
     if (req.user.id !== booking.userId) return res.status(403).json({error: "Booking must belong to the current user"})
 
 try {
+    if (conflictingBooking) throw new Error()
     await booking.update(body)
     return res.json(booking)
     
 } catch (error) {
-    if (!booking) return res.json({"message": "Booking couldn't be found"})
+    if (conflictingBooking) return res.status(403).json({message: "Sorry, this spot is already booked for the specified dates"})
+    if (!booking) return res.status(404).json({"message": "Booking couldn't be found"})
     else if (booking.startDate < Sequelize.literal("CURRENT_TIMESTAMP")) res.status(404).json({"message": "Past bookings can't be modified"})
     else if (body.startDate === booking.startDate && body.endDate === booking.endDate) return res.status(404).json({
         "message": "Sorry, this spot is already booked for the specified dates",
@@ -51,10 +104,10 @@ try {
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     let booking = await Booking.findByPk(req.params.bookingId)
 
-    if (booking.userId === req.user.id) return res.status(403).json({error: "Cannot book your own Spot"})
-
+    
     
     try {
+        if (booking.userId === req.user.id) return res.status(403).json({error: "Cannot book your own Spot"})
         if(!booking) throw new Error()
         await booking.destroy()
         return res.json({"message": "Successfully deleted"})

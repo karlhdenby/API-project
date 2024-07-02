@@ -6,9 +6,11 @@ const { currentSpot } = require('./spots') ;
 const { requireAuth } = require("../../utils/auth");
 
 router.delete('/:imageId', requireAuth, async (req, res, next) => {
-    const id = req.params.imageId
+    let image = await ReviewImage.findByPk(req.params.imageId)
     
     try {
+        let review = await Review.findByPk(image.reviewId)
+        if (review.userId !== req.user.id) return res.status(403).json({error: "Review must belong to current user"})
         await image.destroy()
         return res.json({"message": "Successfully deleted"})
         
