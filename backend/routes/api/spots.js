@@ -306,30 +306,16 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
     const conflictingBooking = await Booking.findOne({
       where: {
         spotId: spot.id,
-        [Op.or]: [
+        [Op.and]: [
           {
             startDate: {
-              [Op.between]: [startDate, endDate],
+              [Op.lt]: endDate,
             },
           },
           {
             endDate: {
-              [Op.between]: [startDate, endDate],
+              [Op.gt]: startDate,
             },
-          },
-          {
-            [Op.and]: [
-              {
-                startDate: {
-                  [Op.lte]: startDate,
-                },
-              },
-              {
-                endDate: {
-                  [Op.gte]: endDate,
-                },
-              },
-            ],
           },
         ],
       },
