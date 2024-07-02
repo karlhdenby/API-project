@@ -74,7 +74,12 @@ async function makeSpots(array) {
       (current.updatedAt = spot.updatedAt),
       (current.avgRating = await calculateAvg(spot.id));
       if (spot.previewImage) current.previewImage = spot.previewImage
-      else current.previewImage = false
+      else {
+        let first = await findSpotImages(spot.id)
+        current.previewImage = first[0].url
+      }
+        
+
     newSpots.push(current);
   }
   return newSpots;
@@ -119,7 +124,10 @@ async function currentSpot(spot) {
       (current.updatedAt = spot.updatedAt),
       (current.avgRating = await calculateAvg(spot.id));
       if (spot.previewImage) current.previewImage = spot.previewImage
-      else current.previewImage = false
+      else {
+        let first = await findSpotImages(spot.id)
+        current.previewImage = first[0].url
+      }
     
     return current
 }
