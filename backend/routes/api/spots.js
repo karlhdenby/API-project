@@ -271,11 +271,11 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
     }
 
     let { startDate, endDate } = req.body;
-    startDate = new Date(startDate);
-    endDate = new Date(endDate);
+    const newStartDate = new Date(startDate);
+    const newEndDate = new Date(endDate);
 
-    if (!startDate || !endDate) {
-      return res.status(400).json({
+    if (isNaN(newStartDate) || isNaN(newEndDate)) {
+      return res.status(403).json({
         message: "Bad Request",
         errors: {
           startDate: "startDate is required",
@@ -285,8 +285,8 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
     }
 
     const now = new Date();
-    if (startDate < now) {
-      return res.status(400).json({
+    if (newStartDate < now) {
+      return res.status(403).json({
         message: "Validation error",
         errors: {
           startDate: "startDate cannot be in the past",
@@ -294,8 +294,8 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
       });
     }
 
-    if (endDate <= startDate) {
-      return res.status(400).json({
+    if (newEndDate <= newStartDate) {
+      return res.status(403).json({
         message: "Validation error",
         errors: {
           endDate: "endDate cannot be on or before startDate",
@@ -303,18 +303,17 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
       });
     }
 
+    // Check for any overlapping bookings
     const conflictingBooking = await Booking.findOne({
       where: {
         spotId: spot.id,
-        [Op.and]: [
+        [Op.or]: [
           {
             startDate: {
-              [Op.lt]: endDate,
+              [Op.lte]: newEndDate,
             },
-          },
-          {
             endDate: {
-              [Op.gt]: startDate,
+              [Op.gte]: newStartDate,
             },
           },
         ],
@@ -334,8 +333,8 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
     const result = await Booking.create({
       spotId: spot.id,
       userId: req.user.id,
-      startDate,
-      endDate,
+      startDate: newStartDate,
+      endDate: newEndDate,
     });
 
     return res.json(result);
@@ -346,6 +345,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
     });
   }
 });
+
 
 router.delete("/:spotId", requireAuth, async (req, res, next) => {
   let spot = await Spot.findByPk(req.params.spotId);
