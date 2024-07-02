@@ -7,33 +7,43 @@ const { requireAuth } = require("../../utils/auth");
 
 
 router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+  let userId = req.user.id;
   let id = req.params.reviewId;
-  let review = await Review.findByPk(id)
-  let { url } = req.body
-  if (review.userId !== req.user.id) return res.status(403).json({error: "Cannot edit another user's review"})
+  let { url } = req.body;
 
   try {
-  if (req.user.id !== review.userId) throw new Error()
-  const reviewImages = (await ReviewImage.findAll({
-    where: {
-      reviewId: id
-    }}))
+    let review = await Review.findByPk(id);
 
-  if (reviewImages.length > 9) return res.status(403).json({error: "Review Image limit reached"})
-    if (!review) throw new Error()
+    if (!review) {
+      return res.status(404).json({"message": "Review couldn't be found"});
+    }
+
+    if (review.userId !== userId) {
+      return res.status(403).json({"error": "Cannot edit another user's review"});
+    }
+
+    const reviewImages = await ReviewImage.findAll({
+      where: {
+        reviewId: id
+      }
+    });
+
+    if (reviewImages.length >= 10) {
+      return res.status(403).json({"error": "Review Image limit reached"});
+    }
+
     let result = await ReviewImage.create({
-    url,
-    reviewId: id
-  })
-  
-  return res.json(result)
-} catch (error) {
-  if (!review) return res.status(404).json({"message": "Review couldn't be found"})
-  else res.status(404).json(error)
-}
+      url,
+      reviewId: id
+    });
 
+    return res.json(result);
 
-})
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 router.put('/:reviewId', requireAuth, async (req, res, next) => {
   let body = req.body
@@ -76,7 +86,7 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
         res.json({"message": "Successfully deleted"})
         
       } catch (error) {
-        return res.json({"message": "Review couldn't be found"})
+        return res.status(404).json({"message": "Review couldn't be found"})
       }
     })
 router.get("/current", requireAuth, async (req, res, next) => {

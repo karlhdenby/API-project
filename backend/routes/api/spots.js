@@ -202,7 +202,7 @@ router.post("/:spotId/reviews", requireAuth, async (req, res, next) => {
     return res.status(201).json(result);
   } catch (error) {
     if (!spot)
-      return res.status(400).json({ message: "Spot couldn't be found" });
+      return res.status(404).json({ message: "Spot couldn't be found" });
     else if (oldRev)
       return res
         .status(500)

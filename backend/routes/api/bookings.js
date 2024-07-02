@@ -102,22 +102,32 @@ try {
 })
 
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
-    let booking = await Booking.findByPk(req.params.bookingId)
+  try {
+      let booking = await Booking.findByPk(req.params.bookingId);
 
-    
-    
-    try {
-        if (booking.userId !== req.user.id) return res.status(403).json({error: "Cannot delete another users booking"})
-        if(!booking) throw new Error()
-        await booking.destroy()
-        return res.json({"message": "Successfully deleted"})
-        
-    } catch (error) {
-        let booking = await Booking.findByPk(id)
-        if (!booking) return res.json({"message": "Booking couldn't be found"})
-        else return res.json({"message": "Bookings that have been started can't be deleted"})
-    }
-})
+      if (!booking) {
+          return res.status(404).json({"message": "Booking couldn't be found"});
+      }
+
+      if (booking.userId !== req.user.id) {
+          return res.status(403).json({"error": "Cannot delete another user's booking"});
+      }
+
+      const bookingStartDate = new Date(booking.startDate).toISOString();
+      const currentDate = new Date(Date.now()).toISOString();
+
+      if (bookingStartDate < currentDate) {
+          return res.status(403).json({"message": "Bookings that have been started can't be deleted"});
+      }
+
+      await booking.destroy();
+      return res.json({"message": "Successfully deleted"});
+      
+  } catch (error) {
+      next(error);
+  }
+});
+
 
 
 module.exports = router
