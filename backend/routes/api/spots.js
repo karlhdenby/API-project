@@ -73,10 +73,15 @@ async function makeSpots(array) {
       (current.createdAt = spot.createdAt),
       (current.updatedAt = spot.updatedAt),
       (current.avgRating = await calculateAvg(spot.id));
-      if (spot.previewImage) current.previewImage = spot.previewImage
-      else {
-        let first = await findSpotImages(spot.id)
-        current.previewImage = first[0].url
+      try {
+        if (spot.previewImage) current.previewImage = spot.previewImage
+        else {
+          let first = await findSpotImages(spot.id)
+          current.previewImage = first[0].url
+        }
+        
+      } catch (error) {
+        newSpots.push(current);
       }
         
 
@@ -123,11 +128,17 @@ async function currentSpot(spot) {
       (current.createdAt = spot.createdAt),
       (current.updatedAt = spot.updatedAt),
       (current.avgRating = await calculateAvg(spot.id));
-      if (spot.previewImage) current.previewImage = spot.previewImage
-      else {
-        let first = await findSpotImages(spot.id)
-        current.previewImage = first[0].url
+      try {
+        if (spot.previewImage) current.previewImage = spot.previewImage
+        else {
+          let first = await findSpotImages(spot.id)
+          current.previewImage = first[0].url
+        }
+      } catch (error) {
+        current.previewImage = false
+        return current
       }
+      
     
     return current
 }
@@ -487,13 +498,13 @@ router.get("/", async (req, res, next) => {
     req.params;
   if (!page) page = 1;
   if (!size) size = 20;
-  if (minPrice < 0 || maxPrice < 0) throw new Error();
   if (minLat) where.minLat = minLat;
   if (maxLat) where.maxLat = maxLat;
   if (minLng) where.minLng = minLng;
   if (maxLng) where.maxLng = maxLng;
   if (minPrice) where.minPrice = minPrice;
   if (maxPrice) where.maxPrice = maxPrice;
+  if ((minPrice && minPrice < 0) || (maxPrice && maxPrice < 0)) throw new Error();
   let result = await Spot.findAll();
   try {
     if (minPrice < 0 || maxPrice < 0) throw new Error();
