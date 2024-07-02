@@ -118,6 +118,8 @@ async function currentSpot(spot) {
       (current.createdAt = spot.createdAt),
       (current.updatedAt = spot.updatedAt),
       (current.avgRating = await calculateAvg(spot.id));
+      if (spot.previewImage) current.previewImage = spot.previewImage
+      else current.previewImage = false
     
     return current
 }
