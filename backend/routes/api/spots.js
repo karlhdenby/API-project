@@ -73,7 +73,8 @@ async function makeSpots(array) {
       (current.createdAt = spot.createdAt),
       (current.updatedAt = spot.updatedAt),
       (current.avgRating = await calculateAvg(spot.id));
-    current.previewImage = null;
+      if (spot.previewImage) current.previewImage = spot.previewImage
+      else current.previewImage = false
     newSpots.push(current);
   }
   return newSpots;
@@ -117,9 +118,8 @@ async function currentSpot(spot) {
       (current.createdAt = spot.createdAt),
       (current.updatedAt = spot.updatedAt),
       (current.avgRating = await calculateAvg(spot.id));
-    if (spot.previewImage) current.previewImage = spot.previewImage;
-    else current.previewImage = false
-  return current
+    
+    return current
 }
 
 router.post("/:spotId/images", requireAuth, async (req, res, next) => {
