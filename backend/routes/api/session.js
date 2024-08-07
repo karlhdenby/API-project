@@ -36,9 +36,7 @@ router.post('/', validateLogin, async (req, res, next) => {
         err.status = 401;
         err.title - 'Login Failed';
         err.errors = { credential: 'The provided credentials were invalid.' };
-        return next({
-            message: "Invalid credentials"
-        });
+        return next(err);
     }
 
     const safeUser = {
@@ -96,7 +94,9 @@ router.post('/', requireAuth, async (req, res, next) => {
             err.status = 401;
             err.title = "Login failed";
             err.errors = { credential: 'The provided credentials were invalid.'};
-            return next(err);
+            return next({
+                message: "Invalid credentials"
+            });
         }
 
         const safeUser = {
