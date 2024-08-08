@@ -37,7 +37,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
       reviewId: id
     });
 
-    return res.json(result);
+    return res.status(201).json(result);
 
   } catch (error) {
     next(error);
