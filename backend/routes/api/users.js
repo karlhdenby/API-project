@@ -8,7 +8,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const validateSignup = [
-    check('email').exists({ checkFalsy: true }).withMessage('Please provide a unique email')
+    check('email').exists({ checkFalsy: true })
     .isEmail().withMessage('Please provide a valid email'),
     check('username').exists({ checkFalsy: true })
     .isLength({ min: 4 }).withMessage(
@@ -22,21 +22,29 @@ const validateSignup = [
 router.post('/', validateSignup, async (req, res) => {
     const { firstName, lastName, email, username, password } = req.body;
     const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ firstName, lastName, email, username, hashedPassword });
+    try {
+        const user = await User.create({ firstName, lastName, email, username, hashedPassword });
+        const safeUser = {
+            firstName: firstName,
+            lastName: lastName,
+            id: user.id,
+            email: user.email,
+            username: user.username,
+        };
+    
+        setTokenCookie(res, safeUser);
+    
+        return res.json({
+            user: safeUser
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+            errors: error.errors
+        })
+    }
 
-    const safeUser = {
-        firstName: firstName,
-        lastName: lastName,
-        id: user.id,
-        email: user.email,
-        username: user.username,
-    };
-
-    setTokenCookie(res, safeUser);
-
-    return res.json({
-        user: safeUser
-    });
 });
 
 
