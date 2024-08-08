@@ -119,6 +119,18 @@ router.get("/current", requireAuth, async (req, res, next) => {
         }
       ]
     });
+    
+    reviews = reviews.map(review => {
+      if (review.Spot && review.Spot.ReviewImages && review.Spot.ReviewImages.length > 0) {
+        review.Spot.previewImage = review.Spot.ReviewImages[0].url;
+      } else {
+        review.Spot.previewImage = null;
+      }
+    
+      delete review.Spot.ReviewImages;
+    
+      return review;
+    });
 
     if (reviews.length > 0) {
       return res.json({ Reviews: reviews });
