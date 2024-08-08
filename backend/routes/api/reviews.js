@@ -113,10 +113,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
             {
               model: ReviewImage,
               attributes: ['url'],
-              limit: 1,
-              order: [['createdAt', 'ASC']],
-              required: false,
-              as: 'PreviewImage'
+              required: true,
             }
           ]
         }
