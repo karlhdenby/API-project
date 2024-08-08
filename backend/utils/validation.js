@@ -24,7 +24,7 @@ const handleValidationErrors = (req, res, next) => {
         err.title = "Bad request.";
         
         for (let key in req.body) {
-            err.errors[key] = key
+            err.errors[key] = valErrors[key]
         }
 
         return res.status(400).json({
