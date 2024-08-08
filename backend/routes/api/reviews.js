@@ -90,7 +90,7 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
       }
     })
 router.get("/current", requireAuth, async (req, res, next) => {
-  if (!req.user.id) return res.json({ user: "null" });
+  if (!req.user) return res.json({ user: "null" });
 
   try {
     let reviews = await Review.findAll({
@@ -120,7 +120,10 @@ router.get("/current", requireAuth, async (req, res, next) => {
       ]
     });
     
-    reviews = reviews.map(review => {
+    reviews = reviews.map(rev => {
+
+      let review = rev.toJSON()
+
       if (review.Spot && review.Spot.SpotImages && review.Spot.SpotImages.length > 0) {
         review.Spot.previewImage = review.Spot.SpotImages[0].url;
       } else {

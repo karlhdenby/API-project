@@ -30,7 +30,10 @@ router.get('/current', requireAuth, async (req, res, next) => {
         ]
         })
 
-        bookings = bookings.map(review => {
+        bookings = bookings.map(rev => {
+
+          let review = rev.toJSON()
+
           console.log(review)
           if (review.Spot && review.Spot.SpotImages && review.Spot.SpotImages.length > 0) {
             review.Spot.previewImage = review.Spot.SpotImages[0].url;
@@ -40,7 +43,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         
           delete review.Spot.SpotImages;
         
-          return review;
+          return bookings;
         });
 
       return res.json({Bookings: bookings})
