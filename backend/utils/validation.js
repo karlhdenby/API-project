@@ -13,6 +13,8 @@ const handleValidationErrors = (req, res, next) => {
         err.errors = errors;
         err.status = 400;
         err.title = "Bad request.";
+        err.errors.credential = "Email or username is required";
+        err.errors.password = "Password is required";
         return res.status(400).json({
             message: err.message,
             errors: err.errors
