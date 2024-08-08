@@ -10,7 +10,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
   
   
   try {
-      const { user } = req
       let bookings = await Booking.findAll({
         where: {
           userId: req.user.id
@@ -30,23 +29,22 @@ router.get('/current', requireAuth, async (req, res, next) => {
         ]
         })
 
-        bookings = bookings.map(rev => {
-
+        const data = bookings.map(rev => {
+    
           let review = rev.toJSON()
-
-          console.log(review)
-          if (review.Spot && review.Spot.SpotImages && review.Spot.SpotImages.length > 0) {
-            review.Spot.previewImage = review.Spot.SpotImages[0].url;
-          } else {
-            review.Spot.previewImage = null;
-          }
-        
+    
+          let previewImage = review.Spot.SpotImages?.[0]?.url;
+    
+          if (previewImage === undefined) previewImage = null;
+    
+          review.Spot = {...review.Spot,previewImage};
+    
           delete review.Spot.SpotImages;
         
-          return bookings;
+          return review;
         });
 
-      return res.json({Bookings: bookings})
+      return res.json({Bookings: data})
     } catch (error) {
       return res.json({user: "null"})
     }

@@ -89,61 +89,61 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
         return res.status(404).json({"message": "Review couldn't be found"})
       }
     })
-router.get("/current", requireAuth, async (req, res, next) => {
-  if (!req.user) return res.json({ user: "null" });
-
-  try {
-    let reviews = await Review.findAll({
-      where: {
-        userId: req.user.id
-      },
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'firstName', 'lastName']
-        },
-        {
-          model: Spot,
-          attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
+    router.get("/current", requireAuth, async (req, res, next) => {
+      if (!req.user) return res.json({ user: "null" });
+    
+      try {
+        let reviews = await Review.findAll({
+          where: {
+            userId: req.user.id
+          },
           include: [
             {
-              model: SpotImage,
-              attributes: ['url'],
-              required: true,
-            }
+              model: User,
+              attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+              model: Spot,
+              attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
+              include: [
+                {
+                  model: SpotImage,
+                  attributes: ['url'],
+                  required: true,
+                }
+              ]
+            },
+            {
+              model: ReviewImage,
+              attributes: ['id', 'url']
+            },
           ]
-        },
-        {
-          model: ReviewImage,
-          attributes: ['id', 'url']
-        },
-      ]
-    });
+        });
+        
+        const data = reviews.map(rev => {
     
-    reviews = reviews.map(rev => {
-
-      let review = rev.toJSON()
-
-      if (review.Spot && review.Spot.SpotImages && review.Spot.SpotImages.length > 0) {
-        review.Spot.previewImage = review.Spot.SpotImages[0].url;
-      } else {
-        review.Spot.previewImage = null;
+          let review = rev.toJSON()
+    
+          let previewImage = review.Spot.SpotImages?.[0]?.url;
+    
+          if (previewImage === undefined) previewImage = null;
+    
+          review.Spot = {...review.Spot,previewImage};
+    
+          delete review.Spot.SpotImages;
+        
+          return review;
+        });
+    
+        if (reviews.length > 0) {
+          return res.json({ Reviews: data });
+        } else {
+          return res.status(400).json({ message: "no reviews found" });
+        }
+      } catch (error) {
+        return res.status(500).json({ message: "An error occurred", error: error.message });
       }
-    
-      delete review.Spot.SpotImages;
-    
-      return review;
     });
-
-    if (reviews.length > 0) {
-      return res.json({ Reviews: reviews });
-    } else {
-      return res.status(400).json({ message: "no reviews found" });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: "An error occurred", error: error.message });
-  }
-});
 
     
     module.exports = router;
