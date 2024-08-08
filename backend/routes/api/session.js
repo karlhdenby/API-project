@@ -57,7 +57,13 @@ router.post('/', validateLogin, async (req, res, next) => {
         });
         
     } catch (error) {
-        res.status(400).json(error.errors[0])
+        res.status(400).json({
+            message: "Bad Request",
+            errors: {
+                credential: "Email or username is required",
+                password: "Password is required"
+            }
+        })
     }
 });
 
