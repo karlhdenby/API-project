@@ -29,7 +29,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     });
 
     if (reviewImages.length >= 10) {
-      return res.status(403).json({"error": "Review Image limit reached"});
+      return res.status(403).json({message: "Review Image limit reached"});
     }
 
     let result = await ReviewImage.create({
@@ -103,10 +103,6 @@ router.get("/current", requireAuth, async (req, res, next) => {
           attributes: ['id', 'firstName', 'lastName']
         },
         {
-          model: ReviewImage,
-          attributes: ['id', 'url']
-        },
-        {
           model: Spot,
           attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
           include: [
@@ -116,18 +112,22 @@ router.get("/current", requireAuth, async (req, res, next) => {
               required: true,
             }
           ]
-        }
+        },
+        {
+          model: ReviewImage,
+          attributes: ['id', 'url']
+        },
       ]
     });
-
+    
     reviews = reviews.map(review => {
-      if (review.Spot && review.Spot.SpotImages && review.Spot.SpotImages.length > 0) {
-        review.Spot.previewImage = review.Spot.SpotImages[0].url;
+      if (review.Spot && review.Spot.SpotImage && review.Spot.SpotImage.length > 0) {
+        review.Spot.previewImage = review.Spot.SpotImage[0].url;
       } else {
         review.Spot.previewImage = null;
       }
     
-      delete review.Spot.SpotImages;
+      delete review.Spot.SpotImage;
     
       return review;
     });
