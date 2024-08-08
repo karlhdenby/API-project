@@ -121,13 +121,13 @@ router.get("/current", requireAuth, async (req, res, next) => {
     });
 
     reviews = reviews.map(review => {
-      if (review.Spot && review.Spot.SpotImage && review.Spot.SpotImage.length > 0) {
-        review.Spot.previewImage = review.Spot.SpotImage[0].url;
+      if (review.Spot && review.Spot.SpotImages && review.Spot.SpotImages.length > 0) {
+        review.Spot.previewImage = review.Spot.SpotImages[0].url;
       } else {
         review.Spot.previewImage = null;
       }
     
-      delete review.Spot.SpotImage;
+      delete review.Spot.SpotImages;
     
       return review;
     });
