@@ -111,7 +111,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
           attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
           include: [
             {
-              model: ReviewImage,
+              model: SpotImage,
               attributes: ['url'],
               required: true,
             }
@@ -119,15 +119,15 @@ router.get("/current", requireAuth, async (req, res, next) => {
         }
       ]
     });
-    
+
     reviews = reviews.map(review => {
-      if (review.Spot && review.Spot.ReviewImages && review.Spot.ReviewImages.length > 0) {
-        review.Spot.previewImage = review.Spot.ReviewImages[0].url;
+      if (review.Spot && review.Spot.SpotImage && review.Spot.SpotImage.length > 0) {
+        review.Spot.previewImage = review.Spot.SpotImage[0].url;
       } else {
         review.Spot.previewImage = null;
       }
     
-      delete review.Spot.ReviewImages;
+      delete review.Spot.SpotImage;
     
       return review;
     });

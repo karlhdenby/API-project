@@ -17,10 +17,31 @@ router.get('/current', requireAuth, async (req, res, next) => {
         },
         include: [
           {
-            model: Spot
+            model: Spot,
+            attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
+            include: [
+              {
+                model: SpotImage,
+                attributes: ['url'],
+                required: true,
+              }
+            ]
           }
         ]
         })
+
+        bookings = bookings.map(review => {
+          if (review.Spot && review.Spot.SpotImage && review.Spot.SpotImage.length > 0) {
+            review.Spot.previewImage = review.Spot.SpotImage[0].url;
+          } else {
+            review.Spot.previewImage = null;
+          }
+        
+          delete review.Spot.SpotImage;
+        
+          return review;
+        });
+
       return res.json({Bookings: bookings})
     } catch (error) {
       return res.json({user: "null"})
