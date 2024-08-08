@@ -100,11 +100,25 @@ router.get("/current", requireAuth, async (req, res, next) => {
       include: [
         {
           model: User,
-          attributes: ['id', 'firstName', 'lastName'] // Include only necessary attributes
+          attributes: ['id', 'firstName', 'lastName']
         },
         {
           model: ReviewImage,
-          attributes: ['id', 'url'] // Include only necessary attributes
+          attributes: ['id', 'url']
+        },
+        {
+          model: Spot,
+          attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
+          include: [
+            {
+              model: ReviewImage,
+              attributes: ['url'],
+              limit: 1,
+              order: [['createdAt', 'ASC']],
+              required: false,
+              as: 'PreviewImage'
+            }
+          ]
         }
       ]
     });
