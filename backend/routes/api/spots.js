@@ -286,7 +286,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
 
     const now = new Date();
     if (newStartDate < now) {
-      return res.status(403).json({
+      return res.status(400).json({
         message: "Validation error",
         errors: {
           startDate: "startDate cannot be in the past",
@@ -321,7 +321,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
     });
 
     if (conflictingBooking) {
-      return res.status(403).json({
+      return res.status(400).json({
         message: "Sorry, this spot is already booked for the specified dates",
         errors: {
           startDate: "Start date conflicts with an existing booking",
