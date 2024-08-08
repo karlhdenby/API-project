@@ -20,40 +20,45 @@ const validateLogin = [
 ];
 
 router.post('/', validateLogin, async (req, res, next) => {
-    const { credential, password } = req.body;
-
-    const user = await User.unscoped().findOne({
-        where: {
-            [Op.or]: {
-                username: credential,
-                email: credential
+    try {
+        const { credential, password } = req.body;
+    
+        const user = await User.unscoped().findOne({
+            where: {
+                [Op.or]: {
+                    username: credential,
+                    email: credential
+                }
             }
-        }
-    });
-
-    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-        const err = new Error("Login Failed");
-        err.status = 401;
-        err.title - 'Login Failed';
-        err.errors = { credential: 'The provided credentials were invalid.' };
-        return res.status(401).json({
-            message: "Invalid credentials"
         });
+    
+        if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+            const err = new Error("Login Failed");
+            err.status = 401;
+            err.title - 'Login Failed';
+            err.errors = { credential: 'The provided credentials were invalid.' };
+            return res.status(401).json({
+                message: "Invalid credentials"
+            });
+        }
+    
+        const safeUser = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            id: user.id,
+            email: user.email,
+            username: user.username,
+        };
+    
+        await setTokenCookie(res, safeUser);
+    
+        return res.json({
+            user: safeUser
+        });
+        
+    } catch (error) {
+        res.status(400).json(error.errors[0])
     }
-
-    const safeUser = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        id: user.id,
-        email: user.email,
-        username: user.username,
-    };
-
-    await setTokenCookie(res, safeUser);
-
-    return res.json({
-        user: safeUser
-    });
 });
 
 router.delete('/', (_req, res) => {
