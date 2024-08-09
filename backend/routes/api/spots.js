@@ -379,7 +379,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
       endDate: newEndDate,
     });
 
-    return res.json(result);
+    return res.status(201).json(result);
   } catch (error) {
     return res.status(500).json({
       message: "Internal Server Error",

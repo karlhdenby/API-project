@@ -37,11 +37,11 @@ module.exports = {
       },
       lat: {
         allowNull: false,
-        type: Sequelize.NUMERIC
+        type: Sequelize.DECIMAL
       },
       lng: {
         allowNull: false,
-        type: Sequelize.NUMERIC
+        type: Sequelize.DECIMAL
       },
       name: {
         allowNull: false,
@@ -53,7 +53,7 @@ module.exports = {
       },
       price: {
         allowNull: false,
-        type: Sequelize.NUMERIC
+        type: Sequelize.DECIMAL
       },
       createdAt: {
         allowNull: false,

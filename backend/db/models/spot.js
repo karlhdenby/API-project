@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     lat: {
-      type: DataTypes.NUMERIC,
+      type: DataTypes.DECIMAL,
       allowNull: false,
       validate: {
         min: -90,
@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     lng: {
-      type: DataTypes.NUMERIC,
+      type: DataTypes.DECIMAl,
       allowNull: false,
       validate: {
         min: -180,
@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     price: {
-      type: DataTypes.NUMERIC,
+      type: DataTypes.DECIMAl,
       allowNull: false,
       validate: {
         min: 0
