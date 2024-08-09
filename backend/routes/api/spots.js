@@ -247,10 +247,46 @@ router.post("/:spotId/reviews", requireAuth, async (req, res, next) => {
 router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
   let id = req.params.spotId;
   let spot = await Spot.findByPk(id);
+  let owner = true
 
-  let bookings = await Booking.findAll({
-    where: {
-      spotId: id,
+  if (req.user.id !== spot.ownerId) owner = false
+
+  let queryOptions = {
+    where: { spotId: id },
+  };
+
+  if (owner) {
+    queryOptions.include = [
+      {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName'],
+      },
+    ];
+  }
+
+  const bookings = await Booking.findAll(queryOptions);
+
+  const formattedBookings = bookings.map((booking) => {
+    if (owner) {
+      
+      return {
+        id: booking.id,
+        spotId: booking.spotId,
+        userId: booking.userId,
+        startDate: booking.startDate,
+        endDate: booking.endDate,
+        createdAt: booking.createdAt,
+        updatedAt: booking.updatedAt,
+        user: booking.User
+        
+      };
+    } else {
+      
+      return {
+        spotId: booking.spotId,
+        startDate: booking.startDate,
+        endDate: booking.endDate,
+      };
     }
   });
 
@@ -489,8 +525,8 @@ router.get("/", async (req, res, next) => {
   if (page < 1) {
     errors.page = "Page must be greater than or equal to 1";
   }
-  if (size < 1) {
-    errors.size = "Size must be greater than or equal to 1";
+  if (size < 1 || size > 20) {
+    errors.size = "Size must be greater than or equal to 1 and less than 20";
   }
 
    if (minLat) {
