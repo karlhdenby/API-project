@@ -277,7 +277,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
         endDate: booking.endDate,
         createdAt: booking.createdAt,
         updatedAt: booking.updatedAt,
-        user: booking.User
+        User: booking.User
         
       };
     } else {
@@ -292,7 +292,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
 
   if (!spot)
     return res.status(404).json({ message: "Spot could not be found" });
-  return res.status(200).json({ Bookings: bookings });
+  return res.status(200).json({ Bookings: formattedBookings });
 });
 
 router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
