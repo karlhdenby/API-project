@@ -482,7 +482,7 @@ router.get("/", async (req, res, next) => {
   let errors = {};
   let where = {};
   let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
-    req.params;
+    req.query;
   if (!page) page = 1;
   if (!size) size = 20;
   if (minLat) where.minLat = minLat;
@@ -492,7 +492,6 @@ router.get("/", async (req, res, next) => {
   if (minPrice) where.minPrice = minPrice;
   if (maxPrice) where.maxPrice = maxPrice;
   if ((minPrice && minPrice < 0) || (maxPrice && maxPrice < 0)) throw new Error();
-  let result = await Spot.findAll();
   try {
     if (minPrice < 0 || maxPrice < 0) throw new Error();
     let result = await Spot.findAll({
