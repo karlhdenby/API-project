@@ -149,7 +149,7 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
     if (spot.ownerId !== req.user.id)
       return res
         .status(403)
-        .json({ error: "Spot must belong to the current user" });
+        .json({ message: "Spot must belong to the current user" });
     let { url, preview } = req.body;
     if (preview === null || preview === undefined) preview = false
     if (!url) throw new Error();
@@ -452,11 +452,11 @@ router.post("/", requireAuth, async (req, res, next) => {
       city,
       state,
       country,
-      lat,
-      lng,
+      lat: parseFloat(lat),
+      lng: parseFloat(lng),
       name,
       description,
-      price,
+      price: parseFloat(price),
     });
 
     res.status(201).json(newSpot);
