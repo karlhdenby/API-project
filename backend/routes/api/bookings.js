@@ -65,7 +65,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     }
 
     if (req.user.id !== booking.userId) {
-      return res.status(403).json({ error: "Booking must belong to the current user" });
+      return res.status(403).json({ message: "Booking must belong to the current user" });
     }
 
     const { startDate, endDate } = req.body;
@@ -83,7 +83,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     }
 
     if (newStartDate < new Date()) {
-      return res.status(403).json({
+      return res.status(400).json({
         message: "Validation error",
         errors: {
           startDate: "startDate cannot be in the past",
@@ -92,7 +92,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     }
 
     if (newEndDate <= newStartDate) {
-      return res.status(403).json({
+      return res.status(400).json({
         message: "Validation error",
         errors: {
           endDate: "endDate cannot be on or before startDate",
@@ -119,7 +119,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     });
 
     if (conflictingBooking) {
-      return res.status(403).json({
+      return res.status(400).json({
         message: "Sorry, this spot is already booked for the specified dates",
         errors: {
           startDate: "Start date conflicts with an existing booking",
@@ -148,14 +148,14 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
       }
 
       if (booking.userId !== req.user.id) {
-          return res.status(403).json({"error": "Cannot delete another user's booking"});
+          return res.status(403).json({"message": "Cannot delete another user's booking"});
       }
 
       const bookingStartDate = new Date(booking.startDate).toISOString();
       const currentDate = new Date(Date.now()).toISOString();
 
       if (bookingStartDate < currentDate) {
-          return res.status(403).json({"message": "Bookings that have been started can't be deleted"});
+          return res.status(400).json({"message": "Bookings that have been started can't be deleted"});
       }
 
       await booking.destroy();

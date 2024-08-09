@@ -296,7 +296,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
     }
 
     if (newEndDate <= newStartDate) {
-      return res.status(403).json({
+      return res.status(400).json({
         message: "Validation error",
         errors: {
           endDate: "endDate cannot be on or before startDate",
@@ -355,7 +355,7 @@ router.delete("/:spotId", requireAuth, async (req, res, next) => {
     if (spot.ownerId !== req.user.id)
       return res
         .status(403)
-        .json({ error: "Spot must belong to the current user" });
+        .json({ message: "Spot must belong to the current user" });
     await spot.destroy();
   } catch (error) {
     return res.status(404).json({ message: "Spot couldn't be found" });
@@ -389,7 +389,7 @@ router.put("/:spotId", requireAuth, async (req, res, next) => {
     if (spot.ownerId !== req.user.id)
       return res
         .status(403)
-        .json({ error: "Spot must belong to the current user" });
+        .json({ message: "Spot must belong to the current user" });
     if (!spot) throw new Error();
     await spot.update(body);
 

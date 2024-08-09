@@ -19,7 +19,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     }
 
     if (review.userId !== userId) {
-      return res.status(403).json({"error": "Cannot edit another user's review"});
+      return res.status(403).json({"message": "Cannot edit another user's review"});
     }
 
     const reviewImages = await ReviewImage.findAll({
