@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Spot, Review, SpotImage, User, Booking, ReviewImage } = require("../../db/models");
 const { where } = require("sequelize");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const { requireAuth } = require("../../utils/auth");
 
 const formatDate = (date) => {
