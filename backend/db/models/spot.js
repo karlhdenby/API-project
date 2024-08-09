@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     lng: {
-      type: DataTypes.DECIMAl,
+      type: DataTypes.DECIMAL,
       allowNull: false,
       validate: {
         min: -180,
@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     price: {
-      type: DataTypes.DECIMAl,
+      type: DataTypes.DECIMAL,
       allowNull: false,
       validate: {
         min: 0
