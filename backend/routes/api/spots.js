@@ -291,13 +291,12 @@ router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
       }
     });
     
+    return res.status(200).json({ Bookings: formattedBookings });
   } catch (error) {
     let spot = await Spot.findByPk(id);
     if (!spot)
       return res.status(404).json({ message: "Spot could not be found" });
   }
-  
-  return res.status(200).json({ Bookings: formattedBookings });
 });
 
 router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
