@@ -245,53 +245,58 @@ router.post("/:spotId/reviews", requireAuth, async (req, res, next) => {
 });
 
 router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
-  let id = req.params.spotId;
-  let spot = await Spot.findByPk(id);
-  let owner = true
-
-  if (req.user.id !== spot.ownerId) owner = false
-
-  let queryOptions = {
-    where: { spotId: id },
-  };
-
-  if (owner) {
-    queryOptions.include = [
-      {
-        model: User,
-        attributes: ['id', 'firstName', 'lastName'],
-      },
-    ];
-  }
-
-  const bookings = await Booking.findAll(queryOptions);
-
-  const formattedBookings = bookings.map((booking) => {
+  try {
+    let id = req.params.spotId;
+    let spot = await Spot.findByPk(id);
+    let owner = true
+  
+    if (req.user.id !== spot.ownerId) owner = false
+  
+    let queryOptions = {
+      where: { spotId: id },
+    };
+  
     if (owner) {
-      
-      return {
-        id: booking.id,
-        spotId: booking.spotId,
-        userId: booking.userId,
-        startDate: booking.startDate,
-        endDate: booking.endDate,
-        createdAt: booking.createdAt,
-        updatedAt: booking.updatedAt,
-        User: booking.User
-        
-      };
-    } else {
-      
-      return {
-        spotId: booking.spotId,
-        startDate: booking.startDate,
-        endDate: booking.endDate,
-      };
+      queryOptions.include = [
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName'],
+        },
+      ];
     }
-  });
-
-  if (!spot)
-    return res.status(404).json({ message: "Spot could not be found" });
+  
+    const bookings = await Booking.findAll(queryOptions);
+  
+    const formattedBookings = bookings.map((booking) => {
+      if (owner) {
+        
+        return {
+          id: booking.id,
+          spotId: booking.spotId,
+          userId: booking.userId,
+          startDate: booking.startDate,
+          endDate: booking.endDate,
+          createdAt: booking.createdAt,
+          updatedAt: booking.updatedAt,
+          User: booking.User
+          
+        };
+      } else {
+        
+        return {
+          spotId: booking.spotId,
+          startDate: booking.startDate,
+          endDate: booking.endDate,
+        };
+      }
+    });
+    
+  } catch (error) {
+    let spot = await Spot.findByPk(id);
+    if (!spot)
+      return res.status(404).json({ message: "Spot could not be found" });
+  }
+  
   return res.status(200).json({ Bookings: formattedBookings });
 });
 
