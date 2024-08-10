@@ -401,13 +401,13 @@ router.delete("/:spotId", requireAuth, async (req, res, next) => {
   res.json({ message: "Successfully deleted" });
 });
 router.get("/current", requireAuth, async (req, res, next) => {
+  
   let { user } = req
   let result = await Spot.findAll({
     where: {
       ownerId: user.id,
     },
   });
-  
   try {
     let resultArr = []
     for (let a of result) resultArr.push(await currentSpot(a))
