@@ -39,6 +39,22 @@ router.post('/', validateSignup, async (req, res) => {
         });
         
     } catch (error) {
+        if (error.errors[0].message === 'username must be unique') {
+            res.status(500).json( {
+                message: "User already exists",
+                errors: {
+                    username: "User with that username already exists"
+                }
+            })
+        }
+        if (error.errors[0].message === 'email must be unique') {
+            res.status(500).json( {
+                message: "User already exists",
+                errors: {
+                    username: "User with that email already exists"
+                }
+            })
+        }
         res.status(500).json({
             message: error.message,
             errors: error.errors[0].message
