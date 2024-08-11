@@ -360,7 +360,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res, next) => {
     });
 
     if (conflictingBooking) {
-      return res.status(400).json({
+      return res.status(403).json({
         message: "Sorry, this spot is already booked for the specified dates",
         errors: {
           startDate: "Start date conflicts with an existing booking",
@@ -527,8 +527,16 @@ router.get("/", async (req, res, next) => {
   let where = {};
   let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
     req.query;
-  if (!page) page = 1;
-  if (!size) size = 20;
+
+  page = parseInt(page) || 1;
+  size = parseInt(size) || 20;
+  minLat = minLat !== undefined ? parseFloat(minLat) : undefined;
+  maxLat = maxLat !== undefined ? parseFloat(maxLat) : undefined;
+  minLng = minLng !== undefined ? parseFloat(minLng) : undefined;
+  maxLng = maxLng !== undefined ? parseFloat(maxLng) : undefined;
+  minPrice = minPrice !== undefined ? parseFloat(minPrice) : undefined;
+  maxPrice = maxPrice !== undefined ? parseFloat(maxPrice) : undefined;
+
 
   if (page < 1) {
     errors.page = "Page must be greater than or equal to 1";
@@ -537,27 +545,27 @@ router.get("/", async (req, res, next) => {
     errors.size = "Size must be greater than or equal to 1 and less than 20";
   }
 
-   if (minLat) {
+  if (minLat !== undefined) {
     if (minLat < -90 || minLat > 90) errors.minLat = "Minimum latitude is invalid";
     else where.lat = { ...where.lat, [Sequelize.Op.gte]: minLat };
   }
-  if (maxLat) {
+  if (maxLat !== undefined) {
     if (maxLat < -90 || maxLat > 90) errors.maxLat = "Maximum latitude is invalid";
     else where.lat = { ...where.lat, [Sequelize.Op.lte]: maxLat };
   }
-  if (minLng) {
+  if (minLng !== undefined) {
     if (minLng < -180 || minLng > 180) errors.minLng = "Minimum longitude is invalid";
     else where.lng = { ...where.lng, [Sequelize.Op.gte]: minLng };
   }
-  if (maxLng) {
+  if (maxLng !== undefined) {
     if (maxLng < -180 || maxLng > 180) errors.maxLng = "Maximum longitude is invalid";
     else where.lng = { ...where.lng, [Sequelize.Op.lte]: maxLng };
   }
-  if (minPrice) {
+  if (minPrice !== undefined) {
     if (minPrice < 0) errors.minPrice = "Minimum price must be greater than or equal to 0";
     else where.price = { ...where.price, [Sequelize.Op.gte]: minPrice };
   }
-  if (maxPrice) {
+  if (maxPrice !== undefined) {
     if (maxPrice < 0) errors.maxPrice = "Maximum price must be greater than or equal to 0";
     else where.price = { ...where.price, [Sequelize.Op.lte]: maxPrice };
   }

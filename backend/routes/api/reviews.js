@@ -51,7 +51,7 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
   let review = await Review.findByPk(reviewId)
   
   try {
-    if (review.userId !== req.user.id) return res.status(403).json({error: "Cannot edit another users review"})
+    if (review.userId !== req.user.id) return res.status(403).json({message: "Cannot edit another users review"})
     if(!review) throw new Error()
       if(!body) throw new Error()
         await review.update(body)
@@ -79,7 +79,7 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
       //   }
       // })
       try {
-        if (review.userId !== req.user.id) return res.status(403).json({error: "Review must belong to current user"})
+        if (review.userId !== req.user.id) return res.status(403).json({message: "Review must belong to current user"})
         if(!review) throw new Error()
           await review.destroy()
         
