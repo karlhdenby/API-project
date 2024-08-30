@@ -5,11 +5,6 @@ const { where } = require("sequelize");
 const { Op, Sequelize } = require("sequelize");
 const { requireAuth } = require("../../utils/auth");
 
-const formatDate = (date) => {
-  const isoString = date.toISOString();
-  return isoString.substring(0, 19).replace("T", " ");
-};
-
 async function calculateAvg(id) {
   const result = await Review.findAll({
     where: {
@@ -418,7 +413,6 @@ router.get("/current", requireAuth, async (req, res, next) => {
     return res.status(404).json(error);
   }
 });
-// Create spot by ID
 router.put("/:spotId", requireAuth, async (req, res, next) => {
   let body = req.body;
   let spotId = req.params.spotId;
@@ -477,8 +471,6 @@ router.post("/", requireAuth, async (req, res, next) => {
       !city ||
       !state ||
       !country ||
-      !lat ||
-      !lng ||
       !name ||
       !description ||
       !price
@@ -525,11 +517,11 @@ router.post("/", requireAuth, async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   let errors = {};
   let where = {};
-  let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
-    req.query;
+  let { page = 1, size = 20, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
-  page = parseInt(page) || 1;
-  size = parseInt(size) || 20;
+  // Parsing and validation of query parameters
+  page = parseInt(page);
+  size = parseInt(size);
   minLat = minLat !== undefined ? parseFloat(minLat) : undefined;
   maxLat = maxLat !== undefined ? parseFloat(maxLat) : undefined;
   minLng = minLng !== undefined ? parseFloat(minLng) : undefined;
@@ -537,50 +529,62 @@ router.get("/", async (req, res, next) => {
   minPrice = minPrice !== undefined ? parseFloat(minPrice) : undefined;
   maxPrice = maxPrice !== undefined ? parseFloat(maxPrice) : undefined;
 
-
   if (page < 1) {
     errors.page = "Page must be greater than or equal to 1";
   }
   if (size < 1 || size > 20) {
-    errors.size = "Size must be greater than or equal to 1 and less than 20";
+    errors.size = "Size must be between 1 and 20";
   }
 
-  if (minLat !== undefined) {
-    if (minLat < -90 || minLat > 90) errors.minLat = "Minimum latitude is invalid";
-    else where.lat = { ...where.lat, [Sequelize.Op.gte]: minLat };
-  }
-  if (maxLat !== undefined) {
-    if (maxLat < -90 || maxLat > 90) errors.maxLat = "Maximum latitude is invalid";
-    else where.lat = { ...where.lat, [Sequelize.Op.lte]: maxLat };
-  }
-  if (minLng !== undefined) {
-    if (minLng < -180 || minLng > 180) errors.minLng = "Minimum longitude is invalid";
-    else where.lng = { ...where.lng, [Sequelize.Op.gte]: minLng };
-  }
-  if (maxLng !== undefined) {
-    if (maxLng < -180 || maxLng > 180) errors.maxLng = "Maximum longitude is invalid";
-    else where.lng = { ...where.lng, [Sequelize.Op.lte]: maxLng };
-  }
-  if (minPrice !== undefined) {
-    if (minPrice < 0) errors.minPrice = "Minimum price must be greater than or equal to 0";
-    else where.price = { ...where.price, [Sequelize.Op.gte]: minPrice };
-  }
-  if (maxPrice !== undefined) {
-    if (maxPrice < 0) errors.maxPrice = "Maximum price must be greater than or equal to 0";
-    else where.price = { ...where.price, [Sequelize.Op.lte]: maxPrice };
+  if (minLat !== undefined && (minLat < -90 || minLat > 90)) {
+    errors.minLat = "Minimum latitude is invalid";
+  } else if (minLat !== undefined) {
+    where.lat = { ...where.lat, [Sequelize.Op.gte]: minLat };
   }
 
+  if (maxLat !== undefined && (maxLat < -90 || maxLat > 90)) {
+    errors.maxLat = "Maximum latitude is invalid";
+  } else if (maxLat !== undefined) {
+    where.lat = { ...where.lat, [Sequelize.Op.lte]: maxLat };
+  }
+
+  if (minLng !== undefined && (minLng < -180 || minLng > 180)) {
+    errors.minLng = "Minimum longitude is invalid";
+  } else if (minLng !== undefined) {
+    where.lng = { ...where.lng, [Sequelize.Op.gte]: minLng };
+  }
+
+  if (maxLng !== undefined && (maxLng < -180 || maxLng > 180)) {
+    errors.maxLng = "Maximum longitude is invalid";
+  } else if (maxLng !== undefined) {
+    where.lng = { ...where.lng, [Sequelize.Op.lte]: maxLng };
+  }
+
+  if (minPrice !== undefined && minPrice < 0) {
+    errors.minPrice = "Minimum price must be greater than or equal to 0";
+  } else if (minPrice !== undefined) {
+    where.price = { ...where.price, [Sequelize.Op.gte]: minPrice };
+  }
+
+  if (maxPrice !== undefined && maxPrice < 0) {
+    errors.maxPrice = "Maximum price must be greater than or equal to 0";
+  } else if (maxPrice !== undefined) {
+    where.price = { ...where.price, [Sequelize.Op.lte]: maxPrice };
+  }
+
+  // Return errors if any validations failed
   if (Object.keys(errors).length > 0) {
     return res.status(400).json({ message: "Bad Request", errors });
   }
 
   try {
-    let result = await Spot.findAll({
-      where: where,
+    const spots = await Spot.findAll({
+      where,
       limit: size,
       offset: (page - 1) * size,
     });
-    let done = await makeSpots(result);
+
+    const done = await makeSpots(spots);
     return res.json({ Spots: done });
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error", error: error.message });
