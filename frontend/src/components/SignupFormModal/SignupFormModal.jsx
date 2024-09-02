@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
@@ -15,101 +15,138 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+
+  useEffect(() => {
+    const newErrors = {};
+
+    if (!email) newErrors.email = "Email is required";
+    if (!username) newErrors.username = "Username is required";
+    if (username && username.length < 4) newErrors.username = "Username must be at least 4 characters long";
+    if (!firstName) newErrors.firstName = "First Name is required";
+    if (!lastName) newErrors.lastName = "Last Name is required";
+    if (!password) newErrors.password = "Password is required";
+    if (password && password.length < 6) newErrors.password = "Password must be at least 6 characters long";
+    if (password !== confirmPassword) newErrors.confirmPassword = "Passwords must match";
+
+    setErrors(newErrors);
+  }, [email, username, firstName, lastName, password, confirmPassword]);
+
+  const isDisabled = Object.keys(errors).length > 0;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors({});
-      return dispatch(
+
+    if (password !== confirmPassword) {
+      setErrors({ confirmPassword: "Passwords must match" });
+      return;
+    }
+
+    try {
+      const response = await dispatch(
         sessionActions.signup({
           email,
           username,
           firstName,
           lastName,
-          password
+          password,
         })
-      )
-        .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data?.errors) {
-            setErrors(data.errors);
-          }
-        });
+      );
+
+      if (response.ok) {
+        closeModal();
+      } else {
+        const data = await response.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        } else if (!Object.keys(errors).length) {
+          setErrors({ username: "Username must be unique" });
+        } else {
+          setErrors({ general: "An error occurred. Please try again." });
+        }
+      }
+    } catch (error) {
+      const data = await error;
+      if (data && data.errors) {
+        setErrors(data.errors);
+      } else if (!Object.keys(errors).length) {
+        setErrors({ username: "Username must be unique" });
+      } else {
+        setErrors({ general: "An error occurred. Please try again." });
+      }
     }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
   };
 
   return (
-    <>
+    <div className="signup-modal">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Email
+        <div className="form-group">
+          <label>Email</label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
+          {errors.email && <p className="error">{errors.email}</p>}
+        </div>
+        <div className="form-group">
+          <label>Username</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          First Name
+          {errors.username && <p className="error">{errors.username}</p>}
+        </div>
+        <div className="form-group">
+          <label>First Name</label>
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
-        </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
-        <label>
-          Last Name
+          {errors.firstName && <p className="error">{errors.firstName}</p>}
+        </div>
+        <div className="form-group">
+          <label>Last Name</label>
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
           />
-        </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
-        <label>
-          Password
+          {errors.lastName && <p className="error">{errors.lastName}</p>}
+        </div>
+        <div className="form-group">
+          <label>Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
+          {errors.password && <p className="error">{errors.password}</p>}
+        </div>
+        <div className="form-group">
+          <label>Confirm Password</label>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-        </label>
-        {errors.confirmPassword && (
-          <p>{errors.confirmPassword}</p>
-        )}
-        <button type="submit">Sign Up</button>
+          {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
+        </div>
+        <button type="submit" disabled={isDisabled} className="submit-button">
+          Sign Up
+        </button>
+        {isDisabled && <p className="error">Please fill out all fields correctly to enable the sign-up button.</p>}
+        {errors.general && <p className="error">{errors.general}</p>}
       </form>
-    </>
+    </div>
   );
 }
 

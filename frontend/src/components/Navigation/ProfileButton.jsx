@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
+import './ProfileButton.css';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -9,8 +11,7 @@ function ProfileButton({ user }) {
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep click from bubbling up to document and triggering closeMenu
-    // if (!showMenu) setShowMenu(true);
+    e.stopPropagation(); // Prevent the click event from bubbling up
     setShowMenu(!showMenu);
   };
 
@@ -33,21 +34,23 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.logout());
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-
   return (
     <>
       <button onClick={toggleMenu}>
         <FaUserCircle />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
-        <li>{user.firstName} {user.lastName}</li>
-        <li>{user.email}</li>
-        <li>
-          <button onClick={logout}>Log Out</button>
-        </li>
-      </ul>
+      {showMenu && (
+        <ul className="profile-dropdown" ref={ulRef}>
+          <li>Hello, {user.firstName}</li>
+          <li>{user.email}</li>
+          <li>
+            <NavLink to="/spots/current">Manage Spots</NavLink>
+          </li>
+          <li>
+            <button onClick={logout}>Log Out</button>
+          </li>
+        </ul>
+      )}
     </>
   );
 }

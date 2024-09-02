@@ -8,7 +8,7 @@ const CREATE_IMAGES = "spots/createSpotImages";
 const UPDATE_SPOT = "spots/id/updateSpot";
 const DELETE_SPOT = "spots/id/deleteSpot"
 
-const GET_CURRENT_REVIEWS = "spots/reviews/getCurrentReviews";
+
 
 const loadSpots = (spots) => {
   return {
@@ -47,24 +47,19 @@ const updateSpot = (spot) => {
 
 const deleteSpot = (spot) => {
   return {
-    type: UPDATE_SPOT,
+    type: DELETE_SPOT,
     payload: spot,
   };
 };
 
-const loadCurrentReviews = (reviews) => {
+const newImage = (images) => {
   return {
-    type: GET_ALL_REVIEWS,
-    payload: reviews,
-  };
-};
+    type: CREATE_IMAGES,
+    payload: images
+  }
+}
 
-// const newImages = (images) => {
-//   return {
-//     type: CREATE_IMAGES,
-//     payload: images
-//   }
-// }
+
 
 export const getAllSpots = () => async (dispatch) => {
   const response = await csrfFetch("/api/spots");
@@ -144,10 +139,9 @@ export const editSpot = (spot) => async (dispatch) => {
   }
 };
 
-export const spotDelete = (spot) => async (dispatch) => {
-  console.log("spot!", spot);
+export const spotDelete = (spotId) => async (dispatch) => {
   try {
-    const response = await csrfFetch(`/api/spots/${spot.id}`, {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -155,42 +149,39 @@ export const spotDelete = (spot) => async (dispatch) => {
     });
 
     if (response.ok) {
-      console.log("okay!");
-      const newSpot = await response.json();
-      dispatch(deleteSpot(spot.id));
-
-      return newSpot;
+      dispatch(deleteSpot(spotId));
+      return response;
     }
   } catch (error) {
-    console.log("error!!!!", await error.json());
+    console.error("Failed to delete spot:", error);
+    throw error;
   }
 };
 
-export const getCurrentReviews = () => async (dispatch) => {
-  const response = await csrfFetch("/api/reviews/current");
 
-  if (response.ok) {
-    const data = await response.json();
 
-    dispatch(loadCurrentReviews(data.reviews));
-    return data.reviews;
+export const createSpotImages = (images) => async (dispatch) => {
+  const spotId = images[0].spotId;
+  console.log(images)
+
+  for (let i = 0; i < images.length; i++) {
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+      method: 'POST',
+      body: JSON.stringify(images[i]),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      const image = await response.json();
+      dispatch(newImage(image));
+    } else {
+      
+      console.error('Failed to upload image:', images[i]);
+    }
   }
 };
-
-// export const createSpotImages = (images) => async (dispatch) => {
-//   const response = await csrfFetch('/api/spots/images', {
-//     method: 'POST',
-//     body: JSON.stringify(images),
-//     headers: {
-//       'Content-Type': 'application/json'
-//     }
-//   })
-
-//   if (response.ok) {
-//     const images = await response.json();
-//     dispatch()
-//   }
-// }
 
 const initialState = {};
 
@@ -230,15 +221,10 @@ const spotsReducer = (state = initialState, action) => {
     }
     case DELETE_SPOT: {
       const newState = { ...state };
-
-      delete newState[action.payload]
+      delete newState[action.payload];
       return newState;
     }
-    case GET_CURRENT_REVIEWS: {
-      const allReviews = {};
-      action.payload.forEach((spot) => (allReviews[spot.id] = spot));
-      return allReviews;
-    }
+    
 
     default:
       return state;

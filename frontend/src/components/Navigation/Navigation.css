@@ -1,0 +1,62 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo .logo {
+    height: 40px;
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.create-spot-button {
+    padding: 10px 15px;
+    background-color: #ff5a5f;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.create-spot-button:hover {
+    background-color: #e04848;
+}
+
+
+.navbar-menu button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-button:hover {
+    background-color: #0056b3;
+}
+
+/* Optional: differentiate Sign Up button with a lighter shade */
+.signup-button {
+    background-color: #28a745;
+}
+
+.signup-button:hover {
+    background-color: #218838;
+}

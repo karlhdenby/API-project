@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { updateReview } from "../../store/reviews";
+import { editReview } from "../../store/reviews";
 import { useState } from "react";
 import { useModal } from "../../context/Modal";
 
@@ -16,7 +16,7 @@ export const ReviewForm = ({ spotId }) => {
 
     const newReview = { review, stars, spotId, userId: sessionUser.id };
 
-    dispatch(updateReview(newReview));
+    dispatch(editReview(newReview));
 
     setStars(0);
     setReview("");

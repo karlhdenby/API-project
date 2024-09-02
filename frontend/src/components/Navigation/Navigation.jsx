@@ -12,36 +12,37 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li>
+      <>
+        <NavLink to="/spots/new" className="create-spot-button">
+          Create a New Spot
+        </NavLink>
         <ProfileButton user={sessionUser} />
-      </li>
+      </>
     );
   } else {
     sessionLinks = (
       <>
-        <li>
-          <OpenModalButton
-            buttonText="Log In"
-            modalComponent={<LoginFormModal />}
-          />
-        </li>
-        <li>
-          <OpenModalButton
-            buttonText="Sign Up"
-            modalComponent={<SignupFormModal />}
-          />
-        </li>
+        <OpenModalButton
+          buttonText="Log In"
+          modalComponent={<LoginFormModal />}
+        />
+        <OpenModalButton
+          buttonText="Sign Up"
+          modalComponent={<SignupFormModal />}
+        />
       </>
     );
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      {isLoaded && sessionLinks}
-    </ul>
+    <nav className="navbar">
+      <NavLink exact to="/" className="navbar-logo">
+        <img src="https://thumbs.dreamstime.com/z/airbnb-logo-white-image-maroon-background-93709646.jpg" alt="Airbnb logo" className="logo"/>
+      </NavLink>
+      <div className="navbar-menu">
+        {isLoaded && sessionLinks}
+      </div>
+    </nav>
   );
 }
 

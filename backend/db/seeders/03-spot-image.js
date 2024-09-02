@@ -8,9 +8,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const spotImages = [
-  { spotId: 1, url: "https://example.com/spot1.jpg", preview: true},
-  { spotId: 2, url: "https://example.com/spot2.jpg", preview: true},
-  { spotId: 3, url: "https://example.com/spot3.jpg", preview: true},
+  { spotId: 1, url: "https://www.travelandleisure.com/thmb/91pb8LbDAUwUN_11wATYjx5oF8Q=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/new-york-city-evening-NYCTG0221-52492d6ccab44f328a1c89f41ac02aea.jpg", preview: true},
+  { spotId: 2, url: "https://lacounty.gov/wp-content/uploads/2022/03/shutterstock_1418018357-scaled.jpg", preview: true},
+  { spotId: 3, url: "https://www.mediastorehouse.co.uk/p/629/chicago-skyline-viewed-lincoln-park-19793205.jpg.webp", preview: true},
 ];
 
 
