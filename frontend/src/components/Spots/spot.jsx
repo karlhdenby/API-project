@@ -27,12 +27,13 @@ export const Spot = () => {
     alert("Feature Coming Soon...");
   };
 
-  const formatRating = (rating) => {
-    if (rating) {
-      return rating.toFixed(1);
-    }
-    return "NEW";
+  const calculateAverageRating = (reviews) => {
+    if (reviews.length === 0) return "NEW";
+    const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0);
+    return (totalStars / reviews.length).toFixed(1);
   };
+
+  const avgRating = calculateAverageRating(reviews);
 
   if (!spot) {
     return <h1 style={{ color: "brown", textAlign: "center" }}>Loading...</h1>;
@@ -71,7 +72,7 @@ export const Spot = () => {
             </span>
             <div className="reviews">
               <span>
-                ★ {formatRating(spot.avgStarRating)} ·{" "}
+                ★ {avgRating} ·{" "}
                 {reviews.length === 1
                   ? "1 review"
                   : `${reviews.length} reviews`}
@@ -87,7 +88,7 @@ export const Spot = () => {
       {/* Reviews */}
       <div className="reviews-section">
         <h3>
-          ★ {formatRating(spot.avgStarRating)} ·{" "}
+          ★ {avgRating} ·{" "}
           {reviews.length === 1 ? "1 review" : `${reviews.length} reviews`}
         </h3>
         {sessionUser && sessionUser.id !== spot.ownerId && (
