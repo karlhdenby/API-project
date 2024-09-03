@@ -2,15 +2,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { editSpot, getSpot } from "../../store/spots";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import './UpdateSpot.css'; // Import the CSS file
+import "./UpdateSpot.css";
 
 export default function UpdateSpot() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const spot = useSelector((state) => state.spots[id]); // Access the specific spot from the Redux store
 
+
+  const [errors, setErrors] = useState({});
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -22,7 +23,6 @@ export default function UpdateSpot() {
   const [lng, setLng] = useState(10);
 
   useEffect(() => {
-    // Fetch the spot data when the component mounts
     async function fetchSpot() {
       const spotData = await dispatch(getSpot(id));
       if (spotData) {
@@ -37,18 +37,29 @@ export default function UpdateSpot() {
         setLng(spotData.lng || 10);
       }
     }
-
     fetchSpot();
   }, [dispatch, id]);
 
-  if (sessionUser.id !== spot?.ownerId) {
-    return <p>You are not authorized to edit this spot.</p>;
-  }
-
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    const validationErrors = {};
+
+    if (!country.trim()) validationErrors.country = "Country is required.";
+    if (!address.trim()) validationErrors.address = "Address is required.";
+    if (!city.trim()) validationErrors.city = "City is required.";
+    if (!state.trim()) validationErrors.state = "State is required.";
+    if (description.length < 30) validationErrors.description = "Description must be at least 30 characters long.";
+    if (!name.trim()) validationErrors.name = "Name is required.";
+    if (price <= 0) validationErrors.price = "Price must be greater than 0.";
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     try {
-      e.preventDefault();
       if (!sessionUser.id) throw new Error("Not logged in");
+
       const updatedSpot = {
         id,
         country,
@@ -63,18 +74,23 @@ export default function UpdateSpot() {
         ownerId: sessionUser.id,
       };
 
-      await dispatch(editSpot(updatedSpot));
+      const result = await dispatch(editSpot(updatedSpot));
+      if (result.errors) {
+        setErrors(result.errors);
+        return;
+      }
 
       navigate(`/spots/${id}`);
     } catch (error) {
-      console.log(error);
+      setErrors({ general: "An unexpected error occurred." });
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="update-spot-form">
       <h1>Update Your Spot</h1>
-      
+      {errors.general && <p className="error">{errors.general}</p>}
+
       <section>
         <h2>Wheres your place located?</h2>
         <p>Guests will only get your exact address once they book a reservation.</p>
@@ -88,7 +104,9 @@ export default function UpdateSpot() {
             placeholder="Country"
             required
           />
+          {errors.country && <p className="error">{errors.country}</p>}
         </div>
+
         <div className="form-group">
           <label>Street Address</label>
           <input
@@ -98,55 +116,56 @@ export default function UpdateSpot() {
             placeholder="Address"
             required
           />
+          {errors.address && <p className="error">{errors.address}</p>}
         </div>
-        <div className="form-inline-group">
-          <div className="form-group">
-            <label>City</label>
-            <input
-              type="text"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              placeholder="City"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>State</label>
-            <input
-              type="text"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-              placeholder="STATE"
-              required
-            />
-          </div>
+
+        <div className="form-group">
+          <label>City</label>
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="City"
+            required
+          />
+          {errors.city && <p className="error">{errors.city}</p>}
         </div>
-        <div className="form-inline-group">
-          <div className="form-group">
-            <label>Latitude</label>
-            <input
-              type="number"
-              value={lat}
-              onChange={(e) => setLat(parseFloat(e.target.value))}
-              placeholder="Latitude"
-            />
-          </div>
-          <div className="form-group">
-            <label>Longitude</label>
-            <input
-              type="number"
-              value={lng}
-              onChange={(e) => setLng(parseFloat(e.target.value))}
-              placeholder="Longitude"
-            />
-          </div>
+
+        <div className="form-group">
+          <label>State</label>
+          <input
+            type="text"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            placeholder="State"
+            required
+          />
+          {errors.state && <p className="error">{errors.state}</p>}
+        </div>
+
+        <div className="form-group">
+          <label>Latitude</label>
+          <input
+            type="number"
+            value={lat}
+            onChange={(e) => setLat(parseFloat(e.target.value))}
+            placeholder="Latitude"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Longitude</label>
+          <input
+            type="number"
+            value={lng}
+            onChange={(e) => setLng(parseFloat(e.target.value))}
+            placeholder="Longitude"
+          />
         </div>
       </section>
 
       <section>
         <h2>Describe your place to guests</h2>
-        <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.</p>
-
         <div className="form-group">
           <label>Description</label>
           <textarea
@@ -155,13 +174,12 @@ export default function UpdateSpot() {
             placeholder="Please write at least 30 characters"
             required
           />
+          {errors.description && <p className="error">{errors.description}</p>}
         </div>
       </section>
 
       <section>
         <h2>Update the title for your spot</h2>
-        <p>Catch guests attention with a spot title that highlights what makes your place special.</p>
-
         <div className="form-group">
           <label>Spot Name</label>
           <input
@@ -171,13 +189,12 @@ export default function UpdateSpot() {
             placeholder="Name of your spot"
             required
           />
+          {errors.name && <p className="error">{errors.name}</p>}
         </div>
       </section>
 
       <section>
         <h2>Set a base price for your spot</h2>
-        <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
-
         <div className="form-group price-group">
           <label>Price per night (USD)</label>
           <div className="price-input">
@@ -189,10 +206,11 @@ export default function UpdateSpot() {
               placeholder="Price per night (USD)"
               required
             />
+            {errors.price && <p className="error">{errors.price}</p>}
           </div>
         </div>
       </section>
-      
+
       <button type="submit" className="submit-button">Update Spot</button>
     </form>
   );

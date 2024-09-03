@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
@@ -13,10 +13,10 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const { closeModal } = useModal();
 
-
-  useEffect(() => {
+  const validateFields = () => {
     const newErrors = {};
 
     if (!email) newErrors.email = "Email is required";
@@ -29,17 +29,15 @@ function SignupFormModal() {
     if (password !== confirmPassword) newErrors.confirmPassword = "Passwords must match";
 
     setErrors(newErrors);
-  }, [email, username, firstName, lastName, password, confirmPassword]);
 
-  const isDisabled = Object.keys(errors).length > 0;
+    return Object.keys(newErrors).length === 0; // return true if no errors
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setHasSubmitted(true);
 
-    if (password !== confirmPassword) {
-      setErrors({ confirmPassword: "Passwords must match" });
-      return;
-    }
+    if (!validateFields()) return; // Validate fields and stop if there are errors
 
     try {
       const response = await dispatch(
@@ -52,33 +50,43 @@ function SignupFormModal() {
         })
       );
 
-      if (response.ok) {
-        closeModal();
-      } else {
+      if (!response.ok) {
         const data = await response.json();
         if (data && data.errors) {
-          setErrors(data.errors);
-        } else if (!Object.keys(errors).length) {
-          setErrors({ username: "Username must be unique" });
+          const backendErrors = {};
+          for (let key in data.errors) {
+            if (key === 'username') {
+              backendErrors.username = "Username must be unique";
+            } else if (key === 'email') {
+              backendErrors.email = "Email is already in use or invalid";
+            }
+          }
+          setErrors(backendErrors);
         } else {
           setErrors({ general: "An error occurred. Please try again." });
         }
+      } else {
+        closeModal();
       }
     } catch (error) {
-      const data = await error;
-      if (data && data.errors) {
-        setErrors(data.errors);
-      } else if (!Object.keys(errors).length) {
-        setErrors({ username: "Username must be unique" });
-      } else {
-        setErrors({ general: "An error occurred. Please try again." });
-      }
+      setErrors({ general: "An error occurred. Please try again." });
     }
   };
 
   return (
     <div className="signup-modal">
       <h1>Sign Up</h1>
+      {hasSubmitted && Object.keys(errors).length > 0 && (
+        <div className="error-message">
+          {errors.username && <p>{errors.username}</p>}
+          {errors.email && <p>{errors.email}</p>}
+          {errors.firstName && <p>{errors.firstName}</p>}
+          {errors.lastName && <p>{errors.lastName}</p>}
+          {errors.password && <p>{errors.password}</p>}
+          {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+          {errors.general && <p>{errors.general}</p>}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Email</label>
@@ -88,7 +96,6 @@ function SignupFormModal() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          {errors.email && <p className="error">{errors.email}</p>}
         </div>
         <div className="form-group">
           <label>Username</label>
@@ -98,7 +105,6 @@ function SignupFormModal() {
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-          {errors.username && <p className="error">{errors.username}</p>}
         </div>
         <div className="form-group">
           <label>First Name</label>
@@ -108,7 +114,6 @@ function SignupFormModal() {
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
-          {errors.firstName && <p className="error">{errors.firstName}</p>}
         </div>
         <div className="form-group">
           <label>Last Name</label>
@@ -118,7 +123,6 @@ function SignupFormModal() {
             onChange={(e) => setLastName(e.target.value)}
             required
           />
-          {errors.lastName && <p className="error">{errors.lastName}</p>}
         </div>
         <div className="form-group">
           <label>Password</label>
@@ -128,7 +132,6 @@ function SignupFormModal() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {errors.password && <p className="error">{errors.password}</p>}
         </div>
         <div className="form-group">
           <label>Confirm Password</label>
@@ -138,13 +141,13 @@ function SignupFormModal() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-          {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
         </div>
-        <button type="submit" disabled={isDisabled} className="submit-button">
+        <button type="submit" className="submit-button">
           Sign Up
         </button>
-        {isDisabled && <p className="error">Please fill out all fields correctly to enable the sign-up button.</p>}
-        {errors.general && <p className="error">{errors.general}</p>}
+        {hasSubmitted && Object.keys(errors).length > 0 && (
+          <p className="error-message">Please fill out all fields correctly to enable the sign-up button.</p>
+        )}
       </form>
     </div>
   );

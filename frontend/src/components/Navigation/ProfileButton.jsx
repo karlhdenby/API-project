@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
 import './ProfileButton.css';
+import { useNavigate } from 'react-router-dom';
 
 function ProfileButton({ user }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -31,13 +32,18 @@ function ProfileButton({ user }) {
 
   const logout = (e) => {
     e.preventDefault();
+    navigate('/');
     dispatch(sessionActions.logout());
   };
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
+      <button onClick={toggleMenu} className="profile-button">
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/038/147/992/original/ai-generated-man-waving-hand-and-smiling-on-transparent-background-image-png.png"
+          alt="Profile logo"
+          className="profile-logo"
+        />
       </button>
       {showMenu && (
         <ul className="profile-dropdown" ref={ulRef}>

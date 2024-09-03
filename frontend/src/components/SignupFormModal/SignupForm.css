@@ -1,17 +1,40 @@
-.signup-modal {
+/* Modal.css */
+#modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px; /* Adjust to the size in the mockup */
   background-color: white;
-  padding: 40px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1001; /* Ensure this is above the background */
+}
+
+#modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000; /* Background should be behind the modal */
+}
+
+#modal-content {
+  position: relative;
+  width: 100%;
+  z-index: 1002; /* Ensure content is interactable */
+}
+
+.signup-modal {
   text-align: center;
-  max-width: 450px;
-  margin: 0 auto;
-  font-family: Arial, sans-serif;
 }
 
 .signup-modal h1 {
-  margin-bottom: 30px;
-  font-size: 28px;
+  margin-bottom: 20px;
+  font-size: 24px;
   font-weight: 700;
 }
 
@@ -24,23 +47,36 @@
   margin-bottom: 5px;
   font-weight: 600;
   text-align: left;
+  font-size: 16px;
 }
 
 .signup-modal input {
   margin-bottom: 10px;
-  padding: 12px;
+  padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 4px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.signup-modal p.error {
+.signup-modal .form-group {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.signup-modal .error {
   color: red;
   font-size: 14px;
-  margin-top: -5px;
-  margin-bottom: 15px;
+  margin-top: -10px; /* Position error close to input */
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.signup-modal .error-message {
+  color: red;
+  font-size: 16px;
+  margin-bottom: 20px;
   text-align: left;
 }
 
@@ -52,19 +88,10 @@
   background-color: #ff385c;
   color: white;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .signup-modal button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
-
-.signup-modal .error {
-  color: red;
-  font-size: 14px;
-  margin-top: -5px;
-  margin-bottom: 15px;
-  text-align: left;
-}
-

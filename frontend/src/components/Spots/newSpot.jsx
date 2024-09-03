@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import './CreateSpot.css'; // Import the CSS file
+import './CreateSpot.css';
 
 export default function CreateSpot() {
   const navigate = useNavigate();
@@ -25,6 +25,7 @@ export default function CreateSpot() {
   const [lng, setLng] = useState(10);
   const sessionUser = useSelector((state) => state.session.user);
   const [length, setLength] = useState(0);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     async function fetchSpots() {
@@ -37,10 +38,28 @@ export default function CreateSpot() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    const validationErrors = {};
+
+    // Validate required fields
+    if (!country) validationErrors.country = "Country is required.";
+    if (!address) validationErrors.address = "Address is required.";
+    if (!city) validationErrors.city = "City is required.";
+    if (!state) validationErrors.state = "State is required.";
+    if (description.length < 30) validationErrors.description = "Description must be at least 30 characters long.";
+    if (!name) validationErrors.name = "Name is required.";
+    if (price <= 0) validationErrors.price = "Price must be greater than 0.";
+    if (!previewImage) validationErrors.previewImage = "Preview image is required.";
+
+    // Check for any errors
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     try {
       if (!sessionUser.id) throw new Error("Not logged in");
-  
+
       const newSpot = {
         country,
         address,
@@ -53,13 +72,16 @@ export default function CreateSpot() {
         price,
         ownerId: sessionUser.id,
       };
-  
+
       const createdSpot = await dispatch(createSpot(newSpot));
-  
-      if (!createdSpot) throw new Error("Spot creation failed");
-  
+
+      if (createdSpot.errors) {
+        setErrors(createdSpot.errors);
+        return;
+      }
+
       const spotId = createdSpot.id || length;
-  
+
       const newImages = [
         { url: previewImage, spotId: spotId, preview: true },
         { url: imageOne, spotId: spotId, preview: false },
@@ -67,16 +89,17 @@ export default function CreateSpot() {
         { url: imageThree, spotId: spotId, preview: false },
         { url: imageFour, spotId: spotId, preview: false },
       ].filter(image => image.url.trim() !== "");
-  
+
       if (newImages.length > 0) {
         try {
           await dispatch(createSpotImages(newImages));
         } catch (imageError) {
-          console.error("Failed to create images:", imageError);
-          alert("An error occurred while uploading images. Please try again.");
+          setErrors({ images: "An error occurred while uploading images. Please try again." });
+          return;
         }
       }
-  
+
+      // Reset the form fields
       setCountry("");
       setAddress("");
       setCity("");
@@ -90,20 +113,21 @@ export default function CreateSpot() {
       setImageThree("");
       setImageFour("");
       setPreviewImage("");
-  
+
       navigate(`/spots/${spotId}`);
     } catch (error) {
-      console.error("Failed to create spot:", error);
-      alert("An error occurred while creating the spot. Please try again.");
+      setErrors({ general: error.message });
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="create-spot-form">
       <h1>Create a New Spot</h1>
-      
+
+      {errors.general && <p className="error">{errors.general}</p>}
+
       <section>
-        <h2>Wheres your place located?</h2>
+        <h2>Where is your place located?</h2>
         <p>Guests will only get your exact address once they booked a reservation.</p>
 
         <div className="form-group">
@@ -115,6 +139,7 @@ export default function CreateSpot() {
             placeholder="Country"
             required
           />
+          {errors.country && <p className="error">{errors.country}</p>}
         </div>
         <div className="form-group">
           <label>Street Address</label>
@@ -125,6 +150,7 @@ export default function CreateSpot() {
             placeholder="Address"
             required
           />
+          {errors.address && <p className="error">{errors.address}</p>}
         </div>
         <div className="form-inline-group">
           <div className="form-group">
@@ -136,6 +162,7 @@ export default function CreateSpot() {
               placeholder="City"
               required
             />
+            {errors.city && <p className="error">{errors.city}</p>}
           </div>
           <div className="form-group">
             <label>State</label>
@@ -143,9 +170,10 @@ export default function CreateSpot() {
               type="text"
               value={state}
               onChange={(e) => setState(e.target.value)}
-              placeholder="STATE"
+              placeholder="State"
               required
             />
+            {errors.state && <p className="error">{errors.state}</p>}
           </div>
         </div>
         <div className="form-inline-group">
@@ -157,6 +185,7 @@ export default function CreateSpot() {
               onChange={(e) => setLat(parseFloat(e.target.value))}
               placeholder="Latitude"
             />
+            {errors.lat && <p className="error">{errors.lat}</p>}
           </div>
           <div className="form-group">
             <label>Longitude</label>
@@ -166,6 +195,7 @@ export default function CreateSpot() {
               onChange={(e) => setLng(parseFloat(e.target.value))}
               placeholder="Longitude"
             />
+            {errors.lng && <p className="error">{errors.lng}</p>}
           </div>
         </div>
       </section>
@@ -182,6 +212,7 @@ export default function CreateSpot() {
             placeholder="Please write at least 30 characters"
             required
           />
+          {errors.description && <p className="error">{errors.description}</p>}
         </div>
       </section>
 
@@ -198,6 +229,7 @@ export default function CreateSpot() {
             placeholder="Name of your spot"
             required
           />
+          {errors.name && <p className="error">{errors.name}</p>}
         </div>
       </section>
 
@@ -216,6 +248,7 @@ export default function CreateSpot() {
               placeholder="Price per night (USD)"
               required
             />
+            {errors.price && <p className="error">{errors.price}</p>}
           </div>
         </div>
       </section>
@@ -233,6 +266,7 @@ export default function CreateSpot() {
             placeholder="Preview Image URL"
             required
           />
+          {errors.previewImage && <p className="error">{errors.previewImage}</p>}
         </div>
         <div className="form-group">
           <label>Image URL</label>
@@ -270,8 +304,9 @@ export default function CreateSpot() {
             placeholder="Image URL"
           />
         </div>
+        {errors.images && <p className="error">{errors.images}</p>}
       </section>
-      
+
       <button type="submit" className="submit-button">Create Spot</button>
     </form>
   );

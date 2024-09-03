@@ -1,6 +1,6 @@
 import { useRef, useState, useContext, createContext } from 'react';
 import ReactDOM from 'react-dom';
-import './Modal.css';
+import '../../src/components/SignupFormModal/SignupForm.css';
 
 const ModalContext = createContext();
 

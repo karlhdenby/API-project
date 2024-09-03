@@ -4,6 +4,7 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
+import { FaUserCircle } from 'react-icons/fa';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
@@ -21,23 +22,32 @@ function Navigation({ isLoaded }) {
     );
   } else {
     sessionLinks = (
-      <>
-        <OpenModalButton
-          buttonText="Log In"
-          modalComponent={<LoginFormModal />}
-        />
-        <OpenModalButton
-          buttonText="Sign Up"
-          modalComponent={<SignupFormModal />}
-        />
-      </>
+      <div className="dropdown">
+        <button className="dropbtn">
+          <FaUserCircle className="user-icon" />
+        </button>
+        <div className="dropdown-content">
+          <OpenModalButton
+            buttonText="Log In"
+            modalComponent={<LoginFormModal />}
+          />
+          <OpenModalButton
+            buttonText="Sign Up"
+            modalComponent={<SignupFormModal />}
+          />
+        </div>
+      </div>
     );
   }
 
   return (
     <nav className="navbar">
       <NavLink exact to="/" className="navbar-logo">
-        <img src="https://thumbs.dreamstime.com/z/airbnb-logo-white-image-maroon-background-93709646.jpg" alt="Airbnb logo" className="logo"/>
+        <img
+          src="https://www.muv.co.uk/cdn-cgi/image/width=1200,height=675,quality=80,format=auto,onerror=redirect,metadata=none/cdn-cgi/image/quality=80,format=auto,onerror=redirect,metadata=none/wp-content/uploads/2024/01/steamboat.jpg"
+          alt="Airbnb logo"
+          className="logo"
+        />
       </NavLink>
       <div className="navbar-menu">
         {isLoaded && sessionLinks}

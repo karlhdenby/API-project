@@ -12,8 +12,7 @@ h1, h2 {
 
 .image-gallery {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   margin-bottom: 20px;
 }
@@ -21,25 +20,30 @@ h1, h2 {
 .main-image {
   grid-column: 1 / 2;
   grid-row: 1 / 3;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
 }
 
 .main-image img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   border-radius: 8px;
 }
 
 .other-images {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: 10px;
+  aspect-ratio: 1 / 1; 
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
 }
 
 .other-images img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -60,40 +64,65 @@ h1, h2 {
 }
 
 .price-reviews-box {
-  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
   border-radius: 8px;
   background-color: #f8f8f8;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 300px; /* You can adjust this width as necessary */
+  margin-top: 20px;
+}
+
+.price-reviews-box .price-reviews {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .price-reviews-box .price {
   font-size: 24px;
   font-weight: bold;
-  display: block;
-  margin-bottom: 10px;
+}
+
+.price-reviews-box .reviews .dot {
+  margin: 0 5px;
 }
 
 .reviews {
   font-size: 16px;
   color: #666;
+  margin-bottom: 20px;
 }
 
-.reserve-button {
-  padding: 10px 20px;
+.price-reviews-box .reserve-button {
+  width: 100%;
+  padding: 10px;
   background-color: #ff5a5f;
   color: white;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   font-size: 16px;
-  margin-top: 20px;
   transition: background-color 0.3s ease;
+}
+
+.price-reviews-box .reserve-button:hover {
+  background-color: #e04848;
+}
+
+.spot-details-right {
+  width: 100%;
+  max-width: 300px;
+  text-align: left
 }
 
 .reserve-button:hover {
   background-color: #e04848;
 }
-
 .reviews-section {
   margin-top: 40px;
 }
@@ -129,18 +158,20 @@ h1, h2 {
 }
 
 .delete-review-button {
-  padding: 5px 10px;
-  background-color: #ff5a5f;
-  color: white;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
   margin-top: 10px;
-  transition: background-color 0.3s ease;
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-align: center;
 }
 
 .delete-review-button:hover {
-  background-color: #e04848;
+  background-color: #c82333;
 }
 
 .post-review-button {
@@ -158,4 +189,19 @@ h1, h2 {
 .post-review-button:hover {
   background-color: #0056b3;
 }
+
+.reviews-section button {
+
+    cursor: pointer;
+    background-color: #971439; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  
+}
+
 

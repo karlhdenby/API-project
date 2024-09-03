@@ -94,7 +94,6 @@ export const getSpot = (id) => async (dispatch) => {
 };
 
 export const createSpot = (spot) => async (dispatch) => {
-  console.log(spot);
   try {
     const response = await csrfFetch("/api/spots", {
       method: "POST",
@@ -105,16 +104,19 @@ export const createSpot = (spot) => async (dispatch) => {
     });
 
     if (response.ok) {
-      console.log("okay!");
       const spot = await response.json();
       dispatch(newSpot(spot));
-
       return spot.id;
+    } else {
+      const errorData = await response.json();
+      return { errors: errorData.errors }; // Return the errors
     }
   } catch (error) {
-    console.log("error!!!!", await error.json());
+    return { errors: ["An unexpected error occurred."] }; // Generic error handling
   }
 };
+
+
 
 export const editSpot = (spot) => async (dispatch) => {
   console.log("spot!", spot);
@@ -162,26 +164,34 @@ export const spotDelete = (spotId) => async (dispatch) => {
 
 export const createSpotImages = (images) => async (dispatch) => {
   const spotId = images[0].spotId;
+  console.log(spotId)
   console.log(images)
 
   for (let i = 0; i < images.length; i++) {
-    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
-      method: 'POST',
-      body: JSON.stringify(images[i]),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    try {
+      const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: 'POST',
+        body: JSON.stringify(images[i]),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
 
-    if (response.ok) {
-      const image = await response.json();
-      dispatch(newImage(image));
-    } else {
-      
-      console.error('Failed to upload image:', images[i]);
+      if (response.ok) {
+        const image = await response.json();
+        dispatch(newImage(image));
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to upload image:', images[i], errorData.errors);
+        return { errors: errorData.errors };
+      }
+    } catch (error) {
+      console.error('Unexpected error while uploading image:', images[i], error);
+      return { errors: ["An unexpected error occurred during image upload."] };
     }
   }
 };
+
 
 const initialState = {};
 
@@ -210,10 +220,15 @@ const spotsReducer = (state = initialState, action) => {
     }
     case CREATE_IMAGES: {
       const newState = { ...state };
-
-      newState[action.payload.id] = action.payload;
+      const spotImages = newState[action.payload.spotId]?.images || [];
+      spotImages.push(action.payload);
+      newState[action.payload.spotId] = {
+        ...newState[action.payload.spotId],
+        images: spotImages,
+      };
       return newState;
     }
+    
     case GET_CURRENT_SPOTS: {
       const allSpots = {};
       action.payload.forEach((spot) => (allSpots[spot.id] = spot));

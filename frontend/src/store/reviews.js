@@ -41,6 +41,14 @@ const updateReview = (review) => {
   };
 };
 
+const CLEAR_REVIEWS = "spots/reviews/clearReviews";
+
+const clearReviews = () => {
+  return {
+    type: CLEAR_REVIEWS,
+  };
+};
+
 export const createReview = (review) => async (dispatch) => {
   // console.log(review);
   try {
@@ -80,6 +88,9 @@ export const getCurrentReviews = () => async (dispatch) => {
 };
 
 export const getSpotReviews = (id) => async (dispatch) => {
+  // Clear the reviews before fetching new ones
+  dispatch(clearReviews());
+
   const response = await csrfFetch(`/api/spots/${id}/reviews`);
 
   if (response.ok) {
@@ -140,9 +151,11 @@ const initialState = {};
 
 const reviewReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CLEAR_REVIEWS: {
+      return {}; // Clear all reviews
+    }
     case CREATE_REVIEW: {
       const newState = { ...state };
-
       newState[action.payload.id] = action.payload;
       return newState;
     }
@@ -156,12 +169,10 @@ const reviewReducer = (state = initialState, action) => {
       action.payload.forEach((review) => {
         allReviews[review.id] = review;
       });
-      return { ...state, ...allReviews };
+      return allReviews; // Replace the state with the new reviews
     }
-
     case DELETE_REVIEW: {
       const newState = { ...state };
-
       delete newState[action.payload];
       return newState;
     }

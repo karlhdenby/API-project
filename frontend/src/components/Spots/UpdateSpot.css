@@ -9,7 +9,7 @@
   }
   
   .update-spot-form h1 {
-    text-align: center;
+    text-align: left;
     margin-bottom: 20px;
     font-size: 24px;
     color: #333;
@@ -72,7 +72,7 @@
     flex: 1;
   }
   
-  /* Specific styling for the price input */
+
   .price-group {
     display: flex;
     flex-direction: column;
@@ -118,4 +118,12 @@
   .submit-button:hover {
     background-color: #e04848;
   }
+
+  .form-group .error {
+    color: #ff0000;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    font-weight: bold;
+  }
+  
   
