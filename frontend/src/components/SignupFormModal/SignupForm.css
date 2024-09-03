@@ -4,12 +4,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px; /* Adjust to the size in the mockup */
+  width: 400px;
   background-color: white;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  z-index: 1001; /* Ensure this is above the background */
+  z-index: 1001;
 }
 
 #modal-background {
@@ -19,13 +19,13 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000; /* Background should be behind the modal */
+  z-index: 1000;
 }
 
 #modal-content {
   position: relative;
   width: 100%;
-  z-index: 1002; /* Ensure content is interactable */
+  z-index: 1002;
 }
 
 .signup-modal {
@@ -68,7 +68,7 @@
 .signup-modal .error {
   color: red;
   font-size: 14px;
-  margin-top: -10px; /* Position error close to input */
+  margin-top: -10px;
   margin-bottom: 10px;
   text-align: left;
 }

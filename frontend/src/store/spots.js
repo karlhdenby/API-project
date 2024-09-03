@@ -109,10 +109,10 @@ export const createSpot = (spot) => async (dispatch) => {
       return spot.id;
     } else {
       const errorData = await response.json();
-      return { errors: errorData.errors }; // Return the errors
+      return { errors: errorData.errors };
     }
   } catch (error) {
-    return { errors: ["An unexpected error occurred."] }; // Generic error handling
+    return { errors: ["An unexpected error occurred."] };
   }
 };
 

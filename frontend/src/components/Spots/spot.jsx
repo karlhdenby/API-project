@@ -118,8 +118,8 @@ export const Spot = () => {
         <div>
           {reviews && reviews.length > 0 ? (
             reviews
-              .slice() // Create a shallow copy of the reviews array
-              .reverse() // Reverse the order of the array to display the newest review first
+              .slice() 
+              .reverse() 
               .map((review) => (
                 <div key={review.id} className="review">
                   <h4>{review.User?.firstName || "Anonymous"}</h4>{" "}

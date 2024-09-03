@@ -23,7 +23,7 @@ function LoginFormModal() {
         if (data && data.errors) {
           setErrors(data.errors);
         } else {
-          // Set a generic error message if no specific errors are provided
+
           setErrors({ credential: "The provided credentials were invalid." });
         }
       });
@@ -38,7 +38,7 @@ function LoginFormModal() {
         if (data && data.errors) {
           setErrors(data.errors);
         } else {
-          // Set a generic error message if no specific errors are provided
+
           setErrors({ credential: "The provided credentials were invalid." });
         }
       });

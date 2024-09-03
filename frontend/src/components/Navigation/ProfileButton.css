@@ -6,14 +6,14 @@
 }
 
 .profile-logo {
-  height: 40px; /* Adjust size as needed */
-  border-radius: 50%; /* Make it round if you want */
+  height: 40px;
+  border-radius: 50%;
 }
 
 .profile-dropdown {
   text-align: center;
   position: absolute;
-  right: 10px; /* Adjust this value to position the dropdown closer to the icon */
+  right: 10px;
   top: 50px;
   background-color: white;
   border: 1px solid #ddd;

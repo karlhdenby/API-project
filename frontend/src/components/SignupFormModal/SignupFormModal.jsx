@@ -30,14 +30,14 @@ function SignupFormModal() {
 
     setErrors(newErrors);
 
-    return Object.keys(newErrors).length === 0; // return true if no errors
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
 
-    if (!validateFields()) return; // Validate fields and stop if there are errors
+    if (!validateFields()) return;
 
     try {
       const response = await dispatch(
