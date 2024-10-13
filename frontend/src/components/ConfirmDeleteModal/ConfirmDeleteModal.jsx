@@ -16,7 +16,7 @@ function ConfirmDeleteModal({ reviewId }) {
     <div className="confirm-delete-modal">
       <h1>Confirm Delete</h1>
       <p>Are you sure you want to delete this review?</p>
-      <div className="button-container">
+      <div className="button-container-confirm">
         <button className="delete-button" onClick={handleDelete}>Yes (Delete Review)</button>
         <button className="cancel-button" onClick={closeModal}>No (Keep Review)</button>
       </div>

@@ -51,4 +51,9 @@
   .confirm-delete-modal .delete-button + .cancel-button {
     margin-top: 0;
   }
+
+  .button-container-confirm {
+    display: flex;
+    flex-direction: column;
+  }
   

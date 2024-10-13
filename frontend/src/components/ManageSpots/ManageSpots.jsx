@@ -33,11 +33,9 @@ export const CurrentSpots = () => {
   return (
     <div className="spot-container">
       <h1>Manage Your Spots</h1>
-      <NavLink to="/spots/new" className="create-spot-button">
-        Create a New Spot
-      </NavLink>
       <div className="spots-grid">
-        {spotsArr?.map((spot) => {
+        {spotsArr.length > 0 ? 
+        spotsArr.map((spot) => {
           return (
             <div
               key={spot.id}
@@ -56,30 +54,34 @@ export const CurrentSpots = () => {
                     {spot.city}, {spot.state}
                   </p>
                   <div className="spot-rating">
-                    <span>⭐ {spot.avgStarRating || "NEW"}</span>
+                    <span>⭐ {spot.avgRating?.toFixed(1) || "NEW"}</span>
                   </div>
                 </div>
                 <p className="spot-price">${spot.price}/night</p>
               </div>
               <div className="button-container">
-                {" "}
-                {/* New container for buttons */}
+                <span>
                 <button
-                  className="update-button"
                   onClick={(e) => handleEdit(e, spot)}
                 >
                   Update
                 </button>
-                <button
-                  className="delete-button"
+                </span>
+                <span>
+                <button id="delete"
                   onClick={(e) => handleDelete(e, spot.id)}
                 >
                   Delete
                 </button>
+                </span>
               </div>
             </div>
           );
-        })}
+        }) : 
+        <NavLink to="/spots/new" className="create-spot-button">
+        Create a New Spot
+      </NavLink>
+        }
       </div>
     </div>
   );
