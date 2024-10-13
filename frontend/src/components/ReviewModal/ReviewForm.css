@@ -8,10 +8,12 @@
   text-align: center;
 }
 
+
 .review-form h2 {
   margin-bottom: 15px;
   font-size: 22px;
   color: #333;
+  text-align: center;
 }
 
 .review-form .error {
@@ -21,7 +23,7 @@
 }
 
 .review-form textarea {
-  width: 100%;
+  width: 95%;
   height: 100px;
   padding: 10px;
   border: 1px solid #ccc;

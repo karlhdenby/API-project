@@ -17,7 +17,7 @@ async function calculateAvg(id) {
   for (let a of result) {
     total += a.stars;
   }
-  if (count > 0) return total / count;
+  if (count > 0) return (total / count);
   else return null;
 }
 
@@ -162,7 +162,7 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
   }
 });
 
-router.get("/:spotId/reviews", requireAuth, async (req, res, next) => {
+router.get("/:spotId/reviews", async (req, res, next) => {
   let spotId = req.params.spotId;
   try {
     let reviews = await Review.findAll({

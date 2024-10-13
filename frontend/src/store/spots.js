@@ -19,7 +19,7 @@ const loadSpots = (spots) => {
 
 const loadCurrentSpots = (spots) => {
   return {
-    type: GET_ALL_SPOTS,
+    type: GET_CURRENT_SPOTS,
     payload: spots,
   };
 };
@@ -64,9 +64,10 @@ const newImage = (images) => {
 export const getAllSpots = () => async (dispatch) => {
   const response = await csrfFetch("/api/spots");
 
+
   if (response.ok) {
     const data = await response.json();
-
+    console.log(data)
     dispatch(loadSpots(data.Spots));
     return data.Spots;
   }
@@ -88,12 +89,13 @@ export const getSpot = (id) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     console.log(data);
-    dispatch(loadSpot(data));
+    await dispatch(loadSpot(data));
     return data;
   }
 };
 
 export const createSpot = (spot) => async (dispatch) => {
+  console.log(spot)
   try {
     const response = await csrfFetch("/api/spots", {
       method: "POST",
@@ -104,9 +106,10 @@ export const createSpot = (spot) => async (dispatch) => {
     });
 
     if (response.ok) {
-      const spot = await response.json();
-      dispatch(newSpot(spot));
-      return spot.id;
+      const spotNew = await response.json();
+      console.log(spotNew)
+      dispatch(newSpot(spotNew));
+      return spotNew;
     } else {
       const errorData = await response.json();
       return { errors: errorData.errors };
@@ -163,9 +166,10 @@ export const spotDelete = (spotId) => async (dispatch) => {
 
 
 export const createSpotImages = (images) => async (dispatch) => {
-  const spotId = images[0].spotId;
-  console.log(spotId)
   console.log(images)
+  let spotId = images[0].spotId;
+  console.log(spotId)
+  spotId = spotId.id
 
   for (let i = 0; i < images.length; i++) {
     try {
@@ -194,12 +198,13 @@ export const createSpotImages = (images) => async (dispatch) => {
 
 
 const initialState = {};
+let spots = {}
 
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_SPOTS: {
-      const allSpots = {};
-      action.payload.forEach((spot) => (allSpots[spot.id] = spot));
+      const allSpots = {spots};
+      action.payload.forEach((spot) => (allSpots.spots[spot.id] = spot));
       return allSpots;
     }
     case GET_SPOT: {

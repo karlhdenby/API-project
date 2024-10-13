@@ -32,33 +32,55 @@ export const CurrentSpots = () => {
 
   return (
     <div className="spot-container">
-  <h1>Manage Your Spots</h1>
-  <NavLink to="/spots/new" className="create-spot-button">Create a New Spot</NavLink>
-  <div className="spots-grid">
-    {spotsArr?.map((spot) => (
-      <div key={spot.id} className="spot-card" title={spot.name} onClick={() => navigate(`/spots/${spot.id}`)}>
-        <img src={spot.previewImage || "https://via.placeholder.com/150"} alt={`Preview of ${spot.name}`} />
-        <div className="spot-info">
-          <div className="spot-details">
-            <p>{spot.city}, {spot.state}</p>
-            <div className="spot-rating">
-              <span>⭐ {spot.avgStarRating || "NEW"}</span>
+      <h1>Manage Your Spots</h1>
+      <NavLink to="/spots/new" className="create-spot-button">
+        Create a New Spot
+      </NavLink>
+      <div className="spots-grid">
+        {spotsArr?.map((spot) => {
+          return (
+            <div
+              key={spot.id}
+              className="spot-card"
+              title={spot.name}
+              onClick={() => navigate("/spots/" + spot.id)}
+              >
+              {console.log(spot)}
+              <img
+                src={spot.previewImage || "https://via.placeholder.com/150"}
+                alt={`Preview of ${spot.name}`}
+              />
+              <div className="spot-info">
+                <div className="spot-details">
+                  <p>
+                    {spot.city}, {spot.state}
+                  </p>
+                  <div className="spot-rating">
+                    <span>⭐ {spot.avgStarRating || "NEW"}</span>
+                  </div>
+                </div>
+                <p className="spot-price">${spot.price}/night</p>
+              </div>
+              <div className="button-container">
+                {" "}
+                {/* New container for buttons */}
+                <button
+                  className="update-button"
+                  onClick={(e) => handleEdit(e, spot)}
+                >
+                  Update
+                </button>
+                <button
+                  className="delete-button"
+                  onClick={(e) => handleDelete(e, spot.id)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
-          <p className="spot-price">${spot.price}/night</p>
-        </div>
-        <div className="button-container"> {/* New container for buttons */}
-          <button className="update-button" onClick={(e) => handleEdit(e, spot)}>
-            Update
-          </button>
-          <button className="delete-button" onClick={(e) => handleDelete(e, spot.id)}>
-            Delete
-          </button>
-        </div>
+          );
+        })}
       </div>
-    ))}
-  </div>
-</div>
-
+    </div>
   );
 };

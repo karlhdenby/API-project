@@ -40,6 +40,7 @@ function SignupFormModal() {
     if (!validateFields()) return;
 
     try {
+      console.log(email, username, firstName, lastName, password)
       const response = await dispatch(
         sessionActions.signup({
           email,
@@ -51,25 +52,22 @@ function SignupFormModal() {
       );
 
       if (!response.ok) {
-        const data = await response.json();
+        const data = response
+        console.log(data)
         if (data && data.errors) {
           const backendErrors = {};
           for (let key in data.errors) {
-            if (key === 'username') {
-              backendErrors.username = "Username must be unique";
-            } else if (key === 'email') {
-              backendErrors.email = "Email is already in use or invalid";
-            }
+            backendErrors[key] = data.errors[key]
           }
           setErrors(backendErrors);
-        } else {
-          setErrors({ general: "An error occurred. Please try again." });
+          console.log(backendErrors)
         }
       } else {
         closeModal();
       }
     } catch (error) {
-      setErrors({ general: "An error occurred. Please try again." });
+      console.log(await error)
+      setErrors({ general: "hello" });
     }
   };
 

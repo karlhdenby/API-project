@@ -1,9 +1,8 @@
 import { useDispatch } from "react-redux";
-import { createSpot, getAllSpots, createSpotImages } from "../../store/spots";
+import { createSpot, createSpotImages } from "../../store/spots";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import './CreateSpot.css';
 
 export default function CreateSpot() {
@@ -24,24 +23,14 @@ export default function CreateSpot() {
   const [lat, setLat] = useState(10);
   const [lng, setLng] = useState(10);
   const sessionUser = useSelector((state) => state.session.user);
-  const [length, setLength] = useState(0);
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    async function fetchSpots() {
-      const allSpots = await dispatch(getAllSpots());
-      setLength(allSpots.length + 1);
-    }
-
-    fetchSpots();
-  }, [dispatch]);
+  const [disabled, setDisabled] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validationErrors = {};
 
-    // Validate required fields
     if (!country) validationErrors.country = "Country is required.";
     if (!address) validationErrors.address = "Address is required.";
     if (!city) validationErrors.city = "City is required.";
@@ -51,7 +40,7 @@ export default function CreateSpot() {
     if (price <= 0) validationErrors.price = "Price must be greater than 0.";
     if (!previewImage) validationErrors.previewImage = "Preview image is required.";
 
-    // Check for any errors
+    
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -73,21 +62,21 @@ export default function CreateSpot() {
         ownerId: sessionUser.id,
       };
 
-      const createdSpot = await dispatch(createSpot(newSpot));
+      const createdSpot = await dispatch(createSpot(newSpot))
+      console.log(createdSpot)
 
       if (createdSpot.errors) {
         setErrors(createdSpot.errors);
+        setDisabled(true);
         return;
       }
 
-      const spotId = createdSpot.id || length;
-
       const newImages = [
-        { url: previewImage, spotId: spotId, preview: true },
-        { url: imageOne, spotId: spotId, preview: false },
-        { url: imageTwo, spotId: spotId, preview: false },
-        { url: imageThree, spotId: spotId, preview: false },
-        { url: imageFour, spotId: spotId, preview: false },
+        { url: previewImage, spotId: createdSpot, preview: true },
+        { url: imageOne, spotId: createdSpot, preview: false },
+        { url: imageTwo, spotId: createdSpot, preview: false },
+        { url: imageThree, spotId: createdSpot, preview: false },
+        { url: imageFour, spotId: createdSpot, preview: false },
       ].filter(image => image.url.trim() !== "");
 
       if (newImages.length > 0) {
@@ -95,11 +84,12 @@ export default function CreateSpot() {
           await dispatch(createSpotImages(newImages));
         } catch (imageError) {
           setErrors({ images: "An error occurred while uploading images. Please try again." });
+          setDisabled(false);
           return;
         }
       }
 
-      // Reset the form fields
+     
       setCountry("");
       setAddress("");
       setCity("");
@@ -114,11 +104,16 @@ export default function CreateSpot() {
       setImageFour("");
       setPreviewImage("");
 
-      navigate(`/spots/${spotId}`);
+      navigate(`/spots/${createdSpot.id}`)
+
     } catch (error) {
       setErrors({ general: error.message });
+      setDisabled(false);
     }
+
+    
   };
+
 
   return (
     <form onSubmit={handleSubmit} className="create-spot-form">
@@ -137,7 +132,7 @@ export default function CreateSpot() {
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             placeholder="Country"
-            required
+            
           />
           {errors.country && <p className="error">{errors.country}</p>}
         </div>
@@ -148,7 +143,7 @@ export default function CreateSpot() {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder="Address"
-            required
+            
           />
           {errors.address && <p className="error">{errors.address}</p>}
         </div>
@@ -160,7 +155,7 @@ export default function CreateSpot() {
               value={city}
               onChange={(e) => setCity(e.target.value)}
               placeholder="City"
-              required
+              
             />
             {errors.city && <p className="error">{errors.city}</p>}
           </div>
@@ -171,7 +166,7 @@ export default function CreateSpot() {
               value={state}
               onChange={(e) => setState(e.target.value)}
               placeholder="State"
-              required
+              
             />
             {errors.state && <p className="error">{errors.state}</p>}
           </div>
@@ -210,7 +205,7 @@ export default function CreateSpot() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Please write at least 30 characters"
-            required
+            
           />
           {errors.description && <p className="error">{errors.description}</p>}
         </div>
@@ -227,7 +222,7 @@ export default function CreateSpot() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name of your spot"
-            required
+            
           />
           {errors.name && <p className="error">{errors.name}</p>}
         </div>
@@ -246,7 +241,7 @@ export default function CreateSpot() {
               value={price}
               onChange={(e) => setPrice(parseFloat(e.target.value))}
               placeholder="Price per night (USD)"
-              required
+              
             />
             {errors.price && <p className="error">{errors.price}</p>}
           </div>
@@ -264,7 +259,6 @@ export default function CreateSpot() {
             value={previewImage}
             onChange={(e) => setPreviewImage(e.target.value)}
             placeholder="Preview Image URL"
-            required
           />
           {errors.previewImage && <p className="error">{errors.previewImage}</p>}
         </div>
@@ -307,7 +301,7 @@ export default function CreateSpot() {
         {errors.images && <p className="error">{errors.images}</p>}
       </section>
 
-      <button type="submit" className="submit-button">Create Spot</button>
+      <button disabled={disabled} type="submit" className="submit-button">{disabled ? "Submitting..." : "Create Spot"}</button>
     </form>
   );
 }

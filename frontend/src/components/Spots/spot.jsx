@@ -76,7 +76,6 @@ export const Spot = () => {
               <span className="price">
                 ${spot.price} <span>night</span>
               </span>
-              {reviews.length > 0 && (
                 <div className="reviews">
                   ★ {avgRating}
                   {reviews.length > 0 && <span className="dot">·</span>}
@@ -88,7 +87,6 @@ export const Spot = () => {
                     </span>
                   )}
                 </div>
-              )}
             </div>
             <button onClick={handleReserve} className="reserve-button">
               Reserve

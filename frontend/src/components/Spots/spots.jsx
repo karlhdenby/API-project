@@ -13,21 +13,23 @@ export const Spots = () => {
   useEffect(() => {
     const fetchSpots = async () => {
       const allSpots = await dispatch(getAllSpots());
+      console.log(allSpots)
       setSpots(allSpots);
     };
     fetchSpots();
   }, [dispatch]);
+  
 
   return (
     <div className="spots-grid">
-      {spots.map((spot) => (
+      {(Object.values(spots)).map((spot) => (
         <div
-          onClick={() => navigate(`/spots/${spot.id}`)}
-          key={spot.id}
-          className="spot-card"
+        onClick={() => navigate(`/spots/${spot.id}`)}
+        key={spot.id}
+        className="spot-card"
         >
           <img
-            src={spot.previewImage || "https://via.placeholder.com/150"}
+            src={spot.previewImage || "https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png"}
             alt={`Preview of ${spot.name}`}
           />
           <div className="spot-info">
@@ -36,7 +38,8 @@ export const Spots = () => {
               <p>
                 {spot.city}, {spot.state}
               </p>
-              <div className="spot-rating">⭐ {spot.avgRating || "NEW"}</div>
+              <div className="spot-rating">⭐ {spot.avgRating?.toFixed(1) || "NEW"}</div>
+              {console.log(parseInt(spot.avgRating).toFixed())}
             </div>
             <p className="spot-price">${spot.price}/night</p>
           </div>

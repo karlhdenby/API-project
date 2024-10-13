@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import * as sessionActions from '../../store/session';
-import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/Modal';
-import './LoginForm.css';
+import { useState, useRef, useEffect } from "react";
+import * as sessionActions from "../../store/session";
+import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
+import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -10,8 +10,23 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const modalRef = useRef();
+
+
 
   const isDisabled = credential.length < 4 || password.length < 6;
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        closeModal();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [closeModal]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +38,6 @@ function LoginFormModal() {
         if (data && data.errors) {
           setErrors(data.errors);
         } else {
-
           setErrors({ credential: "The provided credentials were invalid." });
         }
       });
@@ -31,30 +45,27 @@ function LoginFormModal() {
 
   const handleDemoUser = () => {
     setErrors({});
-    return dispatch(sessionActions.login({ credential: "TestGuy", password: "password" }))
+    return dispatch(
+      sessionActions.login({ credential: "TestGuy", password: "password" })
+    )
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
           setErrors(data.errors);
         } else {
-
           setErrors({ credential: "The provided credentials were invalid." });
         }
       });
   };
 
   return (
-    <div className="login-modal">
+    <div className="login-modal" ref={modalRef}>
       <h1>Log In</h1>
-      {errors.credential && (
-        <p className="error">{errors.credential}</p>
-      )}
+      {errors.credential && <p className="error">{errors.credential}</p>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>
-            Username or Email
-          </label>
+          <label>Username or Email</label>
           <input
             type="text"
             value={credential}
@@ -63,9 +74,7 @@ function LoginFormModal() {
           />
         </div>
         <div className="form-group">
-          <label>
-            Password
-          </label>
+          <label>Password</label>
           <input
             type="password"
             value={password}
@@ -73,9 +82,13 @@ function LoginFormModal() {
             required
           />
         </div>
-        <button type="submit" disabled={isDisabled} className="submit-button">Log In</button>
+        <button type="submit" disabled={isDisabled} className="submit-button">
+          Log In
+        </button>
       </form>
-      <button onClick={handleDemoUser} className="demo-user-button">Demo User</button>
+      <button onClick={handleDemoUser} className="demo-user-button">
+        Demo User
+      </button>
     </div>
   );
 }

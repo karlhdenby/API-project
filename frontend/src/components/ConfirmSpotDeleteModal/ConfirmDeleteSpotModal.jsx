@@ -3,8 +3,7 @@ import { useModal } from '../../context/Modal';
 import { spotDelete, getCurrentSpots } from '../../store/spots';
 import './ConfirmDeleteSpotModal.css';
 
-const ConfirmDeleteSpotModal = ({ spotId }) => {
-
+const ConfirmDeleteSpotModal = ({spotId}) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 

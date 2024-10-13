@@ -74,11 +74,14 @@ export const signup = (user) => async (dispatch) => {
       }),
     });
     const data = await response.json();
+    console.log(data)
     dispatch(setUser(data.user));
     return response;
     
   } catch (error) {
-    console.log(await error.json())
+    let errors = await error.json()
+    console.log(errors)
+    return errors
   }
 };
 
