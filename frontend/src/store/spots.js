@@ -235,7 +235,7 @@ const spotsReducer = (state = initialState, action) => {
     }
     
     case GET_CURRENT_SPOTS: {
-      const allSpots = {spots};
+      const allSpots = {};
       action.payload.forEach((spot) => (allSpots[spot.id] = spot));
       return allSpots;
     }

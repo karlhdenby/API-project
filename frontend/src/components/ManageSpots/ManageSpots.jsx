@@ -12,6 +12,7 @@ export const CurrentSpots = () => {
   const { setModalContent, setOnModalClose } = useModal();
   const spots = useSelector((state) => state.spots);
   const spotsArr = Object.values(spots);
+  console.log(spotsArr)
 
   useEffect(() => {
     dispatch(getCurrentSpots());
@@ -34,7 +35,7 @@ export const CurrentSpots = () => {
     <div className="spot-container">
       <h1>Manage Your Spots</h1>
       <div className="spots-grid">
-        {(spotsArr.length > 0) ?
+        {spotsArr && spotsArr.length > 0 ?
         spotsArr.map((spot) => {
           return (
             <div
