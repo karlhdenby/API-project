@@ -82,6 +82,7 @@ export const getCurrentSpots = () => async (dispatch) => {
     dispatch(loadCurrentSpots(data.Spots));
     return data.Spots;
   }
+  else console.log(response)
 };
 
 export const getSpot = (id) => async (dispatch) => {
