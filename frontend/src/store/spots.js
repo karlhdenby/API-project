@@ -78,11 +78,10 @@ export const getCurrentSpots = () => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json();
-
+    console.log(data)
     dispatch(loadCurrentSpots(data.Spots));
     return data.Spots;
   }
-  else console.log(response)
 };
 
 export const getSpot = (id) => async (dispatch) => {

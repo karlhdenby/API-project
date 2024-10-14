@@ -34,7 +34,7 @@ export const CurrentSpots = () => {
     <div className="spot-container">
       <h1>Manage Your Spots</h1>
       <div className="spots-grid">
-        {spotsArr.length > 0 ? 
+        {spotsArr && spotsArr.length > 0 ? 
         spotsArr.map((spot) => {
           return (
             <div
