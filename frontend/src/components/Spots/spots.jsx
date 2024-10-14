@@ -39,7 +39,7 @@ export const Spots = () => {
                 {spot.city}, {spot.state}
               </p>
               <div className="spot-rating">⭐ {spot.avgRating?.toFixed(1) || "NEW"}</div>
-              {console.log(parseInt(spot.avgRating).toFixed())}
+              {console.log(parseInt(spot.avgRating).toFixed(1))}
             </div>
             <p className="spot-price">${spot.price}/night</p>
           </div>
