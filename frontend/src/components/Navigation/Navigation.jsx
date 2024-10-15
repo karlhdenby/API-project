@@ -31,10 +31,10 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <div className="dropdown" >
-        <button className="dropbtn" onClick={handleClick} id={`${showMenu ? 'dropdown-button-clicked' : ''}`}>
+        <button className="dropbtn" onClick={handleClick}>
           <FaUserCircle className="user-icon" />
         </button>
-        <div className="dropdown-content">
+        <div className="dropdown-content" id={`${showMenu ? 'dropdown-button-clicked' : 'dropdown-button-not-clicked'}`}>
           <OpenModalButton
             data-testid="login-button"
             buttonText="Log In"
