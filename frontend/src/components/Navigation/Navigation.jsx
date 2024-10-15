@@ -5,9 +5,17 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
 import { FaUserCircle } from 'react-icons/fa';
+import { useState } from 'react';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
+  const [showMenu, setShowMenu] = useState(false);
+
+  const handleClick = () => {
+    if (showMenu) setShowMenu(false)
+    if (!showMenu) setShowMenu(true)
+  }
+
   const sessionUser = useSelector((state) => state.session.user);
 
   let sessionLinks;
@@ -22,8 +30,8 @@ function Navigation({ isLoaded }) {
     );
   } else {
     sessionLinks = (
-      <div className="dropdown">
-        <button className="dropbtn">
+      <div className="dropdown" >
+        <button className="dropbtn" onClick={handleClick} id={`${showMenu ? 'dropdown-button-clicked' : ''}`}>
           <FaUserCircle className="user-icon" />
         </button>
         <div className="dropdown-content">
