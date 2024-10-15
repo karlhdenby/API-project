@@ -60,13 +60,14 @@ function LoginFormModal() {
   };
 
   return (
-    <div className="login-modal" ref={modalRef}>
+    <div className="login-modal" ref={modalRef} data-testid="login-modal">
       <h1>Log In</h1>
       {errors.credential && <p className="error">{errors.credential}</p>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Username or Email</label>
           <input
+            data-testid="credential-input"
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
@@ -76,13 +77,14 @@ function LoginFormModal() {
         <div className="form-group">
           <label>Password</label>
           <input
+            data-testid="password-input"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        <button type="submit" disabled={isDisabled} className="submit-button">
+        <button type="submit" disabled={isDisabled} className="submit-button" data-testid="login-button">
           Log In
         </button>
       </form>

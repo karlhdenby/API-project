@@ -28,10 +28,11 @@ function Navigation({ isLoaded }) {
         </button>
         <div className="dropdown-content">
           <OpenModalButton
+            data-testid="login-button"
             buttonText="Log In"
             modalComponent={<LoginFormModal />}
           />
-          <OpenModalButton
+          <OpenModalButton 
             buttonText="Sign Up"
             modalComponent={<SignupFormModal />}
           />
@@ -42,14 +43,14 @@ function Navigation({ isLoaded }) {
 
   return (
     <nav className="navbar">
-      <NavLink exact to="/" className="navbar-logo">
+      <NavLink exact to="/" className="navbar-logo" data-testid="logo">
         <img
           src="https://www.muv.co.uk/cdn-cgi/image/width=1200,height=675,quality=80,format=auto,onerror=redirect,metadata=none/cdn-cgi/image/quality=80,format=auto,onerror=redirect,metadata=none/wp-content/uploads/2024/01/steamboat.jpg"
           alt="Airbnb logo"
           className="logo"
         />
       </NavLink>
-      <div className="navbar-menu">
+      <div className="navbar-menu" data-testid="user-dropdown-menu">
         {isLoaded && sessionLinks}
       </div>
     </nav>

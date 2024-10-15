@@ -38,7 +38,7 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={toggleMenu} className="profile-button">
+      <button onClick={toggleMenu} className="profile-button" data-testid="user-menu-button">
         <img
           src="https://static.vecteezy.com/system/resources/previews/038/147/992/original/ai-generated-man-waving-hand-and-smiling-on-transparent-background-image-png.png"
           alt="Profile logo"
