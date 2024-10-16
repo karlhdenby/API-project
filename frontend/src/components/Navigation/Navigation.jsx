@@ -5,11 +5,15 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
 import { FaUserCircle } from 'react-icons/fa';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
   const [showMenu, setShowMenu] = useState(false);
+
+  useEffect(() => {
+    if (showMenu) setShowMenu(false)
+  }, [showMenu])
 
   const handleClick = () => {
     if (!showMenu) setShowMenu(true)
