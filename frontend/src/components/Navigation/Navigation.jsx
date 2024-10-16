@@ -46,7 +46,7 @@ function Navigation({ isLoaded }) {
         <button className="dropbtn" onClick={handleClick} data-testid="user-menu-button">
           <FaUserCircle className="user-icon" />
         </button>
-        <div className="dropdown-content" id={`${showMenu ? 'dropdown-button-clicked' : 'dropdown-button-not-clicked'}`}>
+        <div className="dropdown-content" ref={modalRef} id={`${showMenu ? 'dropdown-button-clicked' : 'dropdown-button-not-clicked'}`}>
           <OpenModalButton
             data-testid="login-button"
             buttonText="Log In"
