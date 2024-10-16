@@ -31,7 +31,7 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <div className="dropdown" >
-        <button className="dropbtn" onClick={handleClick}>
+        <button className="dropbtn" onClick={handleClick} data-testid="user-menu-button">
           <FaUserCircle className="user-icon" />
         </button>
         <div className="dropdown-content" id={`${showMenu ? 'dropdown-button-clicked' : 'dropdown-button-not-clicked'}`}>
