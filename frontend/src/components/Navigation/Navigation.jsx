@@ -12,7 +12,6 @@ function Navigation({ isLoaded }) {
   const [showMenu, setShowMenu] = useState(false);
 
   const handleClick = () => {
-    if (showMenu) setShowMenu(false)
     if (!showMenu) setShowMenu(true)
   }
 
