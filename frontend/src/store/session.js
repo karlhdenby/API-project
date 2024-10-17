@@ -16,8 +16,6 @@ const removeUser = () => {
   };
 };
 
-const initialState = { user: null };
-
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch("/api/session", {
@@ -41,48 +39,52 @@ export const logout = () => async (dispatch) => {
   };
 
 
-const sessionReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SET_USER:
-      return { ...state, user: action.payload };
-    case REMOVE_USER:
-      return { ...state, user: null };
-    default:
-      return state;
-  }
-};
-
-export const restoreUser = () => async (dispatch) => {
-  const response = await csrfFetch("/api/session");
-  const data = await response.json();
-  dispatch(setUser(data.user));
-  return response;
-};
-
-export const signup = (user) => async (dispatch) => {
-  try {
-
-    const { username, firstName, lastName, email, password } = user;
-    const response = await csrfFetch("/api/users", {
-      method: "POST",
-      body: JSON.stringify({
-        username,
-        firstName,
-        lastName,
-        email,
-        password,
-      }),
-    });
+  
+  export const restoreUser = () => async (dispatch) => {
+    const response = await csrfFetch("/api/session");
     const data = await response.json();
-    console.log(data)
     dispatch(setUser(data.user));
     return response;
-    
-  } catch (error) {
-    let errors = await error.json()
-    console.log(errors)
-    return errors
-  }
-};
+  };
+  
+  export const signup = (user) => async (dispatch) => {
+    try {
+      
+      const { username, firstName, lastName, email, password } = user;
+      const response = await csrfFetch("/api/users", {
+        method: "POST",
+        body: JSON.stringify({
+          username,
+          firstName,
+          lastName,
+          email,
+          password,
+        }),
+      });
+      const data = await response.json();
+      console.log(data)
+      dispatch(setUser(data.user));
+      return response;
+      
+    } catch (error) {
+      let errors = await error.json()
+      console.log(errors)
+      return errors
+    }
+  };
 
-export default sessionReducer;
+  const initialState = { user: null };
+
+  const sessionReducer = (state = initialState, action) => {
+    switch (action.type) {
+      case SET_USER:
+        return { ...state, user: action.payload };
+      case REMOVE_USER:
+        return { ...state, user: null };
+      default:
+        return state;
+    }
+  };
+  
+  export default sessionReducer;
+  

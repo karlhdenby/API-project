@@ -5,15 +5,18 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
 import { FaUserCircle } from 'react-icons/fa';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect} from 'react';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
   const [showMenu, setShowMenu] = useState(false);
   const modalRef = useRef();
 
+  const closeMenu = () => setShowMenu(false);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
+      console.log("bark")
       if (modalRef.current && !modalRef.current.contains(event.target)) {
         setShowMenu(false);
       }
@@ -26,6 +29,7 @@ function Navigation({ isLoaded }) {
 
   const handleClick = () => {
     if (!showMenu) setShowMenu(true)
+    if (showMenu) setShowMenu(false)
   }
 
   const sessionUser = useSelector((state) => state.session.user);
@@ -42,19 +46,23 @@ function Navigation({ isLoaded }) {
     );
   } else {
     sessionLinks = (
-      <div className="dropdown" >
-        <button className="dropbtn" onClick={handleClick} data-testid="user-menu-button">
-          <FaUserCircle className="user-icon" />
+      <div className="dropdown" ref={modalRef} >
+        <button className="dropbtn" onClick={handleClick} data-testid='user-menu-button'>
+          <FaUserCircle className="user-icon"/>
         </button>
-        <div className="dropdown-content" ref={modalRef} id={`${showMenu ? 'dropdown-button-clicked' : 'dropdown-button-not-clicked'}`}>
+        <div className="dropdown-content" id={`${showMenu ? 'dropdown-button-clicked' : 'dropdown-button-not-clicked'}`} data-testid="user-dropdown-menu">
+          <OpenModalButton 
+            onButtonClick={closeMenu}
+            buttonText="Sign Up"
+            modalComponent={<SignupFormModal />}
+          />
           <OpenModalButton
+            id={"log-in-button-modal"}
+            onButtonClick={closeMenu}
             data-testid="login-button"
             buttonText="Log In"
             modalComponent={<LoginFormModal />}
-          />
-          <OpenModalButton 
-            buttonText="Sign Up"
-            modalComponent={<SignupFormModal />}
+            
           />
         </div>
       </div>
@@ -70,7 +78,7 @@ function Navigation({ isLoaded }) {
           className="logo"
         />
       </NavLink>
-      <div className="navbar-menu" data-testid="user-dropdown-menu">
+      <div className="navbar-menu">
         {isLoaded && sessionLinks}
       </div>
     </nav>

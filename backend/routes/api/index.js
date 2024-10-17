@@ -29,9 +29,6 @@ router.use('/users', usersRouter);
 
 router.use('/reviews', reviewsRouter);
 
-router.post('/test', (req, res) => {
-    res.json({ requestBody: req.body });
-});
 
 
 module.exports = router;

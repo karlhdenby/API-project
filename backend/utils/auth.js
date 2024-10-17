@@ -5,6 +5,7 @@ const { User } = require('../db/models');
 const { secret, expiresIn } = jwtConfig;
 
 const setTokenCookie = (res, user) => {
+    
     const safeUser = {
         id: user.id,
         email: user.email,
@@ -24,10 +25,12 @@ const setTokenCookie = (res, user) => {
         sameSite: isProduction && "Lax" 
     });
 
+    
     return token;
 }
 
 const restoreUser = (req, res, next) => {
+    
     const { token } = req.cookies;
     req.user = null;
 
@@ -48,6 +51,7 @@ const restoreUser = (req, res, next) => {
 
         if(!req.user) res.clearCookie('token');
 
+        
         return next();
     });
 };

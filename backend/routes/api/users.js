@@ -51,7 +51,7 @@ router.post('/', validateSignup, async (req, res) => {
             res.status(500).json( {
                 message: "User already exists",
                 errors: {
-                    username: "User with that email already exists"
+                    email: "User with that email already exists"
                 }
             })
         }

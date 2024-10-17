@@ -57,6 +57,7 @@ router.post('/', validateLogin, async (req, res, next) => {
 });
 
 router.delete('/', (_req, res) => {
+    console.log("hi")
     res.clearCookie('token');
     return res.json({ message: 'success '});
 });
