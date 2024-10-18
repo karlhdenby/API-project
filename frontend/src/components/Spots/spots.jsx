@@ -28,6 +28,7 @@ export const Spots = () => {
         key={spot.id}
         data-testid="spot-tile"
         className="spot-card"
+        href={`/spots/${spot.id}`}
         >
           <img
             data-testid="spot-thumbnail-image"
@@ -36,7 +37,7 @@ export const Spots = () => {
           />
           <div className="spot-info" data-testid="spot-tooltip">
             <div className="spot-name">{spot.name}</div>
-            <a className="spot-details" href={`/spots/${spot.id}`}>
+            <a className="spot-details">
               <div data-testid="spot-city">
               <p>
                 {spot.city}, {spot.state}

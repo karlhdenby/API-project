@@ -116,7 +116,7 @@ export default function CreateSpot() {
 
 
   return (
-    <form onSubmit={handleSubmit} className="create-spot-form">
+    <form onSubmit={handleSubmit} className="create-spot-form" data-testid="create-spot-form">
       <h1>Create a New Spot</h1>
 
       {errors.general && <p className="error">{errors.general}</p>}
