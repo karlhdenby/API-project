@@ -59,7 +59,7 @@ h1, h2 {
 }
 
 .spot-details-right {
-  width: 35%;
+  width: 3%;
   text-align: right;
 }
 
@@ -80,7 +80,6 @@ h1, h2 {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 20px;
 }
 
 .price-reviews-box .price {
@@ -93,9 +92,19 @@ h1, h2 {
 }
 
 .reviews {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   font-size: 16px;
-  color: #666;
+  color: #000000;
   margin-bottom: 20px;
+  width: 8dvw;
+  text-align: center;
+}
+
+.reviews .dot {
+  width: 1dvw;
 }
 
 .price-reviews-box .reserve-button {

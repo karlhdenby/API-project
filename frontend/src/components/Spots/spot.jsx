@@ -24,16 +24,16 @@ export const Spot = () => {
   }, [dispatch, id]);
 
   const handleReserve = () => {
-    alert("Feature Coming Soon...");
+    alert("Feature coming soon");
   };
 
   const calculateAverageRating = (reviews) => {
-    if (reviews.length === 0) return "NEW";
+    if (reviews.length === 0) return "New";
     const totalStars = reviews.reduce(
       (acc, review) => acc + (review.stars || 0),
       0
     );
-    return totalStars ? (totalStars / reviews.length).toFixed(1) : "NEW";
+    return totalStars ? (totalStars / reviews.length).toFixed(1) : "New";
   };
 
   const avgRating = calculateAverageRating(reviews);
@@ -46,49 +46,58 @@ export const Spot = () => {
 
   return (
     <div className="spot-container">
-      <h1>{spot.name}</h1>
-      <h2>{`${spot.city}, ${spot.state}, ${spot.country}`}</h2>
+      <h1 data-testid="spot-name">{spot.name}</h1>
+      <h2 data-testid="spot-location">{`${spot.city}, ${spot.state}, ${spot.country}`}</h2>
 
       {/* Images */}
       <div className="image-gallery">
-        <div className="main-image">
+        <div className="main-image" data-testid="spot-large-image">
           <img src={spot.SpotImages[0]?.url} alt={spot.name} />
         </div>
         <div className="other-images">
           {spot.SpotImages.slice(1, 5).map((image, idx) => (
-            <img key={idx} src={image.url} alt={`${spot.name} ${idx}`} />
+            <img
+              data-testid="spot-small-image"
+              key={idx}
+              src={image.url}
+              alt={`${spot.name} ${idx}`}
+            />
           ))}
         </div>
       </div>
 
       <div className="spot-details-container">
         <div className="spot-details-left">
-          <h3>
+          <h3 data-testid="spot-host">
             {spot.Owner
               ? `Hosted by ${spot.Owner.firstName} ${spot.Owner.lastName}`
               : "Hosted by: Owner information not available"}
           </h3>
-          <p>{spot.description}</p>
+          <p data-testid="spot-description">{spot.description}</p>
         </div>
-        <div className="spot-details-right">
-          <div className="price-reviews-box">
-            <div className="price-reviews">
-              <span className="price">
+        <div className="spot-details-right" >
+          <div className="price-reviews-box" data-testid="spot-callout-box">
+            <div className="price-reviews" data-testid="reviews-heading">
+              <span className="price" data-testid="spot-price">
                 ${spot.price} <span>night</span>
               </span>
-                <div className="reviews">
-                  ★ {avgRating}
-                  {reviews.length > 0 && <span className="dot">·</span>}
-                  {reviews.length > 0 && (
-                    <span>
-                      {reviews.length === 1
-                        ? "1 review"
-                        : `${reviews.length} reviews`}
-                    </span>
-                  )}
-                </div>
+              <div className="reviews" data-testid="spot-rating">
+                <p>★ {avgRating}</p>
+                {reviews.length > 0 && <p className="dot">·</p>}
+                {reviews.length > 0 && (
+                  <p data-testid="review-count">
+                    {reviews.length === 1
+                      ? "1 Review"
+                      : `${reviews.length} Reviews`}
+                  </p>
+                )}
+              </div>
             </div>
-            <button onClick={handleReserve} className="reserve-button">
+            <button
+              onClick={handleReserve}
+              className="reserve-button"
+              data-testid="reserve-button"
+            >
               Reserve
             </button>
           </div>
@@ -108,6 +117,7 @@ export const Spot = () => {
         )}
         {userCanPostReview && (
           <OpenModalButton
+            testid="review-button"
             modalComponent={<ReviewForm spotId={id} />}
             buttonText="Post a review"
             className="review-button"
@@ -116,8 +126,8 @@ export const Spot = () => {
         <div>
           {reviews && reviews.length > 0 ? (
             reviews
-              .slice() 
-              .reverse() 
+              .slice()
+              .reverse()
               .map((review) => (
                 <div key={review.id} className="review">
                   <h4>{review.User?.firstName || "Anonymous"}</h4>{" "}

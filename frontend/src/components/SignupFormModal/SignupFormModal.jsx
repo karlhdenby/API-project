@@ -17,6 +17,10 @@ function SignupFormModal() {
   const { closeModal } = useModal();
   const modalRef = useRef();
 
+  function capitalizeFirstLetterAndPeriod(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1) + ".";
+  }
+
   const validateFields = () => {
     
     const newErrors = {};
@@ -95,16 +99,40 @@ function SignupFormModal() {
       <h1>Sign Up</h1>
       {hasSubmitted && Object.keys(errors).length > 0 && (
         <div className="error-message">
-          {errors.username && <p data-testid="username-error-message">{errors.username}</p>}
-          {errors.email && <p data-testid="email-error-message">{errors.email}</p>}
-          {errors.firstName && <p data-testid="firstName-error-message">{errors.firstName}</p>}
-          {errors.lastName && <p data-testid="lastName-error-message">{errors.lastName}</p>}
-          {errors.password && <p data-testid="password-error-message">{errors.password}</p>}
-          {errors.confirmPassword && <p data-testid="confirmPassword-error-message">{errors.confirmPassword}</p>}
-          {errors.general && <p data-testid="general-error-message">{errors.general}</p>}
+          {errors.username && <p data-testid="username-error-message">{capitalizeFirstLetterAndPeriod(errors.username)}</p>}
+          {errors.email && <p data-testid="email-error-message">{capitalizeFirstLetterAndPeriod(errors.email)}</p>}
+          {errors.firstName && <p data-testid="firstName-error-message">{capitalizeFirstLetterAndPeriod(errors.firstName)}</p>}
+          {errors.lastName && <p data-testid="lastName-error-message">{capitalizeFirstLetterAndPeriod(errors.lastName)}</p>}
+          {errors.password && <p data-testid="password-error-message">{capitalizeFirstLetterAndPeriod(errors.password)}</p>}
+          {errors.confirmPassword && <p data-testid="confirmPassword-error-message">{capitalizeFirstLetterAndPeriod(errors.confirmPassword)}</p>}
+          {errors.general && <p data-testid="general-error-message">{capitalizeFirstLetterAndPeriod(errors.general)}</p>}
         </div>
       )}
       <form onSubmit={handleSubmit}>
+      <div className="form-group">
+          <label>First Name</label>
+          <input
+            data-testid="first-name-input"
+            type="text"
+            value={firstName}
+            onChange={(e) => {
+              setFirstName(e.target.value);
+              validateFields();
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <label>Last Name</label>
+          <input
+            data-testid="last-name-input"
+            type="text"
+            value={lastName}
+            onChange={(e) => {
+              setLastName(e.target.value);
+              validateFields();
+            }}
+          />
+        </div>
         <div className="form-group">
           <label>Email</label>
           <input
@@ -129,30 +157,7 @@ function SignupFormModal() {
             }}
           />
         </div>
-        <div className="form-group">
-          <label>First Name</label>
-          <input
-            data-testid="first-name-input"
-            type="text"
-            value={firstName}
-            onChange={(e) => {
-              setFirstName(e.target.value);
-              validateFields();
-            }}
-          />
-        </div>
-        <div className="form-group">
-          <label>Last Name</label>
-          <input
-            data-testid="last-name-input"
-            type="text"
-            value={lastName}
-            onChange={(e) => {
-              setLastName(e.target.value);
-              validateFields();
-            }}
-          />
-        </div>
+      
         <div className="form-group">
           <label>Password</label>
           <input

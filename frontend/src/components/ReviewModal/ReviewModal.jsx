@@ -13,7 +13,6 @@ export const ReviewForm = ({ spotId }) => {
   const [errors, setErrors] = useState({});
   const modalRef = useRef();
 
-  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -62,7 +61,7 @@ export const ReviewForm = ({ spotId }) => {
           <label>
             <textarea
               value={review}
-              placeholder="Just a quick review..."
+              placeholder="Leave your review here..."
               onChange={(e) => setReview(e.target.value)}
               required
             />
@@ -72,6 +71,7 @@ export const ReviewForm = ({ spotId }) => {
               index += 1;
               return (
                 <button
+                  data-testid="review-star-clickable"
                   type="button"
                   key={index}
                   className={index <= stars ? "on" : "off"}

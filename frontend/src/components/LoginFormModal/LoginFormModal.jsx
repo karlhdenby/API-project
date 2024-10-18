@@ -88,7 +88,7 @@ function LoginFormModal() {
           Log In
         </button>
       </form>
-      <button onClick={handleDemoUser} className="demo-user-button">
+      <button onClick={handleDemoUser} className="demo-user-button" data-testid="demo-user-login">
         Demo User
       </button>
     </div>

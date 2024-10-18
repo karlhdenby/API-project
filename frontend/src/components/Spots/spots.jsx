@@ -21,29 +21,33 @@ export const Spots = () => {
   
 
   return (
-    <div className="spots-grid">
+    <div className="spots-grid" data-testid="spots-list">
       {(Object.values(spots)).map((spot) => (
         <div
         onClick={() => navigate(`/spots/${spot.id}`)}
         key={spot.id}
+        data-testid="spot-tile"
         className="spot-card"
         >
           <img
+            data-testid="spot-thumbnail-image"
             src={spot.previewImage || "https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png"}
             alt={`Preview of ${spot.name}`}
           />
-          <div className="spot-info">
+          <div className="spot-info" data-testid="spot-tooltip">
             <div className="spot-name">{spot.name}</div>
-            <div className="spot-details">
+            <a className="spot-details" href={`/spots/${spot.id}`}>
+              <div data-testid="spot-city">
               <p>
                 {spot.city}, {spot.state}
               </p>
-              <div className="spot-rating">⭐ {spot.avgRating?.toFixed(1) || "NEW"}</div>
+              </div>
+              <div data-testid="spot-rating" className="spot-rating">⭐ {spot.avgRating?.toFixed(1) || "NEW"}</div>
               {console.log(parseInt(spot.avgRating).toFixed(1))}
-            </div>
-            <p className="spot-price">${spot.price}/night</p>
+            </a>
+            <p data-testid="spot-price" className="spot-price">${spot.price}/night</p>
           </div>
-          <div className="tooltiptext">{spot.name}</div>
+          <div  className="tooltiptext">{spot.name}</div>
         </div>
       ))}
     </div>

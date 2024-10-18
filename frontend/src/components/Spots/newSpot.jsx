@@ -142,7 +142,7 @@ export default function CreateSpot() {
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            placeholder="Address"
+            placeholder="Street Address"
             
           />
           {errors.address && <p className="error">{errors.address}</p>}
